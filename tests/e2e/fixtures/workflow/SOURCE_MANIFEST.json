@@ -1,0 +1,47 @@
+{
+  "schema_version": "aef-public-source/1",
+  "repository": "https://github.com/pallets/markupsafe",
+  "release": "3.0.2",
+  "revision": "28ace20b140d15c083e1cbc163ee6b7778ba098c",
+  "downloaded_at": "2026-09-08",
+  "license": "BSD-3-Clause",
+  "license_file": "LICENSE.txt",
+  "files": [
+    {
+      "path": "CHANGES.rst",
+      "url": "https://raw.githubusercontent.com/pallets/markupsafe/28ace20b140d15c083e1cbc163ee6b7778ba098c/CHANGES.rst",
+      "sha256": "93a0f4151f4739297bd25cf79d0bbdf03269b66ed859deea3a628d465226f4ad",
+      "bytes": 4792
+    },
+    {
+      "path": "LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/pallets/markupsafe/28ace20b140d15c083e1cbc163ee6b7778ba098c/LICENSE.txt",
+      "sha256": "489a8e1108509ed98a37bb983e11e0f7e1d31f0bd8f99a79c8448e7ff37d07ea",
+      "bytes": 1475
+    },
+    {
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/pallets/markupsafe/28ace20b140d15c083e1cbc163ee6b7778ba098c/README.md",
+      "sha256": "3d6f49dc8ed9f0bd79394053f8e99034cd2dfd098e55d7290c039e73553dfce7",
+      "bytes": 1280
+    },
+    {
+      "path": "src/markupsafe/__init__.py",
+      "url": "https://raw.githubusercontent.com/pallets/markupsafe/28ace20b140d15c083e1cbc163ee6b7778ba098c/src/markupsafe/__init__.py",
+      "sha256": "b2bf94ebfdbb0df692ae3e639c763158dfa9be1336eec8e50e994c0cf64a9bb9",
+      "bytes": 13214
+    },
+    {
+      "path": "src/markupsafe/_native.py",
+      "url": "https://raw.githubusercontent.com/pallets/markupsafe/28ace20b140d15c083e1cbc163ee6b7778ba098c/src/markupsafe/_native.py",
+      "sha256": "8522ecf099b3e5aa9acae7a780927791d4f93f0369056a4aae6412762a67742f",
+      "bytes": 210
+    },
+    {
+      "path": "tests/test_escape.py",
+      "url": "https://raw.githubusercontent.com/pallets/markupsafe/28ace20b140d15c083e1cbc163ee6b7778ba098c/tests/test_escape.py",
+      "sha256": "68b4dac1f27ea365f3ceb9a306bed1543db5e232b7311e319fe82b6fcce722a1",
+      "bytes": 2048
+    }
+  ]
+}

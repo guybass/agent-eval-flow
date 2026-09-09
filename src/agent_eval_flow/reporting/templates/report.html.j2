@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Agent Eval Flow · {{ view.plan.study_id }}</title>
+  <style>{{ css|safe }}</style>
+</head>
+<body>
+{% macro observation(value) -%}
+<span class="observation {{ value.status }}"><strong>{{ "unknown" if value.status == "unknown" else value.value }}</strong><span class="badge">{{ value.status }}</span></span>
+{% if value.reason %}<span class="reason">{{ value.reason }}</span>{% endif %}
+{%- endmacro %}
+{% macro resources(value) -%}
+<dl class="resources"><div><dt>Cost USD · scope: {{ value.cost_scope|join(', ') }}</dt><dd>{{ observation(value.cost_usd) }}</dd></div><div><dt>Input tokens</dt><dd>{{ observation(value.input_tokens) }}</dd></div><div><dt>Output tokens</dt><dd>{{ observation(value.output_tokens) }}</dd></div><div><dt>Human minutes</dt><dd>{{ observation(value.human_minutes) }}</dd></div></dl>
+{%- endmacro %}
+<header>
+  <p class="eyebrow">AGENT EVAL FLOW · SAVED EVALUATION</p>
+  <h1>{{ view.plan.study_id }}</h1>
+  <p>Project {{ view.plan.project_id }} · Dataset {{ view.plan.dataset.id }} · Suite {{ view.result.suite.id }} / {{ view.result.suite.version }}</p>
+  <p class="muted">Created {{ view.result.created_at }} · Result {{ view.result.id }}</p>
+</header>
+<main>
+<section aria-labelledby="coverage-title">
+  <h2 id="coverage-title">Study coverage</h2>
+  <div class="stats">
+  {% for label, value in [('Planned runs', view.coverage.planned), ('Completed', view.coverage.completed), ('Failed', view.coverage.failed), ('Pending', view.coverage.pending), ('Unavailable', view.coverage.unavailable), ('Unknown resources', view.coverage.resource_unknown)] %}
+    <div><strong>{{ value }}</strong><span>{{ label }}</span></div>
+  {% endfor %}
+  </div>
+  <p class="muted">{{ view.plan.dataset.units.rows|length }} task units · {{ view.plan.execution.repetitions }} repetition(s) per candidate. Diagnostic detail rows are evidence within a run.</p>
+</section>
+<section aria-labelledby="summaries-title">
+  <h2 id="summaries-title">Recorded candidate summaries</h2>
+  <div class="table-wrap"><table><thead><tr><th>Candidate</th><th>Summary</th><th>Value and basis</th><th>Source coverage</th><th>Explanation</th></tr></thead><tbody>
+  {% for row in view.result.summaries %}
+    <tr><td>{{ row.candidate_id }}</td><td>{{ row.summary_id }}</td><td>{{ observation(row.value) }}</td><td>{{ row.observed }} / {{ row.planned }} observed<br>{{ row.missing }} missing · {{ row.errors }} errors · {{ row.not_applicable }} not applicable</td><td>{{ row.reason }}{% if row.exclusions %}<details><summary>Excluded runs</summary><pre>{{ row.exclusions|pretty_json }}</pre></details>{% endif %}{% if row.available_value is not none %}<p class="muted">Available subset: {{ row.available_value }} (descriptive)</p>{% endif %}</td></tr>
+  {% else %}<tr><td colspan="5">No summary specifications were requested.</td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+{% if view.selection %}
+<section aria-labelledby="selection-title"><h2 id="selection-title">Selection · {{ view.selection.status }}</h2>
+  <p>{{ view.selection.policy.mode }} policy “{{ view.selection.policy.id }}” · Selected: {{ view.selection.selected_ids|join(', ') or 'none' }}</p>
+  <div class="table-wrap"><table><thead><tr><th>Candidate</th><th>Eligibility</th><th>Rank</th><th>Preference</th><th>Reasons</th></tr></thead><tbody>{% for row in view.selection.rows %}<tr><td>{{ row.candidate_id }}</td><td>{{ row.eligibility }}</td><td>{{ row.rank if row.rank is not none else '—' }}</td><td>{{ row.preference_score if row.preference_score is not none else '—' }}</td><td>{{ row.reasons|join('; ') }}</td></tr>{% endfor %}</tbody></table></div>
+  <details><summary>Exact selection policy</summary><pre>{{ view.selection.policy|pretty_json }}</pre></details>
+</section>
+{% endif %}
+<section aria-labelledby="grading-title"><h2 id="grading-title">Grading resources</h2>
+  <p class="muted">Shared grading activities are counted once. These charges are separate from agent execution costs below.</p>
+  <h3>All retained and new grading</h3>{{ resources(view.result.evaluation_resources) }}
+  <p>Captured native grading inventory: {{ observation(view.result.runs.grading_inventory_complete) }}</p>
+  <h3>Grading performed in this evaluation</h3>{{ resources(view.incremental_resources) }}
+  <p>Performed grading inventory: {{ observation(view.result.performed_grading_inventory_complete) }}</p>
+  <details><summary>{{ view.result.activities|length }} recorded grading activities</summary><pre>{{ view.result.activities|pretty_json }}</pre><p>Performed activity IDs</p><pre>{{ view.result.performed_activity_ids|pretty_json }}</pre></details>
+</section>
+<section aria-labelledby="tasks-title"><h2 id="tasks-title">Runs and evidence</h2>
+  <div class="table-wrap"><table><thead><tr><th>Candidate / task</th><th>Repetition</th><th>Run status</th><th>Score</th><th>Acceptance</th><th>Details</th></tr></thead><tbody>
+  {% for task in view.tasks %}<tr><td>{{ task.assignment.candidate_id }}<br><code>{{ task.assignment.unit|pretty_json }}</code></td><td>{{ task.assignment.repetition }}</td><td>{{ task.run.status }}</td><td>{{ observation(task.score.score) }}</td><td>{{ task.score.acceptance }}</td><td><a href="#{{ task.anchor }}">Inspect run</a></td></tr>{% endfor %}
+  </tbody></table></div>
+  {% for task in view.tasks %}
+  <article id="{{ task.anchor }}"><h3>{{ task.assignment.candidate_id }} · {{ task.assignment.unit|pretty_json }} · repetition {{ task.assignment.repetition }}</h3>
+    <p><code>{{ task.run.id }}</code> · {{ task.run.status }} · output {{ task.run.output_state }}</p>
+    <p>Elapsed seconds: {{ observation(task.duration) }}</p>
+    <h4>Agent execution resources</h4>{{ resources(task.resources) }}
+    <details><summary>Delivered output</summary><pre>{{ task.run.output|pretty_json }}</pre></details>
+    {% if task.runtime_checks %}
+    <div class="runtime-evidence">
+      <h4>Runtime evidence checks</h4>
+      <p class="muted">These are saved check results and their linked observations. An observation describes its named boundary and phase; it does not establish delivery beyond that boundary or explain the cause of an outcome. Complete value coverage does not establish complete runtime coverage. First/last selection uses retained event order.</p>
+      {% for check in task.runtime_checks %}
+      <div>
+        <h3>{{ check.spec.id }}</h3>
+        <p>Subject: <code>{{ check.spec.params.get('subject', 'unspecified') }}</code> · Phase: <code>{{ check.spec.params.get('phase', 'unspecified') }}</code> · Boundary: <code>{{ check.spec.params.get('boundary', 'unspecified') }}</code></p>
+        <p>Rule: {{ check.spec.params.get('operator', 'equals') }} · Selection: {{ check.spec.params.get('selection', 'all') }} · Evaluator: {{ check.spec.source.ref.name }} / {{ check.spec.source.ref.revision or 'unresolved' }}</p>
+        {% if check.spec.params.get('expected_count') is not none %}<p>Expected matching observations before selection: {{ check.spec.params.get('expected_count') }}</p>{% endif %}
+        {% if check.measurement %}<p>Saved result: <strong>{{ check.measurement.value if check.measurement.value is not none else 'unknown' }}</strong> · {{ check.measurement.status }} / {{ check.measurement.basis or 'unknown' }}<br>{{ check.measurement.reason }}</p>{% endif %}
+        {% for detail in check.details %}
+          <details open><summary>Observation {{ detail.event_id }}</summary>
+          <p>Saved detail: {{ detail.measurement.value if detail.measurement.value is not none else 'unknown' }} · {{ detail.measurement.status }} / {{ detail.measurement.basis or 'unknown' }}<br>{{ detail.measurement.reason }}</p>
+          {% if detail.error %}<p>{{ detail.error }}</p>{% endif %}
+          {% if detail.observation %}
+            {% set record = detail.observation %}
+            <p>Subject: <code>{{ record.subject }}</code> · Phase: <code>{{ record.phase }}</code> · Boundary: <code>{{ record.boundary }}</code><br>Execution: <code>{{ detail.event.execution_id }}</code>{% if record.component_id %} · Component: <code>{{ record.component_id }}</code>{% endif %}{% if record.call_id %} · Call: <code>{{ record.call_id }}</code>{% endif %}<br>Coverage: <strong>{{ record.coverage }}</strong> · Collector: {{ record.collector.name }} / {{ record.collector.revision or 'unresolved' }}</p>
+            <div class="table-wrap"><table><thead><tr><th>Expected</th><th>Observed</th></tr></thead><tbody><tr>
+              <td>{% if check.has_expected_override %}<span class="reason">Configured expectation</span><pre>{{ check.expected_override|pretty_json }}</pre>{% else %}<span class="reason">Declared value · {{ record.declared.status }}{% if record.declared.reason %} · {{ record.declared.reason }}{% endif %}</span>{% if record.declared.status == 'unknown' %}unknown{% else %}<pre>{{ record.declared.value|pretty_json }}</pre>{% endif %}{% endif %}</td>
+              <td><span class="reason">{{ record.observed.status }}{% if record.observed.reason %} · {{ record.observed.reason }}{% endif %}</span>{% if record.observed.status == 'unknown' %}unknown{% else %}<pre>{{ record.observed.value|pretty_json }}</pre>{% endif %}</td>
+            </tr></tbody></table></div>
+            {% if record.transformations %}<p>Recorded transformations:</p><ul>{% for transformation in record.transformations %}<li>{{ transformation }}</li>{% endfor %}</ul>{% else %}<p class="muted">No transformations were recorded.</p>{% endif %}
+          {% endif %}
+          <ul class="evidence">{% for ref in detail.evidence %}<li>{% set href = safe_link(ref.artifact.uri) %}{% if href %}<a href="{{ href }}" rel="noopener noreferrer">{{ ref.description or ref.artifact.uri }}</a>{% else %}<span>{{ ref.description }} · {{ ref.artifact.uri }}</span>{% endif %}{% if ref.locator %}<code>{{ ref.locator }}</code>{% endif %}<small>{{ ref.artifact.media_type }} · SHA-256 {{ ref.artifact.sha256 or 'not recorded' }}</small></li>{% else %}<li>No source evidence was linked.</li>{% endfor %}</ul>
+          </details>
+        {% else %}
+          <p>No runtime observation is linked to this saved check. The report does not infer one from other native events.</p>
+          {% if check.has_expected_override %}<p>Configured expectation:</p><pre>{{ check.expected_override|pretty_json }}</pre>{% endif %}
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <h4>Measurements</h4><div class="table-wrap"><table><thead><tr><th>Metric / detail key</th><th>Value</th><th>Status / basis</th><th>Why</th><th>Activity IDs</th></tr></thead><tbody>
+    {% for row in task.measurements %}<tr><td>{{ row.metric }}{% if row.key is not none %}<pre>{{ row.key|pretty_json }}</pre>{% endif %}</td><td>{{ row.value if row.value is not none else 'unavailable' }}</td><td>{{ row.status }} / {{ row.basis or 'unknown' }}</td><td>{{ row.reason }}</td><td>{{ row.activity_ids|join(', ') }}</td></tr>{% endfor %}
+    </tbody></table></div>
+    <details><summary>Score contributions and acceptance gates</summary><pre>{{ task.score|pretty_json }}</pre></details>
+    <details><summary>{{ task.run.executions|length }} executions · {{ task.run.events|length }} events</summary><pre>{{ task.run.executions|pretty_json }}</pre><pre>{{ task.run.events|pretty_json }}</pre></details>
+    {% if task.run.error %}<details open><summary>Recorded error</summary><pre>{{ task.run.error|pretty_json }}</pre></details>{% endif %}
+    <details><summary>Environment and native references</summary><pre>{{ task.run.environment|pretty_json }}</pre><pre>{{ task.run.native_refs|pretty_json }}</pre></details>
+    <h4>Evidence references</h4><ul class="evidence">{% for ref in task.evidence %}<li>{% set href = safe_link(ref.artifact.uri) %}{% if href %}<a href="{{ href }}" rel="noopener noreferrer">{{ ref.description or ref.artifact.uri }}</a>{% else %}<span>{{ ref.description }} · {{ ref.artifact.uri }}</span>{% endif %}{% if ref.locator %}<code>{{ ref.locator }}</code>{% endif %}<small>{{ ref.artifact.media_type }} · SHA-256 {{ ref.artifact.sha256 or 'not recorded' }}</small></li>{% else %}<li>No evidence references were captured.</li>{% endfor %}</ul>
+  </article>
+  {% endfor %}
+</section>
+<section aria-labelledby="config-title"><h2 id="config-title">Declared configurations and provenance</h2>
+  {% for candidate_id, candidate in view.plan.candidates.items() %}<details><summary>{{ candidate_id }} · {{ candidate.backend.name }} / {{ candidate.backend.revision or 'unresolved revision' }}</summary><pre>{{ candidate|pretty_json }}</pre></details>{% endfor %}
+  <details><summary>Native jobs and capture projections</summary><pre>{{ view.result.runs.native_jobs|pretty_json }}</pre><pre>{{ view.result.runs.projections|pretty_json }}</pre></details>
+  <p class="muted">This report displays saved measurements and declared rules. A trace alone does not establish causal attribution. No confidence interval method is recorded in contract 0.4. Evidence links retain their original locations; external availability is not checked or downloaded by this report.</p>
+</section>
+</main><footer>Agent Eval Flow · schema {{ view.result.schema_version }} · Self-contained report; no external scripts or telemetry.</footer>
+</body></html>

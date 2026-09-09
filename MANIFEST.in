@@ -1,0 +1,8 @@
+include README.md CONTRIBUTING.md THIRD_PARTY_NOTICES.md pyproject.toml pytest.ini requirements-test.txt .gitattributes
+graft .github
+graft docs
+graft tests
+graft examples
+graft scripts
+global-exclude *.pyc *.pyo
+global-exclude __pycache__

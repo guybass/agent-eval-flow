@@ -1,0 +1,166 @@
+{
+  "schema_version": "aef-source-snapshot/1",
+  "repository": "https://github.com/pallets/flask",
+  "revision": "2c1b30d0503cfb064f1cb252e6614a06915a362a",
+  "release": "3.1.2",
+  "downloaded_at": "2026-09-08T17:45:43.540957+00:00",
+  "license": "BSD-3-Clause",
+  "license_file": "LICENSE.txt",
+  "selection": "Complete examples/tutorial subtree; unchanged source bytes. No application or upstream tests executed.",
+  "files": [
+    {
+      "path": ".gitignore",
+      "upstream_path": "examples/tutorial/.gitignore",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/.gitignore",
+      "sha256": "33e8459e8e10c3260d9b06a2d3a256306cbc154708601d734bff17c42109b319",
+      "bytes": 119
+    },
+    {
+      "path": "LICENSE.txt",
+      "upstream_path": "examples/tutorial/LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/LICENSE.txt",
+      "sha256": "489a8e1108509ed98a37bb983e11e0f7e1d31f0bd8f99a79c8448e7ff37d07ea",
+      "bytes": 1475
+    },
+    {
+      "path": "README.rst",
+      "upstream_path": "examples/tutorial/README.rst",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/README.rst",
+      "sha256": "e6c7aa25f5a857ce3b30c0b2a2d0d7a25bbf0f1c96d700e1bad2868c7ea231f5",
+      "bytes": 1273
+    },
+    {
+      "path": "flaskr/__init__.py",
+      "upstream_path": "examples/tutorial/flaskr/__init__.py",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/flaskr/__init__.py",
+      "sha256": "ecfe54451a0cb1cfb8aac26d0f65bdfc4b1fc5ccd7148f4ad38829a8ba26f03a",
+      "bytes": 1437
+    },
+    {
+      "path": "flaskr/auth.py",
+      "upstream_path": "examples/tutorial/flaskr/auth.py",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/flaskr/auth.py",
+      "sha256": "a5ed5eaa05c6f6ee3e5bdb07b9e657a6e9320a115a68fd74b1cb4ac646680167",
+      "bytes": 3296
+    },
+    {
+      "path": "flaskr/blog.py",
+      "upstream_path": "examples/tutorial/flaskr/blog.py",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/flaskr/blog.py",
+      "sha256": "c49c5f6e3db32d74bfac13633fd328ec904cb7159d76ca78f6956432076c1fd7",
+      "bytes": 3305
+    },
+    {
+      "path": "flaskr/db.py",
+      "upstream_path": "examples/tutorial/flaskr/db.py",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/flaskr/db.py",
+      "sha256": "700f9d0a455bf79c9bf6de4f2784f13b96256faea19c15ddee71fb7957e14c31",
+      "bytes": 1317
+    },
+    {
+      "path": "flaskr/schema.sql",
+      "upstream_path": "examples/tutorial/flaskr/schema.sql",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/flaskr/schema.sql",
+      "sha256": "c23021b8a5229cedd3191825850e963f393790a794d31ac2f83846a0c5d559f7",
+      "bytes": 498
+    },
+    {
+      "path": "flaskr/static/style.css",
+      "upstream_path": "examples/tutorial/flaskr/static/style.css",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/flaskr/static/style.css",
+      "sha256": "b7724c7981be21b5a13484c8f7eb9df306f06a88406db3dc7619b80aa040e372",
+      "bytes": 1696
+    },
+    {
+      "path": "flaskr/templates/auth/login.html",
+      "upstream_path": "examples/tutorial/flaskr/templates/auth/login.html",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/flaskr/templates/auth/login.html",
+      "sha256": "f0d4ee341a19c8f9d51a66c5da624e687e58de7e3fb2ca41c6f5b8d07e20a6c1",
+      "bytes": 424
+    },
+    {
+      "path": "flaskr/templates/auth/register.html",
+      "upstream_path": "examples/tutorial/flaskr/templates/auth/register.html",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/flaskr/templates/auth/register.html",
+      "sha256": "53da308c1d62f057613ec8e445eb70e89404288f503156102d1e3e39ec5b2153",
+      "bytes": 428
+    },
+    {
+      "path": "flaskr/templates/base.html",
+      "upstream_path": "examples/tutorial/flaskr/templates/base.html",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/flaskr/templates/base.html",
+      "sha256": "a3c74c6ba8ae95bd3b4b63c0bcf5712944c5b954578514c1316a248db0949b07",
+      "bytes": 752
+    },
+    {
+      "path": "flaskr/templates/blog/create.html",
+      "upstream_path": "examples/tutorial/flaskr/templates/blog/create.html",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/flaskr/templates/blog/create.html",
+      "sha256": "f41e3166cfd09d41a88def1896fb93631e707b0d9968b14ccb00953263e20025",
+      "bytes": 447
+    },
+    {
+      "path": "flaskr/templates/blog/index.html",
+      "upstream_path": "examples/tutorial/flaskr/templates/blog/index.html",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/flaskr/templates/blog/index.html",
+      "sha256": "67cdf10979b06f697953477d0ee8043e56a11ebe87b03b307ada12d13a240617",
+      "bytes": 790
+    },
+    {
+      "path": "flaskr/templates/blog/update.html",
+      "upstream_path": "examples/tutorial/flaskr/templates/blog/update.html",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/flaskr/templates/blog/update.html",
+      "sha256": "0e16cd0d933914628e890411dcddd7527fb96b5a7c9113390d93b3e79b44b5ad",
+      "bytes": 690
+    },
+    {
+      "path": "pyproject.toml",
+      "upstream_path": "examples/tutorial/pyproject.toml",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/pyproject.toml",
+      "sha256": "8ea666f85481f44bc7a5cef54e39ab939f92f5f2cb576f9a6b959866a3fac0aa",
+      "bytes": 771
+    },
+    {
+      "path": "tests/conftest.py",
+      "upstream_path": "examples/tutorial/tests/conftest.py",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/tests/conftest.py",
+      "sha256": "2778b7c035d917bb0909ec6ee2f9d61ccba030ff8ae635ff65a52c133ec5afca",
+      "bytes": 1454
+    },
+    {
+      "path": "tests/data.sql",
+      "upstream_path": "examples/tutorial/tests/data.sql",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/tests/data.sql",
+      "sha256": "244a542220a64bdbf9bd3340f8280551b95e6d3248ead974fdd0a07a7dd06a0c",
+      "bytes": 394
+    },
+    {
+      "path": "tests/test_auth.py",
+      "upstream_path": "examples/tutorial/tests/test_auth.py",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/tests/test_auth.py",
+      "sha256": "cbbe178c9980d8499561d8eae72f01b8abeead2fa10c9d5f71427da4af38a938",
+      "bytes": 2070
+    },
+    {
+      "path": "tests/test_blog.py",
+      "upstream_path": "examples/tutorial/tests/test_blog.py",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/tests/test_blog.py",
+      "sha256": "a4c01c486e86aed522c3ade398bf4016f6ef59bbada2c7c5f69eb55ce297877c",
+      "bytes": 2503
+    },
+    {
+      "path": "tests/test_db.py",
+      "upstream_path": "examples/tutorial/tests/test_db.py",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/tests/test_db.py",
+      "sha256": "324baea21b981575b4e6d92b6517f21ec2ad86a6138010863a9fcfb4f984e649",
+      "bytes": 616
+    },
+    {
+      "path": "tests/test_factory.py",
+      "upstream_path": "examples/tutorial/tests/test_factory.py",
+      "url": "https://raw.githubusercontent.com/pallets/flask/2c1b30d0503cfb064f1cb252e6614a06915a362a/examples/tutorial/tests/test_factory.py",
+      "sha256": "1906cfed379afe315b6ad7db3c71c951ac87c53b57b28b04b5b6c84df2a79e01",
+      "bytes": 298
+    }
+  ]
+}

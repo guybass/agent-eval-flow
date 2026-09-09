@@ -1,0 +1,18 @@
+{
+  "schema_version": "aef-hdfs-incident-context/1",
+  "incident_id": "HDFS-2008-11-09",
+  "title": "Investigate HDFS block-serving warnings in a historical log sample",
+  "window": {"date": "081109", "start_time": "214000", "end_time": "230000"},
+  "log_source": "upstream/HDFS_2k.log",
+  "sample_limitations": [
+    "This is Loghub's 2,000-line HDFS sample, not a contiguous or complete cluster log.",
+    "Timestamp strings retain the source clock; its timezone is not supplied.",
+    "Counts describe only this sample and must not be called production error rates.",
+    "The changes below are synthetic exercise context, not historical HDFS facts."
+  ],
+  "changes": [
+    {"change_id": "exercise-change-1", "at": "081109 213500", "kind": "configuration", "component": "block-transfer-client", "summary": "Exercise-only planned socket-timeout configuration rollout.", "state": "planned", "executed": false, "provenance": "synthetic exercise context"},
+    {"change_id": "exercise-change-2", "at": "081109 214500", "kind": "maintenance", "component": "log-collector", "summary": "Exercise-only collector maintenance ticket; no DataNode deployment recorded.", "state": "completed", "executed": true, "provenance": "synthetic exercise context"},
+    {"change_id": "exercise-change-3", "at": "081109 223000", "kind": "deployment", "component": "namenode", "summary": "Exercise-only deployment request held pending investigation.", "state": "held", "executed": false, "provenance": "synthetic exercise context"}
+  ]
+}

@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OpenKritt | Agent Eval Flow</title><style>
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:#e9eae6;color:#17232b;font-family:'Segoe UI',Arial,sans-serif}
+.report{width:1200px;min-height:1350px;background:#fcfcf9;padding:64px 72px 44px;position:relative;display:flex;flex-direction:column;gap:25px}
+.brand{display:flex;justify-content:space-between;align-items:center;font-size:22px;letter-spacing:.035em;font-weight:600}
+.brand-name{display:flex;align-items:center;gap:12px}.brand-mark{width:24px;height:24px;background:#184d3b;border-radius:6px;display:inline-block}
+.edition{color:#61716d;font-size:18px;letter-spacing:.1em;text-transform:uppercase}
+.project{font-size:22px;color:#42685b;font-weight:600;letter-spacing:.05em;margin:0 0 14px;text-transform:uppercase}
+h1{font-size:54px;line-height:1.1;letter-spacing:-.035em;font-weight:650;max-width:1020px;margin:0 0 18px}
+.task{font-size:25px;line-height:1.4;margin:0;color:#4d5d63;max-width:970px}
+.status-line{display:flex;align-items:center;flex-wrap:wrap;gap:14px 22px}.provenance{font-size:18px;color:#53635a;font-weight:600}
+.status{align-self:flex-start;font-size:18px;padding:8px 13px;background:#e9ece8;color:#49564d;border-radius:6px;font-weight:600}
+.status.success{background:#e5eee8;color:#214e3a}.status.regression{background:#f4e6e2;color:#903e34}
+.status.pending,.status.inconclusive{background:#f1ede1;color:#755e23}
+.comparison{border-top:2px solid #233e33;border-bottom:1px solid #cdd4cf}
+.compare-head,.metric{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:22px;align-items:center}
+.compare-head{padding:18px 0;color:#53635a;font-size:19px;font-weight:600}
+.compare-head span:nth-child(n+2){text-align:center}.metric{padding:22px 0;border-top:1px solid #dde2db}
+.metric-name{font-size:24px;line-height:1.2;font-weight:600}.metric-note{display:block;color:#6a766e;font-size:17px;margin-top:7px;font-weight:400}
+.value{text-align:center;font-size:38px;font-weight:650;line-height:1.1;letter-spacing:-.025em}.value.after{color:inherit}
+.value.after.improved{color:#245c43}.value.after.regressed{color:#983d34}.value.pending{color:#7b8581;font-size:26px}
+.narrative{display:grid;grid-template-columns:1fr 1fr;gap:35px}.finding,.change{padding:24px 26px;background:#f2f0e8;border-radius:9px}.change{background:#eaf0e9}
+.label{font-size:17px;letter-spacing:.1em;text-transform:uppercase;font-weight:650;margin:0 0 13px;color:#6b5e42}.change .label{color:#345841}
+.narrative p{font-size:24px;line-height:1.32;margin:0}.evidence{display:flex;gap:24px;padding-top:7px;align-items:flex-start}.evidence .label{flex:0 0 136px;margin-top:5px;color:#687872}
+.evidence-text{font-size:22px;line-height:1.4;color:#3f514a;margin:0;white-space:pre-wrap;overflow-wrap:anywhere}.scope{margin-top:auto;padding-top:22px;border-top:1px solid #d9dfd8}
+.scope-main{font-size:20px;line-height:1.35;margin:0 0 9px;color:#4d5d54}.scope-note{font-size:17px;line-height:1.4;margin:0;color:#727e76}
+.history{font-size:18px;line-height:1.35;margin:0 0 15px;padding:11px 15px;background:#f0f2ec;border-left:3px solid #8a998e;color:#475a4e}.history strong{font-weight:650}
+.bottom{display:flex;justify-content:space-between;gap:30px;font-size:16px;color:#6c7a72;margin-top:20px;letter-spacing:.01em}.bottom a{color:inherit;text-decoration:none}.bottom a:hover{text-decoration:underline}
+.cover{background:#142e25;color:#f6f5ed;gap:36px}.cover .brand-mark{background:#b8d59c}.cover .edition{color:#b2c5b8}.cover h1{font-size:76px;line-height:1.05;margin-top:54px;max-width:980px;color:#fbfcf6}
+.cover .subtitle{font-size:32px;line-height:1.4;max-width:850px;color:#c7d6ca;margin:0}
+.cover .method{margin-top:24px;border-top:1px solid #527060;border-bottom:1px solid #527060;padding:27px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.step-number{font-size:18px;color:#b4d39d;margin-bottom:13px}.step-name{font-size:28px;font-weight:600;letter-spacing:-.02em}.step-detail{font-size:20px;color:#b6c9bd;line-height:1.4;margin-top:10px}
+.cover .projects{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:4px}.cover .project-card{border:1px solid #557462;border-radius:10px;padding:28px}.cover h2{font-size:32px;margin:0 0 13px;color:#f4f5ed}.cover .project-card p{font-size:22px;line-height:1.4;color:#c6d7cb;margin:0}
+.cover .scope{border-color:#4e6b5a}.cover .scope-main{color:#d0dece;font-size:22px}.cover .scope-note,.cover .bottom{color:#abc0b1}
+@media print{html,body{background:#fff}.report{break-after:page;min-height:1350px}}
+</style></head><body><main class="report" aria-label="OpenKritt evaluation report">
+<div class="brand"><div class="brand-name"><span class="brand-mark"></span>Agent Eval Flow</div><span class="edition">Evaluation → evolution</span></div>
+<header><p class="project">OpenKritt / Case study 02</p><h1>Found the bug. Verified the impact.</h1><p class="task">A billing user can refund another tenant’s invoice. Does the security report prove what it claims?</p></header>
+<div class="status-line"><div class="status neutral">Grounding passes · severity still unresolved</div><span class="provenance">Native agent runs on synthetic cases</span></div>
+<section class="comparison" aria-label="Before and after results"><div class="compare-head"><span>Same test. Same measurement.</span><span>BEFORE</span><span>AFTER</span></div><div class="metric"><div class="metric-name">Submitted proof reproduces<span class="metric-note">Independent replay of the seeded flaw</span></div><div class="value">1 / 1</div><div class="value after tie">1 / 1</div></div><div class="metric"><div class="metric-name">Grounding contract passes<span class="metric-note">Demo rule; baseline types and sign implicit</span></div><div class="value">0 / 1</div><div class="value after improved">1 / 1</div></div><div class="metric"><div class="metric-name">Severity matches policy<span class="metric-note">Declared demo rule; a separate requirement</span></div><div class="value">0 / 1</div><div class="value after tie">0 / 1</div></div></section>
+<section class="narrative"><div class="finding"><div class="label">What the report showed</div><p>Stage 0 said “demonstrated” without execution. Source-only review was allowed; final fields missed our implicit contract.</p></div><div class="change"><div class="label">What we changed</div><p>Require local execution and a typed handoff. Clarify the grading contract; separate measured facts from inference.</p></div></section>
+<section class="evidence"><div class="label">Evidence</div><p class="evidence-text">Native request: HTTP 200 · balance 25,000 → 24,000 cents.
+Final claim: −1,000 cents · disclosure = true.
+Independent replay confirms those effects.</p></section>
+<footer class="scope"><p class="history"><strong>Experiment history:</strong> The revised proof still says “critical”; the demo policy expects “high”. Original-case wall time: 296 → 532 s.</p><p class="scope-main">1 source pair × 1 trial per candidate · gpt-5.6-luna · 900 s/scan</p><p class="scope-note">Custom grounding, not general accuracy. Patched twin: 0 → 0 seeded false alarms; 1 → 1 other claim awaits triage.</p><div class="bottom"><a href="README.md#openkritt" title="Read task, measurement and scope notes">KRITT b02 → a01 · Grounding and severity kept separate</a><span>Run → report → change → rerun</span></div></footer>
+</main></body></html>

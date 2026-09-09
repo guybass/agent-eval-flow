@@ -1,0 +1,12 @@
+{
+  "schema_version": "aef-markupsafe-incident/1",
+  "incident": "A support team reports inconsistent HTML rendering after several call sites started wrapping user-provided values in Markup. Reproduce the supplied call sites against the actual downloaded dependency. Inspect its implementation and explain observed differences with evidence. This is an owned integration scenario, not a claim of a defect in MarkupSafe.",
+  "cases": [
+    {"id": "untrusted-html", "operation": "escape", "value": "<strong>Customer & partner</strong>"},
+    {"id": "pretrusted-html", "operation": "escape_markup", "value": "<strong>Customer & partner</strong>"},
+    {"id": "apostrophe-quotes", "operation": "escape", "value": "Customer's \"special\" <offer>"},
+    {"id": "unicode", "operation": "escape", "value": "こんにちは & שלום <🍣>"},
+    {"id": "template-format", "operation": "format", "template": "<p>{value}</p>", "value": "<em>external user</em>"},
+    {"id": "escaped-twice", "operation": "escape_twice", "value": "5 < 8 & 8 > 5"}
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "schema_version": "aef-fixture-sources/1",
+  "sources": [
+    {
+      "path": "upstream/HDFS_2k.log",
+      "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/HDFS/HDFS_2k.log",
+      "revision": "dd61d0952749ee7963bde24220d1be5ede023033",
+      "sha256": "7c967000980c086ed55fa6544ba4f05fe66d44622795e890c68caf8bbb635035",
+      "bytes": 287848,
+      "retrieved_at": "2026-09-08",
+      "provenance": "Downloaded unmodified research dataset or its license"
+    },
+    {
+      "path": "upstream/LOGHUB_LICENSE",
+      "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/LICENSE",
+      "revision": "dd61d0952749ee7963bde24220d1be5ede023033",
+      "sha256": "9ffa6ae259833cdc6e7ed8a0219fec72ef6455fb457b3c44096cb1ac1f0696d4",
+      "bytes": 553,
+      "retrieved_at": "2026-09-08",
+      "provenance": "Downloaded unmodified research dataset or its license"
+    },
+    {
+      "path": "upstream/opensre/agent.py",
+      "url": "https://raw.githubusercontent.com/Tracer-Cloud/opensre/1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4/core/agent/agent.py",
+      "revision": "1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4",
+      "sha256": "89706ba168719d4685fffbf1fb5f91d38c1832508385f60c3a46142e02a56246",
+      "bytes": 8182,
+      "retrieved_at": "2026-09-08",
+      "provenance": "Downloaded unmodified OpenSRE source; interface evidence, never executed as fixture code"
+    },
+    {
+      "path": "upstream/opensre/events.py",
+      "url": "https://raw.githubusercontent.com/Tracer-Cloud/opensre/1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4/core/events.py",
+      "revision": "1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4",
+      "sha256": "f1e3bae32ee3e3f1aa9c48b37e36e787edcb8f8a60cd831d4238593a26616602",
+      "bytes": 9802,
+      "retrieved_at": "2026-09-08",
+      "provenance": "Downloaded unmodified OpenSRE source; interface evidence, never executed as fixture code"
+    },
+    {
+      "path": "upstream/opensre/harness.py",
+      "url": "https://raw.githubusercontent.com/Tracer-Cloud/opensre/1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4/core/agent_harness/harness.py",
+      "revision": "1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4",
+      "sha256": "5ac0c0e81fc5f6efa1be003f23dd0922d88fb874ab66765d3e04c8797ee167ab",
+      "bytes": 16633,
+      "retrieved_at": "2026-09-08",
+      "provenance": "Downloaded unmodified OpenSRE source; interface evidence, never executed as fixture code"
+    },
+    {
+      "path": "upstream/opensre/LICENSE",
+      "url": "https://raw.githubusercontent.com/Tracer-Cloud/opensre/1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4/LICENSE",
+      "revision": "1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4",
+      "sha256": "67d420ee8cd1b71076a372cd0d41b3f7139f65265e1eb3df542c245e30ea8517",
+      "bytes": 10932,
+      "retrieved_at": "2026-09-08",
+      "provenance": "Downloaded unmodified OpenSRE source; interface evidence, never executed as fixture code"
+    },
+    {
+      "path": "upstream/opensre/mixins.py",
+      "url": "https://raw.githubusercontent.com/Tracer-Cloud/opensre/1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4/core/agent/mixins.py",
+      "revision": "1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4",
+      "sha256": "0911fe9cbb1b9576299e10850e81fa628f43932524a332c09f6da9dd49c2d6f1",
+      "bytes": 4096,
+      "retrieved_at": "2026-09-08",
+      "provenance": "Downloaded unmodified OpenSRE source; interface evidence, never executed as fixture code"
+    },
+    {
+      "path": "upstream/opensre/ports.py",
+      "url": "https://raw.githubusercontent.com/Tracer-Cloud/opensre/1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4/core/agent_harness/ports.py",
+      "revision": "1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4",
+      "sha256": "a18b2ca55d9ad31110aac73d5d2dabca496c71ab5c30fa108c9c82501a06e646",
+      "bytes": 11306,
+      "retrieved_at": "2026-09-08",
+      "provenance": "Downloaded unmodified OpenSRE source; interface evidence, never executed as fixture code"
+    },
+    {
+      "path": "upstream/opensre/react_loop.py",
+      "url": "https://raw.githubusercontent.com/Tracer-Cloud/opensre/1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4/core/agent/react_loop.py",
+      "revision": "1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4",
+      "sha256": "b83bba896a849263737225d4cd33d4e8c6952b72f058db0241091c1902cef2e8",
+      "bytes": 32312,
+      "retrieved_at": "2026-09-08",
+      "provenance": "Downloaded unmodified OpenSRE source; interface evidence, never executed as fixture code"
+    },
+    {
+      "path": "upstream/opensre/turn_results.py",
+      "url": "https://raw.githubusercontent.com/Tracer-Cloud/opensre/1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4/core/agent_harness/turns/turn_results.py",
+      "revision": "1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4",
+      "sha256": "6a4d3b109489692ccc7b35b06ab40ec9454fdccea43d4c4ef3077a641b588f69",
+      "bytes": 2356,
+      "retrieved_at": "2026-09-08",
+      "provenance": "Downloaded unmodified OpenSRE source; interface evidence, never executed as fixture code"
+    },
+    {
+      "path": "context.json",
+      "sha256": "af926eec098476048b6f05d04109795a720ed7dbd59252453a57e6184f2d1ed6",
+      "bytes": 1518,
+      "provenance": "Owned exercise configuration; not historical dataset facts"
+    },
+    {
+      "path": "incidents.json",
+      "sha256": "4e96341a47d0f2a5b3d4b99db6e2139b204b8524e44a8b2a1d12bcd7a4d50fef",
+      "bytes": 1017,
+      "provenance": "Owned exercise configuration; not historical dataset facts"
+    }
+  ],
+  "dataset_citation": "Jieming Zhu, Shilin He, Pinjia He, Jinyang Liu, Michael R. Lyu. Loghub: A Large Collection of System Log Datasets for AI-driven Log Analytics. ISSRE, 2023.",
+  "dataset_url": "https://github.com/logpai/loghub",
+  "dataset_license": "upstream/LOGHUB_LICENSE"
+}

@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="1100" viewBox="0 0 1680 1100">
+<rect width="1680" height="1100" fill="#F5F7FA"/>
+<text x="44" y="39.0" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="700" fill="#215EAF">AGENT EVAL FLOW / FUTURE VISION / 03</text>
+<text x="44" y="92.0" font-family="Segoe UI,Arial,sans-serif" font-size="35" font-weight="700" fill="#172C42">OpenKritt: did a review skill find more real bugs?</text>
+<text x="44" y="129.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#4E6276">An independent security study. Its scores are meaningful within this study; they do not rank OpenKritt against OpenSRE.</text>
+<text x="44" y="1081.0" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#4E6276">3 / 4 • Proposed design, 7 September 2026 • All example tasks, outputs, costs and scores are invented; no agents were run.</text>
+<rect x="44" y="162" width="344" height="284" rx="14" fill="#EAF7F5" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="64" y="201.0" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="700" fill="#087D83">1 A tiny repository task</text>
+<text x="64" y="242.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Task K-001 has two snapshots:</text>
+<text x="64" y="269.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">V: missing ownership check (B1);</text>
+<text x="64" y="296.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">unsafe path handling (B2).</text>
+<text x="64" y="323.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">P: both bugs fixed.</text>
+<text x="64" y="350.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Fresh scans; agent sees code.</text>
+<text x="64" y="377.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Bug IDs and tests stay private.</text>
+<rect x="430" y="162" width="344" height="284" rx="14" fill="#EAF7F5" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="450" y="201.0" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="700" fill="#087D83">2 OpenKritt backend</text>
+<text x="450" y="242.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">A: baseline workflow W1.</text>
+<text x="450" y="269.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">B: W1 + review skill for ownership</text>
+<text x="450" y="296.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">and path handling.</text>
+<text x="450" y="323.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Same model, flow and budgets.</text>
+<text x="450" y="350.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Search → findings → native</text>
+<text x="450" y="377.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">validation / dedup / ranking.</text>
+<rect x="816" y="162" width="394" height="284" rx="14" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="836" y="201.0" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="700" fill="#087D83">3 Native outputs</text>
+<text x="836" y="242.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Finding text + file_path + line</text>
+<text x="836" y="269.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Summary + trigger_flow</text>
+<text x="836" y="296.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Reproduction claim</text>
+<text x="836" y="323.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Findings ZIP + scan status</text>
+<text x="836" y="350.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Separate step records: raw output,</text>
+<text x="836" y="377.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">lineage, timings and usage*</text>
+<rect x="1252" y="162" width="384" height="284" rx="14" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1272" y="201.0" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="700" fill="#087D83">4 Invented final findings</text>
+<text x="1272" y="242.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">A on V: reports B1; misses B2.</text>
+<text x="1272" y="269.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">A on P: falsely reports B1.</text>
+<text x="1272" y="296.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">B on V: reports B1 and B2.</text>
+<text x="1272" y="323.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">B on P: reports neither.</text>
+<text x="1272" y="350.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Adapter attaches finding IDs and</text>
+<text x="1272" y="377.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">snapshot / candidate versions.</text>
+<polyline points="388,304.0 430,304.0" fill="none" stroke="#087D83" stroke-width="2"/>
+<polygon points="430,304.0 420.0477317045804,308.685334115726 420.0477317045804,299.314665884274" fill="#087D83"/>
+<polyline points="774,304.0 816,304.0" fill="none" stroke="#087D83" stroke-width="2"/>
+<polygon points="816,304.0 806.0477317045804,308.685334115726 806.0477317045804,299.314665884274" fill="#087D83"/>
+<polyline points="1210,304.0 1252,304.0" fill="none" stroke="#087D83" stroke-width="2"/>
+<polygon points="1252,304.0 1242.0477317045804,308.685334115726 1242.0477317045804,299.314665884274" fill="#087D83"/>
+<rect x="44" y="494" width="416" height="288" rx="14" fill="#F4EFFA" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="64" y="533.0" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="700" fill="#7752A3">5 Independent checks</text>
+<text x="64" y="574.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">B1: read another user’s order.</text>
+<text x="64" y="601.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">V returns 200; P rejects with 403.</text>
+<text x="64" y="628.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">B2: read outside the allowed folder.</text>
+<text x="64" y="655.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">V reads it; P rejects the request.</text>
+<text x="64" y="682.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Private tests verify these facts.</text>
+<text x="64" y="709.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Native verdicts are claims to check.</text>
+<text x="504" y="508.0" font-family="Segoe UI,Arial,sans-serif" font-size="24" font-weight="700" fill="#087D83">6 Apply this fixture’s rubric (v1)</text>
+<rect x="504" y="532" width="512" height="48" rx="0" fill="#E6EDF5" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="516" y="560.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="700" fill="#172C42">Check</text>
+<rect x="1016" y="532" width="120" height="48" rx="0" fill="#E6EDF5" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1028" y="560.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="700" fill="#172C42">A</text>
+<rect x="1136" y="532" width="120" height="48" rx="0" fill="#E6EDF5" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1148" y="560.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="700" fill="#172C42">B</text>
+<rect x="1256" y="532" width="380" height="48" rx="0" fill="#E6EDF5" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1268" y="560.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="700" fill="#172C42">Why A lost points</text>
+<rect x="504" y="580" width="512" height="48" rx="0" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="516" y="608.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">Verified B1 on V / 40</text>
+<rect x="1016" y="580" width="120" height="48" rx="0" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1028" y="608.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">40</text>
+<rect x="1136" y="580" width="120" height="48" rx="0" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1148" y="608.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">40</text>
+<rect x="1256" y="580" width="380" height="48" rx="0" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1268" y="608.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">B1 independently confirms</text>
+<rect x="504" y="628" width="512" height="48" rx="0" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="516" y="656.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">Verified B2 on V / 40</text>
+<rect x="1016" y="628" width="120" height="48" rx="0" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1028" y="656.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">0</text>
+<rect x="1136" y="628" width="120" height="48" rx="0" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1148" y="656.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">40</text>
+<rect x="1256" y="628" width="380" height="48" rx="0" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1268" y="656.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">No B2 finding to verify</text>
+<rect x="504" y="676" width="512" height="48" rx="0" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="516" y="704.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">No false B1/B2 claims / 20</text>
+<rect x="1016" y="676" width="120" height="48" rx="0" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1028" y="704.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">0</text>
+<rect x="1136" y="676" width="120" height="48" rx="0" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1148" y="704.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">20</text>
+<rect x="1256" y="676" width="380" height="48" rx="0" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1268" y="704.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">B1 is fixed on P</text>
+<rect x="504" y="724" width="512" height="48" rx="0" fill="#EAF7F5" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="516" y="752.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">Fixture score / 100</text>
+<rect x="1016" y="724" width="120" height="48" rx="0" fill="#EAF7F5" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1028" y="752.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">40</text>
+<rect x="1136" y="724" width="120" height="48" rx="0" fill="#EAF7F5" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1148" y="752.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">100</text>
+<rect x="1256" y="724" width="380" height="48" rx="0" fill="#EAF7F5" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1268" y="752.0" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#172C42">40 = 40 + 0 + 0</text>
+<polyline points="460,638 504,638" fill="none" stroke="#7752A3" stroke-width="2"/>
+<polygon points="504,638 494.0477317045804,642.685334115726 494.0477317045804,633.314665884274" fill="#7752A3"/>
+<polyline points="1444,446 1444,474 1598,474 1598,532" fill="none" stroke="#087D83" stroke-width="2"/>
+<polygon points="1598,532 1593.314665884274,522.0477317045804 1602.685334115726,522.0477317045804" fill="#087D83"/>
+<text x="504" y="807.0" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#4E6276">Count each known bug once. Duplicate reports earn no extra points. Other bug claims require separate adjudication.</text>
+<rect x="44" y="837" width="496" height="187" rx="14" fill="#EAF7F5" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="64" y="876.0" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="700" fill="#087D83">7 Read the actual outcome</text>
+<text x="64" y="917.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">A: 1 true finding, 1 miss, 1 false alarm.</text>
+<text x="64" y="944.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">B: 2 true findings, 0 misses, 0 false alarms.</text>
+<text x="64" y="971.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Task accepted only if both bugs are verified and the</text>
+<text x="64" y="998.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">controls pass.</text>
+<rect x="572" y="837" width="508" height="187" rx="14" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="592" y="876.0" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="700" fill="#087D83">Inspect → form a hypothesis</text>
+<text x="592" y="917.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">No B2 finding → inspect search steps: was that path</text>
+<text x="592" y="944.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">skipped or checked badly?</text>
+<text x="592" y="971.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">The trace suggests a cause. Fresh A/B comparisons</text>
+<text x="592" y="998.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">test the skill’s effect.</text>
+<rect x="1112" y="837" width="524" height="187" rx="14" fill="#FFFFFF" stroke="#D7E0E8" stroke-width="1.3"/>
+<text x="1132" y="876.0" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="700" fill="#087D83">Keep resource and review costs</text>
+<text x="1132" y="917.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Sum V + P scan costs, including failures and retries.</text>
+<text x="1132" y="944.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Record wall time and reviewer minutes.</text>
+<text x="1132" y="971.7" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#172C42">Confirm improvements on new repository families.</text>
+<text x="44" y="1051.0" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#4E6276">* Findings ZIP is not a full trace export. Fresh scans provide independent attempts; OpenKritt repeat_runs expands a search using earlier outputs.</text>
+</svg>

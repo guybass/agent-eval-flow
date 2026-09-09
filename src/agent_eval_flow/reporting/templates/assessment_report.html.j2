@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Assessment {{ view.result.plan.id }}</title><style>{{ css|safe }}</style></head>
+<body><main>
+<h1>Assessment {{ view.result.plan.id }}</h1>
+<p>Project {{ view.result.plan.project_id }} · Result {{ view.result.id }} · {{ view.result.created_at }}</p>
+<p>Configuration evidence and behavioral evidence retain their own scope. Linked findings do not establish causation.</p>
+{% if view.result.plan.behavior is none %}<p>Configuration-only assessment. No behavioral study was requested.</p>
+{% elif view.behavior is none %}<p>Behavioral work was requested but no valid behavioral result is available.</p>{% endif %}
+
+<h2>Branch outcomes</h2>
+<table><thead><tr><th>Branch</th><th>Candidates</th><th>Status</th><th>Reason</th></tr></thead><tbody>
+{% for branch in view.result.branches %}<tr><td>{{ branch.kind }}</td><td>{{ branch.candidate_ids|join(', ') }}</td><td>{{ branch.status }}</td><td>{{ branch.reason }}</td></tr>{% endfor %}
+</tbody></table>
+
+{% if view.decision %}
+<h2>Explicit policy: {{ view.decision.policy.id }} / {{ view.decision.policy.revision }}</h2>
+<p>Decision mode: {{ view.decision.status }}{% if view.decision.selected_ids %}; selected: {{ view.decision.selected_ids|join(', ') }}{% endif %}</p>
+<table><thead><tr><th>Candidate</th><th>Eligibility</th><th>Rank</th><th>Reasons</th></tr></thead><tbody>
+{% for row in view.decision.rows %}<tr><td>{{ row.candidate_id }}</td><td>{{ row.eligibility }}</td><td>{{ row.rank if row.rank is not none else 'Not ranked' }}</td><td>{{ row.reasons|join('; ') }}</td></tr>{% endfor %}
+</tbody></table>
+{% for candidate_id, requirements in view.decision.requirements.items() %}
+{% for requirement in requirements %}<p>{{ candidate_id }} / {{ requirement.requirement.check_id }}: {{ requirement.decision }} — {{ requirement.reason }}</p>{% endfor %}{% endfor %}
+{% endif %}
+
+{% for candidate in view.candidates %}
+<section id="candidate-{{ loop.index0 }}"><h2>Candidate {{ candidate.candidate.id }}</h2>
+{% if candidate.capture %}<p>Configuration collection: {{ candidate.capture.status }}</p>
+{% if candidate.capture.snapshot %}<p>Snapshot {{ candidate.capture.snapshot.fingerprint }} · inventory {{ candidate.capture.snapshot.inventory_complete.status }}: {{ candidate.capture.snapshot.inventory_complete.value }}</p>
+<p>Collector: {{ candidate.capture.snapshot.collector.name }} / {{ candidate.capture.snapshot.collector.revision }}</p>
+{% for omission in candidate.capture.snapshot.omissions %}<p>Omitted: {{ omission }}</p>{% endfor %}
+<table><thead><tr><th>Source</th><th>Tool</th><th>Scope</th><th>Role</th></tr></thead><tbody>
+{% for entry in candidate.capture.snapshot.entries %}<tr><td>{{ entry.path }}</td><td>{{ entry.source_tool }}</td><td>{{ entry.scope }}</td><td>{{ entry.role }}</td></tr>{% endfor %}</tbody></table>
+{% endif %}
+{% for name, artifact in candidate.capture.artifacts.items() %}<p>Source report {{ name }}: {% set href = safe_link(artifact.uri) %}{% if href %}<a href="{{ href }}">{{ artifact.uri }}</a>{% else %}{{ artifact.uri }}{% endif %} (availability unverified)</p>{% endfor %}
+{% else %}<p>No configuration capture retained.</p>{% endif %}
+{% for binding in candidate.snapshot_bindings %}<p>Runtime snapshot parity: {{ binding.status }} — {{ binding.reason }}</p>{% else %}{% if view.result.plan.behavior %}<p>Runtime snapshot parity: unknown; no binding evidence retained.</p>{% endif %}{% endfor %}
+<h3>Requested check coverage</h3>
+<table><thead><tr><th>Check</th><th>Status</th><th>Inventory</th><th>Reason</th></tr></thead><tbody>
+{% for cell in candidate.coverage %}<tr><td>{{ cell.check_id }}</td><td>{{ cell.status }}</td><td>{{ cell.inventory_complete.status }}: {{ cell.inventory_complete.value }}</td><td>{{ cell.reason }}{% if cell.omitted_suppressed_findings is not sameas false %}; suppressed findings inventory unavailable or omitted{% endif %}</td></tr>{% endfor %}</tbody></table>
+{% for assessment in candidate.configuration_assessments %}
+<article><h3>{{ assessment.origin.check_id }}</h3>
+<p>Assessment status: {{ assessment.status }} · conclusion: {{ assessment.conclusion }} · {{ assessment.reason }}</p>
+<p>Evaluator {{ assessment.origin.evaluator.name }} / {{ assessment.origin.evaluator.revision }}</p>
+{% for value in assessment.values %}<p>{{ value.id }}: {{ value.value if value.status == 'ok' else value.status }} {{ value.unit or '' }} · basis {{ value.basis or 'unavailable' }} · {{ value.reason }}</p>{% endfor %}
+{% for finding in assessment.findings %}<div><h4>{{ finding.rule.name }} — {{ finding.severity }}</h4>
+<p>{{ finding.message }}</p><p>Claim basis: {{ finding.basis }} · provider tier: {{ finding.evidence_tier or 'unknown' }}</p>
+{% if finding.suggestion %}<p>Suggestion: {{ finding.suggestion }}</p>{% endif %}
+<details><summary>Subject and attributed metadata</summary><pre>{{ finding.subject|pretty_json }}</pre><pre>{{ finding.metadata|pretty_json }}</pre></details>
+{% for evidence in finding.evidence %}<p>{{ evidence.description or '' }} {% set href = safe_link(evidence.artifact.uri) %}{% if href %}<a href="{{ href }}">{{ evidence.artifact.uri }}</a>{% else %}{{ evidence.artifact.uri }}{% endif %} {{ evidence.locator or '' }}</p>{% endfor %}
+</div>{% else %}<p>No retained findings from this check. Read coverage before interpreting absence.</p>{% endfor %}
+</article>{% endfor %}
+</section>{% endfor %}
+
+{% if view.behavior %}<h2>Behavioral results</h2>
+<p>Planned tasks/repetitions: {{ view.behavior.coverage.planned }} · completed: {{ view.behavior.coverage.completed }} · failed: {{ view.behavior.coverage.failed }} · unavailable: {{ view.behavior.coverage.unavailable }}</p>
+<h3>Stored candidate summaries</h3><pre>{{ view.behavior.result.summaries|pretty_json }}</pre>
+<table><thead><tr><th>Candidate</th><th>Run</th><th>Status</th><th>Acceptance</th></tr></thead><tbody>
+{% for task in view.behavior.tasks %}<tr><td>{{ task.assignment.candidate_id }}</td><td>{{ task.run.id }}</td><td>{{ task.run.status }}</td><td>{{ task.score.acceptance }}</td></tr>{% endfor %}</tbody></table>
+{% for task in view.behavior.tasks %}<details id="run-{{ loop.index0 }}"><summary>Run {{ task.run.id }} measurements and evidence</summary><pre>{{ task.measurements|pretty_json }}</pre><pre>{{ task.evidence|pretty_json }}</pre><p>Agent execution resources:</p><pre>{{ task.resources|pretty_json }}</pre></details>{% endfor %}
+{% endif %}
+
+<h2>Source activities</h2><p>Each namespaced activity appears once. Finding/run links do not allocate or multiply charges. Unknown resources remain unknown; costs retain their scope.</p>
+<p>New activity inventory: {{ view.result.performed_inventory_complete.status }} — {{ view.result.performed_inventory_complete.reason or '' }}</p>
+{% for item in view.activities %}<details><summary>{{ item.ref.namespace }}/{{ item.ref.id }} · {{ item.activity.phase }} · {{ item.activity.status }} · {{ 'performed in this assessment call' if item.performed else 'retained history' }}</summary><pre>{{ item.activity.resources|pretty_json }}</pre></details>{% else %}<p>No evaluator/collector activity receipts retained.</p>{% endfor %}
+</main></body></html>

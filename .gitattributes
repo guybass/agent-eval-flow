@@ -1,0 +1,4 @@
+# The acceptance checkpoint hashes exact original bytes, including upstream logs.
+tests/** -text
+pytest.ini -text
+requirements-test.txt -text

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1960" height="1240" viewBox="0 0 1960 1240">
+<rect width="1960" height="1240" fill="#F6F8FB"/>
+<text x="40" y="43" font-family="Segoe UI,Arial,sans-serif" font-size="17" font-weight="700" fill="#285FA5">AGENT EVAL FLOW  /  LEVEL 2  /  MODULE COMMUNICATION</text>
+<text x="40" y="99" font-family="Segoe UI,Arial,sans-serif" font-size="38" font-weight="700" fill="#18334A">One pipeline, explicit boundaries</text>
+<text x="40" y="134" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#536B7E">Files stay inside their directory. Arrows show calls or named data handoffs; the Markdown map expands the exact paths.</text>
+<rect x="40" y="200" width="380" height="350" rx="15" fill="#F0F2F6" stroke="#CFDCE8" stroke-width="2"/>
+<text x="60" y="243" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#285FA5">objects/</text>
+<text x="60" y="282" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">study.py  /  dataset.py</text>
+<text x="60" y="307" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">candidate.py  /  runset.py</text>
+<text x="60" y="332" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">suite.py  /  result.py</text>
+<text x="60" y="357" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">values.py  /  protocols.py</text>
+<text x="60" y="382" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">validation.py  /  identity.py</text>
+<text x="60" y="407" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">errors.py</text>
+<text x="60" y="432" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A"></text>
+<text x="60" y="457" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">Shared records and contracts.</text>
+<text x="60" y="482" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">Private references stay evaluator-side.</text>
+<rect x="500" y="200" width="420" height="250" rx="15" fill="#EDF4FE" stroke="#CFDCE8" stroke-width="2"/>
+<text x="520" y="243" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#285FA5">pipeline/</text>
+<text x="520" y="282" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">api.py — EvaluationPipeline.eval()</text>
+<text x="520" y="307" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">bindings.py — implementations</text>
+<text x="520" y="332" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">preflight.py — validate and resolve</text>
+<text x="520" y="357" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A"></text>
+<text x="520" y="382" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">Coordinates fresh or saved runs.</text>
+<rect x="1030" y="200" width="410" height="350" rx="15" fill="#ECF7F3" stroke="#CFDCE8" stroke-width="2"/>
+<text x="1050" y="243" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#285FA5">evaluation/</text>
+<text x="1050" y="282" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">compiler.py — metric dependencies</text>
+<text x="1050" y="307" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">engine.py — callback execution</text>
+<text x="1050" y="332" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">primitives.py — run.* helpers</text>
+<text x="1050" y="357" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">scoring.py — rubric / acceptance</text>
+<text x="1050" y="382" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">aggregation.py — candidate summaries</text>
+<text x="1050" y="407" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A"></text>
+<text x="1050" y="432" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">User-defined evaluators and reducers.</text>
+<text x="1050" y="457" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">Receives runs; never starts an agent.</text>
+<rect x="1550" y="200" width="360" height="250" rx="15" fill="#ECF7F3" stroke="#CFDCE8" stroke-width="2"/>
+<text x="1570" y="243" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#285FA5">results/</text>
+<text x="1570" y="282" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">query.py — explain / summary</text>
+<text x="1570" y="307" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">comparison.py — differences</text>
+<text x="1570" y="332" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">selection.py — preferences</text>
+<text x="1570" y="357" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A"></text>
+<text x="1570" y="382" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">Reads saved measurements.</text>
+<rect x="40" y="740" width="380" height="295" rx="15" fill="#FFF5E8" stroke="#CFDCE8" stroke-width="2"/>
+<text x="60" y="783" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#285FA5">adapters/</text>
+<text x="60" y="822" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">codex.py  /  claude_code.py</text>
+<text x="60" y="847" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">opensre.py  /  openkritt.py</text>
+<text x="60" y="872" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">process.py — native supervision</text>
+<text x="60" y="897" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">worker.py — prepared GCP worker</text>
+<text x="60" y="922" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A"></text>
+<text x="60" y="947" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">Native programs own agent behavior.</text>
+<text x="60" y="972" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">Adapters preserve their evidence.</text>
+<rect x="500" y="740" width="420" height="295" rx="15" fill="#EDF4FE" stroke="#CFDCE8" stroke-width="2"/>
+<text x="520" y="783" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#285FA5">execution/</text>
+<text x="520" y="822" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">planning.py — assignments</text>
+<text x="520" y="847" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">preflight.py — backend capabilities</text>
+<text x="520" y="872" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">runner.py — bounded dispatch</text>
+<text x="520" y="897" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">capture.py — recorder reconciliation</text>
+<text x="520" y="922" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">importing.py — saved native records</text>
+<text x="520" y="947" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A"></text>
+<text x="520" y="972" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">Fresh RunSet/run IDs; stable assignments.</text>
+<rect x="1030" y="740" width="410" height="245" rx="15" fill="#F5F0FB" stroke="#CFDCE8" stroke-width="2"/>
+<text x="1050" y="783" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#285FA5">storage/</text>
+<text x="1050" y="822" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">manifests.py — save / load</text>
+<text x="1050" y="847" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">codec.py — typed JSON</text>
+<text x="1050" y="872" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">artifacts.py — local evidence cache</text>
+<text x="1050" y="897" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A"></text>
+<text x="1050" y="922" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">Records + references in v0.</text>
+<rect x="1550" y="740" width="360" height="210" rx="15" fill="#F5F0FB" stroke="#CFDCE8" stroke-width="2"/>
+<text x="1570" y="783" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#285FA5">reporting/</text>
+<text x="1570" y="822" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">html.py — existing result to HTML</text>
+<text x="1570" y="847" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A"></text>
+<text x="1570" y="872" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">Optional selection + evidence links.</text>
+<text x="1570" y="897" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#18334A">No grading or remote fetch.</text>
+<polyline points="420,285 500,285" fill="none" stroke="#536B7E" stroke-width="3"/>
+<polygon points="500,285 488.2941876694152,290.654551943446 488.2941876694152,279.345448056554" fill="#536B7E"/>
+<text x="429" y="272" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#536B7E">Study</text>
+<polyline points="710,450 710,740" fill="none" stroke="#285FA5" stroke-width="3"/>
+<polygon points="710,740 704.345448056554,728.2941876694152 715.654551943446,728.2941876694152" fill="#285FA5"/>
+<text x="730" y="637" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#285FA5">1  execute(PreparedExecution)</text>
+<polyline points="920,295 1030,295" fill="none" stroke="#285FA5" stroke-width="3"/>
+<polygon points="1030,295 1018.2941876694152,300.654551943446 1018.2941876694152,289.345448056554" fill="#285FA5"/>
+<text x="938" y="279" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#285FA5">2  grade</text>
+<polyline points="1440,295 1550,295" fill="none" stroke="#087D78" stroke-width="3"/>
+<polygon points="1550,295 1538.2941876694151,300.654551943446 1538.2941876694151,289.345448056554" fill="#087D78"/>
+<text x="1460" y="279" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#087D78">result*</text>
+<polyline points="500,832 420,832" fill="none" stroke="#285FA5" stroke-width="3"/>
+<polygon points="420,832 431.7058123305848,826.345448056554 431.7058123305848,837.654551943446" fill="#285FA5"/>
+<text x="444" y="818" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#285FA5">run</text>
+<polyline points="420,962 500,962" fill="none" stroke="#087D78" stroke-width="3" stroke-dasharray="8 6"/>
+<polygon points="500,962 488.2941876694152,967.654551943446 488.2941876694152,956.345448056554" fill="#087D78"/>
+<text x="426" y="946" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#087D78">capture</text>
+<polyline points="1730,450 1730,740" fill="none" stroke="#087D78" stroke-width="3"/>
+<polygon points="1730,740 1724.345448056554,728.2941876694152 1735.654551943446,728.2941876694152" fill="#087D78"/>
+<text x="1750" y="644" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#087D78">report(result)</text>
+<polyline points="1630,450 1630,620 1235,620 1235,740" fill="none" stroke="#087D78" stroke-width="3"/>
+<polygon points="1235,740 1229.345448056554,728.2941876694152 1240.654551943446,728.2941876694152" fill="#087D78"/>
+<text x="1300" y="606" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#087D78">save / load result*</text>
+<polyline points="1440,850 1550,850" fill="none" stroke="#087D78" stroke-width="3"/>
+<polygon points="1550,850 1538.2941876694151,855.654551943446 1538.2941876694151,844.345448056554" fill="#087D78"/>
+<text x="1456" y="834" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#087D78">loaded*</text>
+<polyline points="230,1035 230,1110 1225,1110 1225,985" fill="none" stroke="#536B7E" stroke-width="3" stroke-dasharray="8 6"/>
+<polygon points="1225,985 1230.654551943446,996.7058123305848 1219.345448056554,996.7058123305848" fill="#536B7E"/>
+<text x="480" y="1093" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#536B7E">Materialize native artifacts and remap evidence links</text>
+<text x="40" y="1184" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="700" fill="#18334A">Blue: runtime calls. Green: returned data / user-invoked result operations. Dashed: evidence transfer.</text>
+<text x="40" y="1216" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#536B7E">* Handoffs pass through the caller/result methods. Routine type imports and return arrows are omitted. Proposed design, 8 September 2026.</text>
+</svg>

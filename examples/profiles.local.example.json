@@ -1,0 +1,31 @@
+{
+  "codex_local": {
+    "factory": "examples.integrations.local_cli:make_backend",
+    "backend_ref": {"name": "codex", "revision": "aef-0.4.0"},
+    "settings": {
+      "executable": "codex",
+      "runtime_revision": "REPLACE_WITH_EXACT_CLI_VERSION",
+      "sandbox": "workspace-write",
+      "model": {"provider": "openai", "id": "REPLACE_WITH_MODEL_ID"}
+    },
+    "deployment": {"kind": "local"},
+    "model": {"provider": "openai", "id": "REPLACE_WITH_MODEL_ID"}
+  },
+  "vertex_gcp": {
+    "factory": "examples.integrations.vertex:make_backend",
+    "backend_ref": {"name": "vertex-showcase", "revision": "aef-0.4.0"},
+    "settings": {
+      "sdk_version": "REPLACE_WITH_INSTALLED_GOOGLE_GENAI_VERSION",
+      "model_call_limit": 24,
+      "tool_call_limit": 16,
+      "output_token_limit_per_call": 4096,
+      "supervisor_timeout_s": 600,
+      "model": {"provider": "vertex", "id": "REPLACE_WITH_ENABLED_MODEL"}
+    },
+    "deployment": {
+      "kind": "gcp", "project": "REPLACE_WITH_PROJECT", "location": "REPLACE_WITH_LOCATION",
+      "worker_image": "REPLACE_WITH_IMAGE_DIGEST_AND_METADATA_LABEL"
+    },
+    "model": {"provider": "vertex", "id": "REPLACE_WITH_ENABLED_MODEL"}
+  }
+}

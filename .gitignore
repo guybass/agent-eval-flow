@@ -1,0 +1,15 @@
+.venv/
+.tmp/
+.pytest_cache/
+__pycache__/
+*.pyc
+.e2e-local.json
+profiles.local.json
+test-artifacts/
+demo-output/
+dist/
+build/
+*.egg-info/
+.env
+.env.*
+!.env.example

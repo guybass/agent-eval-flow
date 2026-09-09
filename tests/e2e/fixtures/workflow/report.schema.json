@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "required": ["task_id", "nonce", "summary", "case_results", "open_questions"],
+  "additionalProperties": false,
+  "properties": {
+    "task_id": {"type": "string"},
+    "nonce": {"type": "string"},
+    "summary": {"type": "string", "minLength": 1},
+    "open_questions": {"type": "array", "items": {"type": "string"}},
+    "case_results": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["case_id", "observed", "receipt_id", "explanation", "source"],
+        "additionalProperties": false,
+        "properties": {
+          "case_id": {"type": "string"},
+          "observed": {"type": "string"},
+          "receipt_id": {"type": "string"},
+          "explanation": {"type": "string", "minLength": 1},
+          "source": {
+            "type": "object",
+            "required": ["receipt_id", "path", "start_line", "end_line"],
+            "additionalProperties": false,
+            "properties": {
+              "receipt_id": {"type": "string"},
+              "path": {"type": "string"},
+              "start_line": {"type": "integer", "minimum": 1},
+              "end_line": {"type": "integer", "minimum": 1}
+            }
+          }
+        }
+      }
+    }
+  }
+}

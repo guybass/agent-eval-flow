@@ -1,0 +1,18 @@
+{
+  "variant": "openkritt-flaskr-native-global-keys-v1",
+  "source_fixture": "tests/e2e/fixtures/openkritt/workflow.json",
+  "source_sha256": "0515930bbf75cb3a5aed79d301d3bc5ebe9ec9260faabc3e42144a28fb06a02f",
+  "derived_sha256": "e77f4fe9a24d5d245a494a84ac51c3c188089a5fcef69b2223135d4ade078dee",
+  "upstream_revision": "1ba10d410b4a0a309bacf5bc2d14ec1c27ed8a09",
+  "reason": "Native validateWorkflow rejects output key reuse across depths. First live import returned422 before a scan existed. Frozen acceptance fixture remains unchanged.",
+  "changes": {
+    "depth0": {
+      "review_area": "map_area",
+      "files_read": "map_files_read"
+    },
+    "depth1": {
+      "files_read": "review_files_read"
+    }
+  },
+  "preserved": "Four step prompt contents, topology, terminal output schema and requested native repeats are unchanged."
+}

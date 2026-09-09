@@ -1,0 +1,101 @@
+{
+  "codex_local": {
+    "factory": "your_test_integrations.codex:make_backend",
+    "backend_ref": {
+      "name": "codex",
+      "revision": "REPLACE_WITH_ADAPTER_REVISION"
+    },
+    "settings": {
+      "executable": "codex",
+      "runtime_revision": "REPLACE_WITH_CLI_VERSION"
+    },
+    "deployment": {
+      "kind": "local"
+    },
+    "model": {
+      "provider": "openai",
+      "id": "REPLACE_WITH_MODEL_ID"
+    }
+  },
+  "claude_local": {
+    "factory": "your_test_integrations.claude:make_backend",
+    "backend_ref": {
+      "name": "claude-code",
+      "revision": "REPLACE_WITH_ADAPTER_REVISION"
+    },
+    "settings": {
+      "executable": "claude",
+      "runtime_revision": "REPLACE_WITH_CLI_VERSION"
+    },
+    "deployment": {
+      "kind": "local"
+    },
+    "model": {
+      "provider": "anthropic",
+      "id": "REPLACE_WITH_MODEL_ID"
+    }
+  },
+  "vertex_gcp": {
+    "factory": "your_test_integrations.vertex:make_backend",
+    "backend_ref": {
+      "name": "tiny-vertex-harness",
+      "revision": "REPLACE_WITH_ADAPTER_REVISION"
+    },
+    "settings": {
+      "model_call_limit": 24,
+      "output_token_limit_per_call": 4096,
+      "supervisor_timeout_s": 600
+    },
+    "deployment": {
+      "kind": "gcp",
+      "project": "REPLACE_WITH_PROJECT",
+      "location": "REPLACE_WITH_LOCATION",
+      "worker_image": "REPLACE_WITH_DIGEST"
+    },
+    "model": {
+      "provider": "vertex",
+      "id": "REPLACE_WITH_ENABLED_MODEL"
+    }
+  },
+  "opensre_gcp": {
+    "factory": "your_test_integrations.opensre:make_backend",
+    "backend_ref": {
+      "name": "opensre",
+      "revision": "REPLACE_WITH_ADAPTER_REVISION"
+    },
+    "settings": {
+      "upstream_revision": "1a81e1a1b378ecc9aeb211fcaeecb0f5c93548e4"
+    },
+    "deployment": {
+      "kind": "gcp",
+      "project": "REPLACE_WITH_PROJECT",
+      "location": "REPLACE_WITH_LOCATION",
+      "worker_image": "REPLACE_WITH_DIGEST"
+    },
+    "model": {
+      "provider": "vertex-ai",
+      "id": "REPLACE_WITH_ENABLED_MODEL"
+    }
+  },
+  "openkritt_gcp": {
+    "factory": "your_test_integrations.openkritt:make_backend",
+    "backend_ref": {
+      "name": "openkritt",
+      "revision": "REPLACE_WITH_ADAPTER_REVISION"
+    },
+    "settings": {
+      "upstream_revision": "1ba10d410b4a0a309bacf5bc2d14ec1c27ed8a09"
+    },
+    "deployment": {
+      "kind": "gcp",
+      "project": "REPLACE_WITH_PROJECT",
+      "location": "REPLACE_WITH_LOCATION",
+      "worker_image": "REPLACE_WITH_DIGEST"
+    },
+    "model": {
+      "provider": "REPLACE_WITH_NATIVE_SUPPORTED_PROVIDER",
+      "id": "REPLACE_WITH_ENABLED_MODEL"
+    },
+    "post_script_id": "REPLACE_WITH_PREPARED_NATIVE_POST_SCRIPT_ID"
+  }
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "task_id": "hdfs-block-serving-investigation",
+    "incident_id": "HDFS-2008-11-09",
+    "prompt": "Investigate incident HDFS-2008-11-09 using the fixture observability tools. Start with fixture_incident_open. Search the incident WARN logs and retrieve at least two pages using the returned cursor. Inspect the sample-derived metrics, topology and change history; use block or host identifiers from retrieved logs for any follow-up search. Then use fixture_report_write to deliver a structured incident report with summary, hypotheses, timeline, evidence receipt IDs, limitations and next actions. Correlate the signals, distinguish source log facts from synthetic exercise context, and say what remains unproven. Do not remediate anything or contact addresses found in the historical logs. The downloaded logs are a sample, not a complete live-cluster history. The evaluation does not require a particular diagnosis; it requires actual investigation calls and a report whose evidence can be opened."
+  }
+]
