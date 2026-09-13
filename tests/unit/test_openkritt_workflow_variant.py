@@ -11,6 +11,55 @@ import pytest
 from examples.openkritt_local_review import FIXTURE, LOCAL_WORKFLOW, build_study
 
 
+@pytest.mark.parametrize("provenance_file", sorted(LOCAL_WORKFLOW.parent.glob("*.provenance.json")),
+                         ids=lambda path: path.stem)
+def test_all_local_workflow_provenance_hashes_match_original_bytes(provenance_file):
+    root = Path(__file__).resolve().parents[2]
+    provenance = json.loads(provenance_file.read_bytes())
+    workflow = provenance_file.with_name(provenance_file.name.replace(".provenance.json", ".json"))
+    assert hashlib.sha256(workflow.read_bytes()).hexdigest() == provenance["derived_sha256"]
+    assert hashlib.sha256((root / provenance["source_fixture"]).read_bytes()).hexdigest() == provenance["source_sha256"]
+    if "parent_variant" in provenance:
+        parent = provenance_file.parent / provenance["parent_variant"]
+        assert hashlib.sha256(parent.read_bytes()).hexdigest() == provenance["parent_sha256"]
+
+
+@pytest.mark.parametrize("autocrlf", ["false", "true", "input"])
+def test_git_checkout_preserves_byte_pinned_workflows(tmp_path, autocrlf):
+    git = shutil.which("git")
+    if git is None:
+        pytest.skip("Git round-trip regression requires Git; direct provenance checks still run")
+    root = Path(__file__).resolve().parents[2]
+    repository = tmp_path / "repository"
+    workflow_dir = repository / "examples/workflows"
+    workflow_dir.mkdir(parents=True)
+    (repository / ".gitattributes").write_bytes((root / ".gitattributes").read_bytes())
+    for path in LOCAL_WORKFLOW.parent.glob("*.json"):
+        (workflow_dir / path.name).write_bytes(path.read_bytes())
+    # Exercise actual clean and checkout conversion in an isolated repository.
+    # No commit, native runtime, or mutation of the project's Git index is needed.
+    command = [git, "-c", f"core.autocrlf={autocrlf}", "-c", "core.safecrlf=false",
+               "-c", f"core.attributesFile={tmp_path / 'no-global-attributes'}"]
+    def run(*args):
+        return subprocess.run([*command, *args], cwd=repository, check=True,
+                              capture_output=True).stdout
+    run("init", "--quiet")
+    run("add", "--", ".gitattributes", "examples/workflows")
+    checkout = tmp_path / "checkout"
+    checkout.mkdir()
+    run("checkout-index", "--all", f"--prefix={checkout.as_posix()}/")
+    provenance_files = sorted(LOCAL_WORKFLOW.parent.glob("*.provenance.json"))
+    assert provenance_files
+    for provenance_file in provenance_files:
+        expected = json.loads(provenance_file.read_bytes())["derived_sha256"]
+        name = provenance_file.name.replace(".provenance.json", ".json")
+        relative = f"examples/workflows/{name}"
+        # Checking the index blob catches Windows checkout restoring CRLF and
+        # masking incorrectly normalized stored bytes before Linux CI sees them.
+        assert hashlib.sha256(run("show", f":{relative}")).hexdigest() == expected
+        assert hashlib.sha256((checkout / relative).read_bytes()).hexdigest() == expected
+
+
 def test_local_variant_preserves_prompts_topology_and_frozen_source():
     source = json.loads((FIXTURE / "workflow.json").read_bytes())
     derived = json.loads(LOCAL_WORKFLOW.read_bytes())

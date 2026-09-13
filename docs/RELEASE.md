@@ -35,6 +35,10 @@ checks that the report process actually timed out, retained stdout/stderr,
 stopped its direct child and cleaned up its staging directory. It no longer
 assumes a new Python interpreter starts within 300 ms.
 
+Fresh-checkout CI also checks pinned workflow bytes under Git's different
+line-ending modes and reads native artifact paths without dropping Windows
+drive letters or interpreting literal path characters as URL syntax.
+
 ## Scope
 
 This is an initial implementation. Native adapters require version-specific

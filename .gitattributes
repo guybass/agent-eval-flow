@@ -2,3 +2,5 @@
 tests/** -text
 pytest.ini -text
 requirements-test.txt -text
+# Workflow derivation receipts pin exact bytes; never normalize their line endings.
+examples/workflows/*.json -text whitespace=cr-at-eol

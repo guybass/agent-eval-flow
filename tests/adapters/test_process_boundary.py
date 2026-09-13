@@ -2,8 +2,6 @@
 from pathlib import Path
 import os
 import sys
-from urllib.parse import urlparse
-from urllib.request import url2pathname
 
 import anyio
 import pytest
@@ -16,7 +14,16 @@ from agent_eval_flow.storage.artifacts import ArtifactCache
 
 
 def contents(ref):
-    return Path(url2pathname(urlparse(ref.uri).path)).read_bytes()
+    # ArtifactCache returns native paths, including Windows drive letters.
+    return Path(ref.uri).read_bytes()
+
+
+def test_retained_cache_paths_preserve_literal_characters(tmp_path):
+    cache = ArtifactCache(tmp_path / "cache # literal %23")
+    payload = b"\x00retained native evidence\n"
+    ref = cache.write_bytes("native.stdout", payload, "application/octet-stream")
+    cache.verify(ref).raise_for_errors()
+    assert contents(ref) == payload
 
 
 class ReceiptStream:

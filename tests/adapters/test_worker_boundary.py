@@ -3,8 +3,6 @@ from dataclasses import replace
 from hashlib import sha256
 import json
 from pathlib import Path
-from urllib.parse import urlparse
-from urllib.request import url2pathname
 
 import anyio
 import pytest
@@ -79,7 +77,7 @@ class OwnedWorker:
 def test_materializes_nested_evidence_once_and_preserves_native_source_provenance(api, toy_backend, tmp_path):
     request, run, expected = setup_request(api, toy_backend)
     worker = OwnedWorker(expected, run)
-    cache = ArtifactCache(tmp_path / "cache")
+    cache = ArtifactCache(tmp_path / "cache # literal %23")
     client = PreparedWorkerClient(worker=worker, expected=expected, artifacts=cache, poll_interval_s=0)
     callbacks = []
     result = anyio.run(lambda: client.invoke(WorkerSubmission(request_id=request.run_id,
@@ -91,9 +89,9 @@ def test_materializes_nested_evidence_once_and_preserves_native_source_provenanc
     assert result.environment.evidence[0].artifact == source
     assert result.output == run.output and result.id == run.id
     cache.verify(source).raise_for_errors()
-    assert Path(url2pathname(urlparse(source.uri).path)).read_bytes() == TRACE
+    assert Path(source.uri).read_bytes() == TRACE
     provenance = result.artifacts["aef.worker.provenance"]
-    data = json.loads(Path(url2pathname(urlparse(provenance.uri).path)).read_text())
+    data = json.loads(Path(provenance.uri).read_text())
     assert data["sources"][run.artifacts["native.trace"].uri]["local_uri"] == source.uri
     assert callbacks == [result] and worker.stops == 0
 
