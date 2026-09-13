@@ -4,20 +4,27 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agent-eval-flow"
-version = "0.5.0"
+version = "0.5.1"
 description = "Evidence-preserving evaluation of complete agent systems"
 readme = "README.md"
 requires-python = ">=3.11"
+keywords = ["agents", "agent-evaluation", "llm", "evaluation", "execution-evidence"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 dependencies = ["pydantic>=2.13.5,<3", "anyio>=4.15.1,<5", "jinja2>=3.1.6,<4", "typing-extensions>=4.14"]
 
 [project.urls]
+Homepage = "https://guybass.github.io/agent-eval-flow/"
 Repository = "https://github.com/guybass/agent-eval-flow"
 Issues = "https://github.com/guybass/agent-eval-flow/issues"
 Documentation = "https://github.com/guybass/agent-eval-flow/blob/main/README.md"
+Examples = "https://guybass.github.io/agent-eval-flow/"
+Changelog = "https://github.com/guybass/agent-eval-flow/releases"
 
 [project.optional-dependencies]
 test = ["pytest>=8,<10", "jsonschema>=4.26,<5"]

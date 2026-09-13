@@ -6,6 +6,12 @@ human review selected the changes and interpreted the comparisons. The reports
 illustrate evaluating complete agents under plausible usage, including imperfect
 instructions and integration behavior.
 
+Click a report preview to read it at full size.
+
+| OpenSRE: recovery and stopping | OpenKritt: evidence and impact |
+| --- | --- |
+| [![OpenSRE report: two safe recoveries retained, late tool calls reduced from one to zero](01-opensre.png)](01-opensre.png) | [![OpenKritt report: custom grounding passes after a workflow change, severity still disagrees](02-openkritt.png)](02-openkritt.png) |
+
 | Example | Before/after report | Task and behavior walkthrough |
 | --- | --- | --- |
 | OpenSRE | [PNG](01-opensre.png) · [HTML](01-opensre.html) | [PNG](01-opensre-walkthrough.png) · [HTML](01-opensre-walkthrough.html) |

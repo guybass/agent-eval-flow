@@ -1,0 +1,136 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+  # Retry a published release with: gh workflow run publish.yml --ref v0.5.1
+  # Dispatching a branch never enables either job.
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: pypi-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.repository == 'guybass/agent-eval-flow' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      artifact-id: ${{ steps.distributions.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Verify published release, source version, and all six CI jobs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import subprocess
+          import tomllib
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+
+          def require(condition, message):
+              if not condition:
+                  raise SystemExit(message)
+
+          repository = os.environ['GITHUB_REPOSITORY']
+          tag = os.environ['GITHUB_REF_NAME']
+          sha = os.environ['GITHUB_SHA']
+          require(repository == 'guybass/agent-eval-flow', 'Unexpected repository')
+          require(os.environ['GITHUB_REF'] == f'refs/tags/{tag}', 'A version tag is required')
+          require(re.fullmatch(r'v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)', tag),
+                  'Only final vMAJOR.MINOR.PATCH release tags are publishable')
+          require(os.environ['GITHUB_EVENT_NAME'] in {'release', 'workflow_dispatch'},
+                  'Unexpected publishing event')
+
+          def api(path):
+              request = Request(f'https://api.github.com/repos/{repository}/{path}', headers={
+                  'Authorization': f'Bearer {os.environ["GH_TOKEN"]}',
+                  'Accept': 'application/vnd.github+json',
+                  'X-GitHub-Api-Version': '2022-11-28',
+              })
+              with urlopen(request, timeout=30) as response:
+                  return json.load(response)
+
+          release = api(f'releases/tags/{tag}')
+          require(release['tag_name'] == tag and not release['draft']
+                  and not release['prerelease'] and release['published_at'],
+                  'The tag must have a published, non-prerelease GitHub release')
+          require(api(f'commits/{tag}')['sha'] == sha, 'Tag moved or event SHA differs')
+          require(subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip() == sha,
+                  'Checkout differs from the verified release commit')
+          require(api(f'compare/{sha}...main')['status'] in {'ahead', 'identical'},
+                  'Release commit must belong to main history')
+          project = tomllib.loads(Path('pyproject.toml').read_text(encoding='utf-8'))['project']
+          require(project['name'] == 'agent-eval-flow' and project['version'] == tag[1:],
+                  'Project name/version must match the release tag exactly')
+
+          query = urlencode({'head_sha': sha, 'event': 'push', 'branch': 'main', 'per_page': 100})
+          runs = api(f'actions/workflows/tests.yml/runs?{query}')['workflow_runs']
+          require(runs, 'No Tests and package run exists for this commit on main')
+          run = max(runs, key=lambda row: row['id'])
+          require(run['head_sha'] == sha and run['head_branch'] == 'main'
+                  and run['event'] == 'push' and run['status'] == 'completed'
+                  and run['conclusion'] == 'success',
+                  'Latest Tests and package run for this commit must finish successfully')
+          jobs = api(f'actions/runs/{run["id"]}/jobs?filter=latest&per_page=100')
+          expected = {f'offline ({system}, {version})'
+                      for system in ('ubuntu-latest', 'windows-latest')
+                      for version in ('3.11', '3.12', '3.13')}
+          require(jobs['total_count'] == len(expected) and len(jobs['jobs']) == len(expected)
+                  and {job['name'] for job in jobs['jobs']} == expected
+                  and all(job['status'] == 'completed' and job['conclusion'] == 'success'
+                          for job in jobs['jobs']),
+                  'All six expected Python/OS matrix jobs must pass; skipped jobs do not qualify')
+          print(f'Verified {tag} at {sha}; CI: {run["html_url"]}')
+          PY
+      - name: Build and validate distributions
+        run: |
+          python -m pip install build twine
+          python -m build
+          python -m twine check --strict dist/*
+          python scripts/verify_distribution.py
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        id: distributions
+        with:
+          name: distributions-${{ github.ref_name }}
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    needs: build
+    if: github.repository == 'guybass/agent-eval-flow' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: pypi
+      url: https://pypi.org/project/agent-eval-flow/
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact-id }}
+          path: dist/
+          digest-mismatch: error
+      - name: Publish verified distributions with Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        with:
+          attestations: true

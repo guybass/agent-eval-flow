@@ -1,0 +1,37 @@
+name: Feature or use case
+description: Explain a workflow, missing capability, or useful improvement.
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Describe the decision or workflow you want to support. A specific
+        example helps, but private data and raw run logs are not needed.
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Problem or use case
+      description: What are you evaluating, and what decision are you trying to make?
+    validations:
+      required: true
+  - type: textarea
+    id: desired_outcome
+    attributes:
+      label: Desired outcome
+      description: What would a useful result or supported workflow look like? An example input and output can help.
+    validations:
+      required: true
+  - type: textarea
+    id: current_workflow
+    attributes:
+      label: Current workflow (optional)
+      description: Mention the runtime or imported format, relevant versions, and your current approach or workaround.
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach or alternatives (optional)
+      description: Share a possible solution, alternatives, or constraints. A proposed implementation is not required.
+  - type: textarea
+    id: examples
+    attributes:
+      label: Public or redacted examples (optional)
+      description: Link related issues or include a small example. Remove credentials, private prompts and task data.

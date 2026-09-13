@@ -1,8 +1,10 @@
-# Version 0.5.0 — developer preview
+# Version 0.5.1 — developer preview
 
 Agent Eval Flow evaluates complete agent systems through their existing runtimes
 or retained execution logs. This initial public release is intended for developers
-building evaluation workflows and inspecting failures.
+building evaluation workflows and inspecting failures. Version 0.5.1 adds a
+public report gallery, repository visuals, package metadata and a checked PyPI
+publishing workflow; the evaluation behavior is unchanged from 0.5.0.
 
 ## Included
 
@@ -15,14 +17,17 @@ building evaluation workflows and inspecting failures.
 - HTML reports that retain measurement status, provenance and expected versus
   observed values.
 - Runnable offline examples and a curated [OpenSRE/OpenKritt report
-  gallery](examples/agent-evaluation/README.md).
+  gallery](https://guybass.github.io/agent-eval-flow/) with readable walkthroughs
+  and screenshot previews.
+- A [Trusted Publishing workflow](implementation/pypi_publishing.md) that
+  verifies the release tag, package version and all six CI jobs before upload.
 
 ## Verification
 
-Local release validation on 2026-09-13 passed **428 tests**, with **21 expected
-skips**: twenty unselected live-profile cases and one POSIX-only process-group
-test on Windows. Both offline examples passed, and all **90 frozen acceptance
-and fixture hashes** were unchanged. No live model profiles were selected.
+Version 0.5.1 package validation on 2026-09-13 passed strict Twine checks and
+preserved all **90 frozen acceptance and fixture hashes**. No live model
+profiles were selected. The preceding 0.5.0 release passed 434 local tests with
+21 expected skips; every release commit must also pass the complete CI matrix.
 
 The source distribution and wheel built successfully; package contents matched
 the implementation and preserved the fixture hashes. The installed wheel loaded

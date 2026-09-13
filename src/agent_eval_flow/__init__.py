@@ -7,7 +7,7 @@ from .objects.assessment import __all__ as _assessment_exports
 __all__ = [*_record_exports, *_error_exports, *_assessment_exports,
            "EvaluationPipeline", "AssessmentPipeline", "evaluate", "wrap_behavior_result", "__version__"]
 
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 
 
 def __getattr__(name):

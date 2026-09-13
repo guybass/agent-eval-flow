@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Eval Flow — example reports</title>
+  <meta name="description" content="Read OpenSRE and OpenKritt evaluation reports: native agents, controlled tasks, observed changes, and the limits that remain.">
+  <link rel="canonical" href="https://guybass.github.io/agent-eval-flow/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://guybass.github.io/agent-eval-flow/">
+  <meta property="og:site_name" content="Agent Eval Flow">
+  <meta property="og:title" content="Agent Eval Flow — example reports">
+  <meta property="og:description" content="Follow the evidence from native agent runs to a report, a focused change, and a measured rerun.">
+  <meta property="og:image" content="https://guybass.github.io/agent-eval-flow/assets/agent-eval-flow-banner.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta property="og:image:alt" content="Agent Eval Flow: capture evidence, apply your checks, compare a change.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Agent Eval Flow — example reports">
+  <meta name="twitter:description" content="Native agents on controlled tasks. Read what changed, why, and what still needs work.">
+  <meta name="twitter:image" content="https://guybass.github.io/agent-eval-flow/assets/agent-eval-flow-banner.png">
+  <meta name="twitter:image:alt" content="Agent Eval Flow: capture evidence, apply your checks, compare a change.">
+  <style>
+    :root{color-scheme:light;--paper:#f7f8f3;--ink:#203e34;--muted:#5c6b61;--line:#d9e1d6;--teal:#214f42;--purple:#6b547e;--card:#fffefa}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.6}
+    a{color:var(--teal);text-underline-offset:4px}a:hover{text-decoration-thickness:2px}a:focus-visible{outline:3px solid #9677b2;outline-offset:5px;border-radius:3px}img{display:block;max-width:100%;height:auto}h1,h2,h3,p{margin-top:0}h1,h2,h3{line-height:1.15;letter-spacing:-.035em}h1{font-size:clamp(2rem,3.4vw,2.6rem);margin-bottom:17px}h2{font-size:clamp(1.65rem,2.8vw,2rem);margin-bottom:0}h3{font-size:1.65rem;margin-bottom:14px}.wrap{max-width:1200px;padding:0 36px;margin:auto}
+    .skip{position:absolute;left:20px;top:-80px;background:var(--ink);color:white;padding:10px 16px;z-index:1}.skip:focus{top:12px}
+    .site-header{border-top:5px solid var(--teal)}nav{min-height:84px;display:flex;justify-content:space-between;align-items:center;gap:24px}.brand{font-weight:750;text-decoration:none;letter-spacing:-.02em;font-size:1.2rem;display:flex;align-items:center;gap:10px}.mark{height:18px;width:18px;border-radius:5px;background:var(--teal)}.repo-link{font-size:.9rem;font-weight:650;text-decoration:none;white-space:nowrap}.repo-link span{margin-left:6px}
+    .intro{display:grid;grid-template-columns:1.48fr 1fr;gap:38px;align-items:center;padding:17px 0 45px}.banner{border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:0 10px 35px #203e3408}.intro-copy .eyebrow{margin-bottom:13px}.eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#677661}.intro-copy p:last-child{margin-bottom:0;color:var(--muted)}
+    .section-head{display:flex;gap:20px;align-items:baseline;justify-content:space-between;border-top:1px solid var(--line);padding:30px 0 23px}.section-head p{margin:0;font-size:.88rem;color:var(--muted)}.reports{display:grid;grid-template-columns:1fr 1fr;gap:26px}.report-card{padding:27px;background:var(--card);border:1px solid var(--line);border-radius:17px;box-shadow:0 7px 22px #203e3405;display:flex;flex-direction:column}.report-card .eyebrow{margin-bottom:10px}.report-card.kritt{border-top:3px solid #9987ad;padding-top:25px}.report-card.sre{border-top:3px solid #4c7a64;padding-top:25px}.report-body{display:grid;grid-template-columns:minmax(0,1fr) 160px;gap:21px;align-items:start}.summary{color:var(--muted);margin-bottom:19px;line-height:1.55}.preview{margin:0;padding:6px;background:#edf0e9;border:1px solid #e0e5db;border-radius:9px;transition:box-shadow .15s ease}.preview:hover{box-shadow:0 4px 16px #203e341c}.preview img{border-radius:4px}.measurements{margin:0;display:grid;gap:11px}.measurements div{padding-top:10px;border-top:1px solid #e5e9e1}.measurements dt{font-size:.82rem;color:#697565}.measurements dd{font-size:1.35rem;font-weight:700;letter-spacing:-.035em;line-height:1.4;margin:1px 0 0}.measurements dd span{color:#83907f;padding:0 4px;font-weight:400}.report-note{font-size:.88rem;color:var(--muted);margin:20px 0 23px;line-height:1.6}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}.button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;border-radius:7px;padding:9px 15px;font-size:.9rem;font-weight:650;text-decoration:none;border:1px solid var(--line)}.button.primary{color:#fffefa;background:var(--teal);border-color:var(--teal)}.button.primary:hover{background:#163d32}.button.secondary:hover{background:#eff2ea}.kritt .button.primary{background:var(--purple);border-color:var(--purple)}.kritt .button.primary:hover{background:#58416c}
+    .context{margin:28px 0 0;padding:23px 27px;background:#edf0e8;border-radius:12px;display:grid;grid-template-columns:1.65fr 1fr;gap:33px;align-items:start}.context h2{font-size:1.2rem;letter-spacing:-.02em;margin-bottom:10px}.context p{font-size:.92rem;margin-bottom:0;color:var(--muted)}.context-links{display:flex;flex-direction:column;gap:8px;font-size:.92rem}.context-links a{font-weight:600}
+    footer{margin-top:37px;padding:24px 0 34px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:24px;color:#71806e;font-size:.82rem}footer p{margin:0}footer a{font-weight:600}
+    @media(max-width:1000px){.wrap{padding:0 25px}.intro{gap:25px}.report-card{padding:22px}.report-card.kritt,.report-card.sre{padding-top:20px}.report-body{grid-template-columns:minmax(0,1fr) 125px;gap:16px}h3{font-size:1.45rem}}
+    @media(max-width:740px){.wrap{padding:0 20px}nav{min-height:74px;gap:12px}.brand{font-size:1.07rem}.repo-link{font-size:.82rem}.intro{grid-template-columns:1fr;gap:24px;padding:7px 0 31px}.intro-copy{max-width:560px}.intro-copy .eyebrow{margin-bottom:9px}h1{font-size:2rem;margin-bottom:13px}.section-head{display:block;padding:25px 0 21px}.section-head p{margin-top:10px}.reports{grid-template-columns:1fr;gap:22px}.report-body{grid-template-columns:minmax(0,1fr) 135px}.report-card{padding:22px}.report-card.kritt,.report-card.sre{padding-top:20px}h3{font-size:1.6rem}.context{grid-template-columns:1fr;gap:21px;padding:23px}.context-links{gap:12px}footer{flex-direction:column;gap:10px;margin-top:28px}}
+    @media(max-width:400px){.wrap{padding:0 15px}.report-card{padding:19px}.report-card.kritt,.report-card.sre{padding-top:17px}.report-body{grid-template-columns:minmax(0,1fr) 112px;gap:13px}.summary{font-size:.94rem}.button{padding:9px 12px;font-size:.86rem}.measurements dd{font-size:1.22rem}.repo-link span{display:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.preview{transition:none}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#reports">Skip to reports</a>
+  <header class="site-header">
+    <nav class="wrap" aria-label="Main navigation">
+      <a class="brand" href="./"><span class="mark" aria-hidden="true"></span>Agent Eval Flow</a>
+      <a class="repo-link" href="https://github.com/guybass/agent-eval-flow">View on GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main class="wrap">
+    <section class="intro" aria-labelledby="intro-title">
+      <div class="banner"><img src="assets/agent-eval-flow-banner.svg" width="1280" height="640" alt="Agent Eval Flow: capture evidence, apply your checks, compare a change."></div>
+      <div class="intro-copy">
+        <p class="eyebrow">Example reports</p>
+        <h1 id="intro-title">Read the evidence behind a change.</h1>
+        <p>Two native agent workflows on controlled tasks. Follow the observed behavior, the change a human reviewer chose, and what the rerun showed.</p>
+      </div>
+    </section>
+
+    <section id="reports" aria-labelledby="reports-title">
+      <div class="section-head"><h2 id="reports-title">Two case studies. Four reports.</h2><p>Native runs · synthetic tasks · small development samples</p></div>
+      <div class="reports">
+        <article class="report-card sre">
+          <p class="eyebrow">01 / OpenSRE</p>
+          <h3>Recovered, then kept acting.</h3>
+          <div class="report-body">
+            <div>
+              <p class="summary">Both incidents recovered safely. One extra action after the accepted report exposed a stopping-contract mismatch.</p>
+              <dl class="measurements">
+                <div><dt>Safe recovery · before → after</dt><dd>2 / 2 <span>→</span> 2 / 2</dd></div>
+                <div><dt>Calls after accepted report</dt><dd>1 <span>→</span> 0</dd></div>
+              </dl>
+            </div>
+            <a class="preview" href="examples/agent-evaluation/01-opensre.html" aria-label="Open the full OpenSRE comparison report"><img src="examples/agent-evaluation/01-opensre.png" width="1200" height="1350" alt="Preview of the OpenSRE before-and-after report." loading="lazy"></a>
+          </div>
+          <p class="report-note">The fix uses OpenSRE’s existing termination signal in our demo binding. Conflicting task cues and an instruction-delivery gap limit attribution; no diagnosis improvement is claimed.</p>
+          <div class="actions">
+            <a class="button primary" href="examples/agent-evaluation/01-opensre.html">Open report <span aria-hidden="true">&nbsp;↗</span></a>
+            <a class="button secondary" href="examples/agent-evaluation/01-opensre-walkthrough.html">Task walkthrough</a>
+          </div>
+        </article>
+
+        <article class="report-card kritt">
+          <p class="eyebrow">02 / OpenKritt</p>
+          <h3>Found the bug. Checked the evidence.</h3>
+          <div class="report-body">
+            <div>
+              <p class="summary">A tenant-boundary finding came with a reproducible request. We required execution evidence and clarified the reporting contract.</p>
+              <dl class="measurements">
+                <div><dt>Custom grounding · before → after</dt><dd>0 / 1 <span>→</span> 1 / 1</dd></div>
+                <div><dt>Severity agrees with demo policy</dt><dd>0 / 1 <span>→</span> 0 / 1</dd></div>
+              </dl>
+            </div>
+            <a class="preview" href="examples/agent-evaluation/02-openkritt.html" aria-label="Open the full OpenKritt comparison report"><img src="examples/agent-evaluation/02-openkritt.png" width="1200" height="1350" alt="Preview of the OpenKritt before-and-after report." loading="lazy"></a>
+          </div>
+          <p class="report-note">This combines workflow and contract changes. The result is specific to a hinted synthetic source pair. The original-case scan took longer: 296 → 532 seconds.</p>
+          <div class="actions">
+            <a class="button primary" href="examples/agent-evaluation/02-openkritt.html">Open report <span aria-hidden="true">&nbsp;↗</span></a>
+            <a class="button secondary" href="examples/agent-evaluation/02-openkritt-walkthrough.html">Task walkthrough</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="context" aria-labelledby="context-title">
+      <div>
+        <h2 id="context-title">Scope, evidence and trying it yourself</h2>
+        <p>These are curated report summaries, with one trial per case and candidate. They do not establish general reliability or security accuracy. Raw local captures and the experimental harnesses are not distributed. The public offline examples below demonstrate separate, reproducible tasks without model calls.</p>
+      </div>
+      <div class="context-links">
+        <a href="https://github.com/guybass/agent-eval-flow/blob/main/docs/examples/agent-evaluation/README.md">Read task details, attribution and run metadata</a>
+        <a href="https://github.com/guybass/agent-eval-flow/blob/main/examples/archive_review.py">Try archived-run evaluation</a>
+        <a href="https://github.com/guybass/agent-eval-flow/blob/main/examples/assessment_review.py">Try configuration assessment</a>
+        <a href="https://github.com/guybass/agent-eval-flow#try-it">Installation and quickstart</a>
+      </div>
+    </section>
+    <footer>
+      <p>Agent Eval Flow · Developer preview</p>
+      <a href="https://github.com/guybass/agent-eval-flow">Source and documentation on GitHub</a>
+    </footer>
+  </main>
+</body>
+</html>

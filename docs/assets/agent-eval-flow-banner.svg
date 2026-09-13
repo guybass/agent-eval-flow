@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title description">
+  <title id="title">Agent Eval Flow</title>
+  <desc id="description">Make agent behavior inspectable. Capture evidence from configuration and native runs, apply explicit checks, and compare a change on the same cases.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf9f3"/>
+      <stop offset="1" stop-color="#f0f3ee"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#285b50"/>
+      <stop offset="1" stop-color="#183e36"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#365a4c" opacity=".055"/>
+    </pattern>
+    <filter id="shadow" x="-15%" y="-20%" width="130%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="13" flood-color="#203d33" flood-opacity=".06"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="640" fill="url(#paper)"/>
+  <rect width="1280" height="640" fill="url(#grid)"/>
+  <path d="M 0 0 H 1280" stroke="#254d41" stroke-width="8"/>
+
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <g transform="translate(64 51)">
+      <rect width="44" height="44" rx="12" fill="url(#teal)"/>
+      <path d="M12 14h20M12 22h13M12 30h7" fill="none" stroke="#d9ecd3" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="31" cy="29" r="4" fill="#bdcadf"/>
+    </g>
+    <text x="124" y="78" font-size="15" font-weight="600" letter-spacing="2" fill="#4d6a5d">AGENT SYSTEM EVALUATION</text>
+    <rect x="1030" y="56" width="186" height="31" rx="15.5" fill="#e8ede5"/>
+    <text x="1123" y="76.5" text-anchor="middle" font-size="12" font-weight="600" letter-spacing="1.4" fill="#526653">DEVELOPER PREVIEW</text>
+
+    <text x="60" y="190" font-size="86" font-weight="650" letter-spacing="-3.5" fill="#193d35">Agent Eval Flow</text>
+    <text x="64" y="243" font-size="29" fill="#53645d">Make agent behavior inspectable.</text>
+
+    <g transform="translate(999 120)" aria-hidden="true">
+      <rect x="28" y="0" width="180" height="126" rx="16" fill="#e1e6ed" transform="rotate(8 118 63)"/>
+      <rect x="2" y="3" width="180" height="126" rx="16" fill="#fdfdf9" stroke="#d6dfd5" transform="rotate(-5 92 66)"/>
+      <rect x="-19" y="16" width="180" height="126" rx="16" fill="#fffefa" stroke="#cfdbd0"/>
+      <rect x="1" y="37" width="25" height="7" rx="3.5" fill="#285b50"/>
+      <rect x="33" y="37" width="56" height="7" rx="3.5" fill="#d7ddd4"/>
+      <path d="M1 60h140" stroke="#e3e7de"/>
+      <circle cx="7" cy="80" r="6" fill="#d6e7d6"/>
+      <rect x="22" y="76" width="116" height="7" rx="3.5" fill="#d7ddd4"/>
+      <circle cx="7" cy="104" r="6" fill="#dfd9ed"/>
+      <rect x="22" y="100" width="79" height="7" rx="3.5" fill="#d7ddd4"/>
+    </g>
+
+    <g filter="url(#shadow)">
+      <rect x="64" y="319" width="336" height="199" rx="20" fill="#fffefa" stroke="#d9e0d5"/>
+      <rect x="472" y="319" width="336" height="199" rx="20" fill="url(#teal)"/>
+      <rect x="880" y="319" width="336" height="199" rx="20" fill="#efeaf5" stroke="#ded6e8"/>
+    </g>
+
+    <text x="92" y="361" font-size="14" font-weight="650" letter-spacing="1.8" fill="#58705b">01 / EVIDENCE</text>
+    <text x="92" y="409" font-size="28" font-weight="650" letter-spacing="-.6" fill="#233d33">Capture the evidence</text>
+    <text x="92" y="449" font-size="19" fill="#5d6c60">Configuration and native runs.</text>
+    <text x="92" y="478" font-size="19" fill="#5d6c60">Keep failures and unknowns.</text>
+
+    <path d="M417 418h38m-9-9 9 9-9 9" fill="none" stroke="#709082" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <text x="500" y="361" font-size="14" font-weight="650" letter-spacing="1.8" fill="#bfd5c4">02 / EVALUATE</text>
+    <text x="500" y="409" font-size="28" font-weight="650" letter-spacing="-.6" fill="#f9faf1">Apply your checks</text>
+    <text x="500" y="449" font-size="19" fill="#d1dfd2">Measure outcomes and context.</text>
+    <text x="500" y="478" font-size="19" fill="#d1dfd2">Read the evidence in a report.</text>
+
+    <path d="M825 418h38m-9-9 9 9-9 9" fill="none" stroke="#8c83a4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <text x="908" y="361" font-size="14" font-weight="650" letter-spacing="1.8" fill="#77688c">03 / IMPROVE</text>
+    <text x="908" y="409" font-size="28" font-weight="650" letter-spacing="-.6" fill="#49385f">Compare a change</text>
+    <text x="908" y="449" font-size="19" fill="#71617f">Rerun the same cases.</text>
+    <text x="908" y="478" font-size="19" fill="#71617f">Keep the tradeoffs visible.</text>
+
+    <path d="M64 562h1152" stroke="#d4ddd0"/>
+    <text x="64" y="598" font-size="17" font-weight="500" fill="#60705f">Your runtime. Your criteria. Retained evidence.</text>
+    <text x="1216" y="598" text-anchor="end" font-size="17" font-weight="600" fill="#425e50">Run or import → report → change → rerun</text>
+  </g>
+</svg>
