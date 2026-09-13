@@ -2,7 +2,7 @@
 
 These curated human reports show native OpenSRE and OpenKritt runs on synthetic,
 controlled tasks. Agent Eval Flow retained the runs and applied explicit checks;
-human review selected the changes and interpreted the comparisons. The reports
+review of the results informed the changes and comparisons. The reports
 illustrate evaluating complete agents under plausible usage, including imperfect
 instructions and integration behavior.
 

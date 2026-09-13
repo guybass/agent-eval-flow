@@ -1,46 +1,65 @@
-name: Bug report
-description: Report unexpected behavior with a minimal reproduction.
-body:
-  - type: markdown
-    attributes:
-      value: >-
-        Small, reproducible examples are most useful. Remove credentials,
-        private task data, and sensitive prompts before sharing anything.
-        Raw run logs are not required.
-  - type: textarea
-    id: environment
-    attributes:
-      label: Versions and runtime
-      description: Include the package version or commit, Python version, OS, and relevant runtime or importer. Use "not applicable" for offline-only work.
-      placeholder: |
-        Agent Eval Flow:
-        Python / OS:
-        Runtime, adapter or import format (and revision, if known):
-    validations:
-      required: true
-  - type: textarea
-    id: reproduction
-    attributes:
-      label: Minimal reproduction
-      description: Give the smallest code, configuration and steps that reproduce the problem. Use public or redacted sample data.
-    validations:
-      required: true
-  - type: textarea
-    id: expected
-    attributes:
-      label: Expected behavior
-      description: What result or behavior did you expect?
-    validations:
-      required: true
-  - type: textarea
-    id: observed
-    attributes:
-      label: Observed behavior
-      description: What happened instead? Include relevant statuses or error messages.
-    validations:
-      required: true
-  - type: textarea
-    id: evidence
-    attributes:
-      label: Scrubbed evidence (optional)
-      description: A short traceback, report excerpt or screenshot can help. Prefer the relevant excerpt over a complete capture, and remove sensitive content.
+{
+  "name": "Bug report",
+  "description": "Report unexpected behavior with a minimal reproduction.",
+  "body": [
+    {
+      "type": "markdown",
+      "attributes": {
+        "value": "Small, reproducible examples are most useful. Remove credentials, private task data, and sensitive prompts before sharing anything. Raw run logs are not required."
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "environment",
+      "attributes": {
+        "label": "Versions and runtime",
+        "description": "Include the package version or commit, Python version, OS, and relevant runtime or importer. Use not applicable where appropriate.",
+        "placeholder": "Agent Eval Flow:\nPython / OS:\nRuntime, adapter or import format (and revision, if known):"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "reproduction",
+      "attributes": {
+        "label": "Minimal reproduction",
+        "description": "Give the smallest code, configuration and steps that reproduce the problem. Use public or redacted sample data."
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "expected",
+      "attributes": {
+        "label": "Expected behavior",
+        "description": "What result or behavior did you expect?"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "observed",
+      "attributes": {
+        "label": "Observed behavior",
+        "description": "What happened instead? Include relevant statuses or error messages."
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "evidence",
+      "attributes": {
+        "label": "Scrubbed evidence (optional)",
+        "description": "A short traceback, report excerpt or screenshot can help. Prefer the relevant excerpt over a complete capture, and remove sensitive content."
+      }
+    }
+  ]
+}
