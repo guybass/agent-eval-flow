@@ -20,3 +20,16 @@ _netrc
 *.key
 id_rsa
 id_ed25519
+
+# Internal design, research and historical notes stay local.
+doc/
+docs/
+.report-site/
+/tests/ACCEPTANCE_MANIFEST.json
+/tests/SHOWCASE_MANIFEST.json
+/tests/BASELINE.md
+/tests/e2e/BASELINE.md
+/tests/e2e/README.md
+/tests/e2e/PROFILES.md
+/tests/e2e/SHOWCASE.md
+/tests/integrations/PROFILES.md

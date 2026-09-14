@@ -1,8 +1,14 @@
 include README.md CONTRIBUTING.md THIRD_PARTY_NOTICES.md pyproject.toml pytest.ini requirements-test.txt .gitattributes
 graft .github
-graft docs
+prune doc
+prune docs
 graft tests
 graft examples
 graft scripts
 global-exclude *.pyc *.pyo
 global-exclude __pycache__
+global-exclude .env .env.* .pypirc .netrc _netrc *.pem *.key id_rsa id_ed25519
+global-exclude profiles.local.json .e2e-local.json
+exclude tests/ACCEPTANCE_MANIFEST.json tests/SHOWCASE_MANIFEST.json tests/BASELINE.md
+exclude tests/e2e/BASELINE.md tests/e2e/README.md tests/e2e/PROFILES.md tests/e2e/SHOWCASE.md
+exclude tests/integrations/PROFILES.md

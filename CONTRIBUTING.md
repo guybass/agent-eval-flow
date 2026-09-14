@@ -19,14 +19,15 @@ python scripts/verify_distribution.py
 ```
 
 Default tests do not start live models. Live profiles require explicit selection
-and prepared runtimes; their setup is documented in [tests/e2e/SHOWCASE.md](tests/e2e/SHOWCASE.md).
+and prepared runtimes; see [the test guide](tests/README.md#select-a-live-integration-explicitly).
 
 Keep metric meaning, provenance and missingness explicit. Fixes should include
 a regression check that demonstrates the affected behavior. Preserve the frozen
 acceptance fixtures and their hashes; add new fixtures separately.
 
 Local outputs belong in ignored `demo-output/` or `test-artifacts/` directories.
-Include only deliberately selected, reviewed report artifacts in documentation.
+Keep design drafts, research and planning in ignored `doc/` or `docs/` folders.
+Only selected public report artifacts belong in `examples/reports/`.
 Third-party fixtures retain their own licenses and provenance.
 
 Configuration templates must have `.example` in the filename and contain
