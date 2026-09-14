@@ -1,7 +1,9 @@
 # Publishing to PyPI
 
 The package is `agent-eval-flow`; imports use `agent_eval_flow`. Version 0.5.1
-prepares the first PyPI release while preserving the existing GitHub v0.5.0 tag.
+was published to [PyPI](https://pypi.org/project/agent-eval-flow/0.5.1/) on
+2026-09-14 through [Trusted Publishing](https://github.com/guybass/agent-eval-flow/actions/runs/34837871575),
+preserving the existing GitHub v0.5.0 tag.
 
 ## One-time account setup
 

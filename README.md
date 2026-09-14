@@ -2,6 +2,7 @@
 
 # Agent Eval Flow
 
+[![PyPI](https://img.shields.io/pypi/v/agent-eval-flow?color=245c50)](https://pypi.org/project/agent-eval-flow/)
 [![Release](https://img.shields.io/github/v/release/guybass/agent-eval-flow?include_prereleases&label=release&color=245c50)](https://github.com/guybass/agent-eval-flow/releases)
 [![Tests and package](https://github.com/guybass/agent-eval-flow/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/guybass/agent-eval-flow/actions/workflows/tests.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-49659c?logo=python&logoColor=white)](https://github.com/guybass/agent-eval-flow/blob/main/pyproject.toml)
@@ -23,6 +24,14 @@ inspection and behavioral evaluation can run in parallel. The Python package
 is `agent_eval_flow`.
 
 ## Try it
+
+Install the package from [PyPI](https://pypi.org/project/agent-eval-flow/):
+
+```bash
+python -m pip install agent-eval-flow
+```
+
+For the runnable offline examples and tests, use a checkout:
 
 ```bash
 git clone https://github.com/guybass/agent-eval-flow.git

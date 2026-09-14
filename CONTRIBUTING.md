@@ -28,3 +28,11 @@ acceptance fixtures and their hashes; add new fixtures separately.
 Local outputs belong in ignored `demo-output/` or `test-artifacts/` directories.
 Include only deliberately selected, reviewed report artifacts in documentation.
 Third-party fixtures retain their own licenses and provenance.
+
+Configuration templates must have `.example` in the filename and contain
+placeholders only, like `examples/profiles.local.example.json`. Copy templates
+to the ignored local configuration path when preparing a native runtime. Keep
+actual credentials in that runtime's supported authentication mechanism; never
+put real credentials in a template. Dotenv files, PyPI/netrc credentials and
+private key files are ignored. Offline examples need no credentials, and PyPI
+publishing uses the configured GitHub trusted publisher rather than a token file.

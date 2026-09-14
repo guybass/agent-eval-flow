@@ -13,3 +13,10 @@ build/
 .env
 .env.*
 !.env.example
+.pypirc
+.netrc
+_netrc
+*.pem
+*.key
+id_rsa
+id_ed25519
