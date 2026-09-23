@@ -55,6 +55,25 @@ Missing evidence stays unknown. Runtime-specific importers and collectors map
 native logs into the shared records; arbitrary logs are not interpreted
 automatically. Native adapters keep the agent's own execution loop.
 
+## Tool calling report
+
+Add deterministic Toolscore diagnostics to captured runs and generate a separate
+tools report alongside the general report:
+
+```bash
+python -m pip install -e ".[toolscore]"
+python examples/toolscore_review.py --output demo-output/toolscore
+```
+
+The offline example writes linked `report.html` and `tools.html`, `tools.json`,
+and verified evidence files. It uses synthetic retained streams and makes no
+agent or model calls. Toolscore evaluates requested tools and arguments;
+task outcomes remain separate checks. Missing capture stays unknown.
+
+Use `result.report(path, tools=True)` after configuring the optional evaluator.
+See [the integration guide](examples/TOOLSCORE.md) for trace coverage, expected
+calls, scoring rules, and supported formats.
+
 ## Example reports
 
 | OpenSRE | OpenKritt |

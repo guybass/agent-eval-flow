@@ -112,13 +112,19 @@ def _view(result, selection):
         "incremental_resources": result.incremental_evaluation_resources()}
 
 
-def report(result, path, *, selection=None):
+def report(result, path, *, selection=None, tools=False, _companions=None):
+    if tools:
+        from .toolscore import report_bundle
+        return report_bundle(result, path, selection=selection)
     view = _view(result, selection)
+    view["tools_href"] = _companions["href"] if _companions else None
+    for task in view["tasks"]:
+        task["tools_href"] = _companions["runs"].get(task["run"].id) if _companions else None
     template_root = files("agent_eval_flow.reporting").joinpath("templates")
     environment = Environment(loader=FileSystemLoader(str(template_root)),
         autoescape=select_autoescape(default=True), trim_blocks=True, lstrip_blocks=True)
     environment.filters["pretty_json"] = _json
-    environment.globals["safe_link"] = _safe_link
+    environment.globals["safe_link"] = _companions["evidence"].get if _companions else _safe_link
     template = environment.get_template("report.html.j2")
     # This string comes exclusively from our packaged stylesheet, never from
     # agent text, configuration or a user-supplied template.

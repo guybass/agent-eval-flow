@@ -12,13 +12,16 @@ from ..results.assessment_selection import decide_assessments
 from .html import _json, _safe_link, _view
 
 
-def report_assessment(result, path, *, policy=None):
+def report_assessment(result, path, *, policy=None, tools=False, _companions=None):
+    if tools:
+        from .toolscore import report_bundle
+        return report_bundle(result, path, policy=policy)
     result.validate().raise_for_errors()
     template_root = files("agent_eval_flow.reporting").joinpath("templates")
     environment = Environment(loader=FileSystemLoader(str(template_root)),
         autoescape=select_autoescape(default=True), trim_blocks=True, lstrip_blocks=True)
     environment.filters["pretty_json"] = _json
-    environment.globals["safe_link"] = _safe_link
+    environment.globals["safe_link"] = _companions["evidence"].get if _companions else _safe_link
     activities = tuple({"ref": ref, "activity": activity,
         "performed": ref in result.performed_activity_refs}
         for ref, activity in activity_inventory(result).items())
@@ -26,6 +29,10 @@ def report_assessment(result, path, *, policy=None):
         "activities": activities,
         "decision": decide_assessments(result, policy) if policy is not None else None,
         "behavior": _view(result.behavior_result, None) if result.behavior_result is not None else None}
+    view["tools_href"] = _companions["href"] if _companions else None
+    if view["behavior"]:
+        for task in view["behavior"]["tasks"]:
+            task["tools_href"] = _companions["runs"].get(task["run"].id) if _companions else None
     css = template_root.joinpath("report.css").read_text(encoding="utf-8")
     rendered = environment.get_template("assessment_report.html.j2").render(view=view, css=css)
     path, temporary = Path(path), None

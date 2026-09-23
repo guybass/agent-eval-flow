@@ -609,9 +609,9 @@ class EvaluationResult(RecordBase):
     def select(self, policy):
         from ..results.selection import select
         return select(self, policy)
-    def report(self, path, *, selection=None):
+    def report(self, path, *, selection=None, tools=False):
         from ..reporting.html import report
-        return report(self, path, selection=selection)
+        return report(self, path, selection=selection, tools=tools)
 
 
 @dataclass(frozen=True, kw_only=True, config=RECORD_CONFIG)

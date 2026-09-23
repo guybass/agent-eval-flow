@@ -4,6 +4,7 @@
 <title>Assessment {{ view.result.plan.id }}</title><style>{{ css|safe }}</style></head>
 <body><main>
 <h1>Assessment {{ view.result.plan.id }}</h1>
+{% if view.tools_href %}<p><a href="{{ view.tools_href }}">Tools report</a></p>{% endif %}
 <p>Project {{ view.result.plan.project_id }} · Result {{ view.result.id }} · {{ view.result.created_at }}</p>
 <p>Configuration evidence and behavioral evidence retain their own scope. Linked findings do not establish causation.</p>
 {% if view.result.plan.behavior is none %}<p>Configuration-only assessment. No behavioral study was requested.</p>
@@ -58,7 +59,7 @@
 <h3>Stored candidate summaries</h3><pre>{{ view.behavior.result.summaries|pretty_json }}</pre>
 <table><thead><tr><th>Candidate</th><th>Run</th><th>Status</th><th>Acceptance</th></tr></thead><tbody>
 {% for task in view.behavior.tasks %}<tr><td>{{ task.assignment.candidate_id }}</td><td>{{ task.run.id }}</td><td>{{ task.run.status }}</td><td>{{ task.score.acceptance }}</td></tr>{% endfor %}</tbody></table>
-{% for task in view.behavior.tasks %}<details id="run-{{ loop.index0 }}"><summary>Run {{ task.run.id }} measurements and evidence</summary><pre>{{ task.measurements|pretty_json }}</pre><pre>{{ task.evidence|pretty_json }}</pre><p>Agent execution resources:</p><pre>{{ task.resources|pretty_json }}</pre></details>{% endfor %}
+{% for task in view.behavior.tasks %}<details id="run-{{ loop.index0 }}"><summary>Run {{ task.run.id }} measurements and evidence</summary>{% if task.tools_href %}<p><a href="{{ task.tools_href }}">Inspect tool calls for this run</a></p>{% endif %}<pre>{{ task.measurements|pretty_json }}</pre><pre>{{ task.evidence|pretty_json }}</pre><p>Agent execution resources:</p><pre>{{ task.resources|pretty_json }}</pre></details>{% endfor %}
 {% endif %}
 
 <h2>Source activities</h2><p>Each namespaced activity appears once. Finding/run links do not allocate or multiply charges. Unknown resources remain unknown; costs retain their scope.</p>

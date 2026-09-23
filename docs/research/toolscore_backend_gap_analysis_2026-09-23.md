@@ -63,3 +63,11 @@ Suggested module areas: optional dependency in `pyproject.toml`; projection unde
 Use known traces covering exact match, wrong tool, missing/extra call, repeated name, legitimate retry, reordered/parallel calls, malformed arguments, requested-but-uncompleted call, explicit no-tool success, absent/partial capture, and unavailable timing/cost. Confirm source identities survive save/load and report bundling, and that both reports refer to the same run. Freeze expected contracts before comparison. Check package behavior without the optional dependency as well as with it.
 
 The first deliverable should be one retained-run example producing both reports with transparent coverage. Supporting every adapter and MCP server health is additional scope. The largest uncertainty is trace completeness and acceptable-behavior contracts, rather than calling Toolscore's API.
+
+## Implementation checkpoint on `toolscore-int-dev`
+
+The initial integration now provides the pinned optional evaluator, versioned generic tool traces, an explicit retained Claude stream projector, private task contracts and alternatives, documented ordering/weight rules, seven diagnostic metrics, and complete hashed evaluation receipts. `result.report(path, tools=True)` generates linked general and tools reports, JSON, candidate comparisons, per-tool counts, request/result details and a portable local evidence bundle for both evaluation and behavioral assessment results.
+
+Validation on this Windows/Python 3.12 environment: the full regression run passed 512 tests with 22 expected skips; the final focused integration/report run passed 54 checks, including new coverage added after the full run. The offline tools example and existing archive example ran successfully. Package build/distribution verification passed and all 85 protected fixture/test hashes remained intact. CI configuration adds Windows/Linux and Python 3.11–3.13 optional-dependency jobs; those remote jobs have not been run here.
+
+Remaining scope: native projectors beyond the initial Claude stream format, live collection validation, MCP server testing, and any richer graph-aware matching beyond the documented upstream/canonical ordering behavior. No live agents or model services were invoked. See [the public integration guide](../../examples/TOOLSCORE.md) and [offline example](../../examples/toolscore_review.py).

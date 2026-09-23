@@ -30,3 +30,23 @@ jobs:
       - run: python examples/archive_review.py --output demo-output
       - run: python -m build
       - run: python scripts/verify_distribution.py
+
+  toolscore:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.11', '3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: python -m pip install -e ".[test,cli,toolscore]"
+      - run: python -m pytest tests/unit/test_toolscore_integration.py
+      - run: python examples/toolscore_review.py --output demo-output/toolscore

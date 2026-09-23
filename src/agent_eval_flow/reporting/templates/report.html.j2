@@ -18,6 +18,7 @@
 <header>
   <p class="eyebrow">AGENT EVAL FLOW · SAVED EVALUATION</p>
   <h1>{{ view.plan.study_id }}</h1>
+  {% if view.tools_href %}<p><a href="{{ view.tools_href }}">Tools report</a></p>{% endif %}
   <p>Project {{ view.plan.project_id }} · Dataset {{ view.plan.dataset.id }} · Suite {{ view.result.suite.id }} / {{ view.result.suite.version }}</p>
   <p class="muted">Created {{ view.result.created_at }} · Result {{ view.result.id }}</p>
 </header>
@@ -60,6 +61,7 @@
   </tbody></table></div>
   {% for task in view.tasks %}
   <article id="{{ task.anchor }}"><h3>{{ task.assignment.candidate_id }} · {{ task.assignment.unit|pretty_json }} · repetition {{ task.assignment.repetition }}</h3>
+    {% if task.tools_href %}<p><a href="{{ task.tools_href }}">Inspect tool calls for this run</a></p>{% endif %}
     <p><code>{{ task.run.id }}</code> · {{ task.run.status }} · output {{ task.run.output_state }}</p>
     <p>Elapsed seconds: {{ observation(task.duration) }}</p>
     <h4>Agent execution resources</h4>{{ resources(task.resources) }}
