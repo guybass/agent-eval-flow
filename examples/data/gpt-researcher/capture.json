@@ -1,0 +1,443 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-09-23",
+  "upstream": {
+    "repo": "https://github.com/assafelovic/gpt-researcher",
+    "commit": "6f998577d547b1e54ec662dac63583aa11e3b84b"
+  },
+  "selection": "Three historical failures selected before inference; one trial each; not representative or ranked hardest.",
+  "configuration": {
+    "model_requested": "gpt-5.6-luna",
+    "resolved_model": "Not emitted by Codex CLI JSONL",
+    "provider": "Experimental local Codex CLI transport",
+    "reasoning": "low",
+    "retriever": "DuckDuckGo",
+    "embedding": "local BAAI/bge-small-en-v1.5",
+    "max_iterations": 3,
+    "results_per_query": 5,
+    "report_min_words": 600,
+    "limitations": "Native temperature and max_tokens settings cannot be enforced by this CLI transport; cost in dollars is unknown."
+  },
+  "publication": "Curated projection of local native captures. Raw prompts, full reports, scraped pages, CLI identifiers, and machine paths are omitted. Hashes identify retained originals; they do not independently prove their contents.",
+  "root_cause": {
+    "first_wrong_answer_call": 3,
+    "mechanism": "Planning search results are used for query generation and then discarded. Targeted and repeated searches returned empty after DNS failures. Only competing EPA-award context reached the writer.",
+    "qualification": "Question omits the awarding organization; Chirik is a real EPA award winner. This is wrong against the SimpleQA target, not fabricated identity. Trace supports an evidence-loss mechanism; no end-to-end patched-model accuracy claim.",
+    "patch_validation": "Offline regression: 3 failures / 2 passes before patch; 8 new regression tests pass after patch; targeted suite 37 passes. Network blocked. Synthetic page content and mocked planning isolate orchestration."
+  },
+  "runs": [
+    {
+      "case_id": "simpleqa-3810",
+      "query": "What is the full name of the first person to be awarded a Ph.D. in Mathematics from the Universidad Nacional Autónoma de México?",
+      "answer": "Roberto Vázquez García",
+      "grade": {
+        "case_id": "simpleqa-3810",
+        "grade": "CORRECT",
+        "target_correct": 1,
+        "expected_answer": "Roberto Vázquez García",
+        "report_sha256": "aea4017e0c3e32e46dd1f0e3a945adc3c68a3ba8f36e44f57a27210c308747ca",
+        "grader_model_requested": "gpt-5.6-luna",
+        "rubric": "upstream SimpleQA GRADER_TEMPLATE",
+        "limitation": "Same-model judge, not independent ground truth or complete report factuality."
+      },
+      "started_at": "2026-09-23T15:48:17.944108+00:00",
+      "ended_at": "2026-09-23T15:51:50.071314+00:00",
+      "metrics": {
+        "target_correct": 1,
+        "model_calls": 3,
+        "search_calls": 5,
+        "captured_pages": 13,
+        "elapsed_seconds": 212.127206325531
+      },
+      "usage": {
+        "input_tokens": 29910,
+        "output_tokens": 1791,
+        "cached_input_tokens": 14592
+      },
+      "judge_usage": {
+        "input_tokens": 9599,
+        "output_tokens": 5,
+        "cached_input_tokens": 4864
+      },
+      "trace": [
+        {
+          "kind": "llm.call",
+          "call_number": 1,
+          "stage": "agent selection",
+          "request_sha256": "0efe710fd67a268ad624df65c0ac65ac88180ff17d716d1756482f0f4807a16c",
+          "response_sha256": "e30b8fb52b972b322f8a693ec6b315cc31dc40d5f0662d7cc9853824bc445eca"
+        },
+        {
+          "kind": "llm.call",
+          "call_number": 2,
+          "stage": "query planning",
+          "request_sha256": "4716f855f1afa48ca275b1d23316e1301b733556136869ef303feaf32ba51cd0",
+          "response_sha256": "7b7f80d778af3ed662fdc0eb361823e6ec8db550212c45001865b61066e8109a"
+        },
+        {
+          "kind": "llm.call",
+          "call_number": 3,
+          "stage": "report writing",
+          "request_sha256": "5fb0faa1d372a0a7e957eb28c48b46c88e38681935eb3179a7ed7dd125e8852a",
+          "response_sha256": "aea4017e0c3e32e46dd1f0e3a945adc3c68a3ba8f36e44f57a27210c308747ca"
+        }
+      ],
+      "searches": [
+        {
+          "query": "What is the full name of the first person to be awarded a Ph.D. in Mathematics from the Universidad Nacional Autónoma de México?",
+          "result_count": 5,
+          "urls": [
+            "https://en.wikipedia.org/wiki/National_Autonomous_University_of_Mexico",
+            "https://mathshistory.st-andrews.ac.uk/Biographies/Vazquez/",
+            "https://www.researchgate.net/profile/Alberto-Saldana-3",
+            "https://www.researchgate.net/profile/Humberto-Carrillo-Calvet",
+            "https://www.tvazteca.com/aztecanoticias/la-unam-celebra-475-anos-la-primera-universidad-mexico-esta-es-su-historia/"
+          ]
+        },
+        {
+          "query": "Roberto Vázquez first Ph.D. in mathematics from Universidad Nacional Autónoma de México 1947",
+          "result_count": 5,
+          "urls": [
+            "https://mathshistory.st-andrews.ac.uk/Biographies/Vazquez/",
+            "https://paginas.matem.unam.mx/matematicos/matematicos-r-z/matematicos-v/vazquez-g-roberto/roberto-vazquez-garcia",
+            "https://matematicos.matem.unam.mx/matematicos-r-z/matematicos-v/vazquez-g-roberto/349-semblanza-de-roberto-vazquez-garcia",
+            "https://paginas.matem.unam.mx/matematicos/matematicos-r-z/matematicos-v/vazquez-g-roberto",
+            "https://mathshistory.st-andrews.ac.uk/Extras/Vazquez_papers/"
+          ]
+        },
+        {
+          "query": "first person awarded a doctorate in mathematics by UNAM full name",
+          "result_count": 5,
+          "urls": [
+            "https://en.wikipedia.org/wiki/Sylvia_de_Neymet",
+            "https://en.wikipedia.org/wiki/José_Sarukhán_Kermez",
+            "https://en.wikipedia.org/wiki/National_Autonomous_University_of_Mexico",
+            "https://mathshistory.st-andrews.ac.uk/Biographies/Neymet/",
+            "https://www.ams.org/books/conm/657/conm657-endmatter.pdf"
+          ]
+        },
+        {
+          "query": "Roberto Vázquez biography first mathematics Ph.D. Universidad Nacional Autónoma de México",
+          "result_count": 5,
+          "urls": [
+            "https://mathshistory.st-andrews.ac.uk/Biographies/Vazquez/",
+            "https://matematicos.matem.unam.mx/matematicos-r-z/matematicos-v/vazquez-g-roberto/349-semblanza-de-roberto-vazquez-garcia",
+            "https://paginas.matem.unam.mx/matematicos/matematicos-r-z/matematicos-v/vazquez-g-roberto/roberto-vazquez-garcia",
+            "https://paginas.matem.unam.mx/matematicos/matematicos-r-z/matematicos-v/vazquez-g-roberto",
+            "https://matematicos.matem.unam.mx/matematicos-r-z/matematicos-v/vazquez-g-roberto?start=5"
+          ]
+        },
+        {
+          "query": "What is the full name of the first person to be awarded a Ph.D. in Mathematics from the Universidad Nacional Autónoma de México?",
+          "result_count": 5,
+          "urls": [
+            "https://mathshistory.st-andrews.ac.uk/Biographies/Neymet/",
+            "https://mathshistory.st-andrews.ac.uk/Biographies/Vazquez/",
+            "https://mathshistory.st-andrews.ac.uk/Biographies/Gandara/",
+            "https://gustavo.jasso.info/",
+            "https://www.facebook.com/groups/2413757252123955/posts/3514375818728754/"
+          ]
+        }
+      ],
+      "captured_urls": [
+        "https://mathshistory.st-andrews.ac.uk/Extras/Vazquez_papers/",
+        "https://matematicos.matem.unam.mx/matematicos-r-z/matematicos-v/vazquez-g-roberto/349-semblanza-de-roberto-vazquez-garcia",
+        "https://paginas.matem.unam.mx/matematicos/matematicos-r-z/matematicos-v/vazquez-g-roberto/roberto-vazquez-garcia",
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Vazquez/",
+        "https://paginas.matem.unam.mx/matematicos/matematicos-r-z/matematicos-v/vazquez-g-roberto",
+        "https://matematicos.matem.unam.mx/matematicos-r-z/matematicos-v/vazquez-g-roberto?start=5",
+        "https://gustavo.jasso.info/",
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Gandara/",
+        "https://en.wikipedia.org/wiki/Sylvia_de_Neymet",
+        "https://www.ams.org/books/conm/657/conm657-endmatter.pdf",
+        "https://en.wikipedia.org/wiki/José_Sarukhán_Kermez",
+        "https://en.wikipedia.org/wiki/National_Autonomous_University_of_Mexico",
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Neymet/"
+      ],
+      "raw_file_sha256": {
+        "receipt.json": "908c00795895ad633175bef2ecd6cc604012f46e78452ba24d2541e5f640b4a4",
+        "search.jsonl": "45c5f414a80b65e9b9e0114ff6c6ff0a5583ef37f87d10ba4700138a5c0a889d",
+        "context.txt": "5a4e9f6ccbd67283d89ae4c04c83d84f2bea4000fd474feda3af12b41f576287",
+        "report.md": "1cc8f989eb3fb6e30e6961170ccf3e160e9b75d3c6538701757e352ca81d72bc"
+      }
+    },
+    {
+      "case_id": "simpleqa-1111",
+      "query": "Who won the Hall Medal in 2011?",
+      "answer": "Olga Polverino",
+      "grade": {
+        "case_id": "simpleqa-1111",
+        "grade": "CORRECT",
+        "target_correct": 1,
+        "expected_answer": "Olga Polverino",
+        "report_sha256": "561247a4bba652acd6540c96dca9c5ae7d9e7806af689ace1eb51ad225350793",
+        "grader_model_requested": "gpt-5.6-luna",
+        "rubric": "upstream SimpleQA GRADER_TEMPLATE",
+        "limitation": "Same-model judge, not independent ground truth or complete report factuality."
+      },
+      "started_at": "2026-09-23T15:52:17.585940+00:00",
+      "ended_at": "2026-09-23T15:53:56.187197+00:00",
+      "metrics": {
+        "target_correct": 1,
+        "model_calls": 3,
+        "search_calls": 5,
+        "captured_pages": 10,
+        "elapsed_seconds": 98.60125708580017
+      },
+      "usage": {
+        "input_tokens": 41335,
+        "output_tokens": 2345,
+        "cached_input_tokens": 19456
+      },
+      "judge_usage": {
+        "input_tokens": 9948,
+        "output_tokens": 5,
+        "cached_input_tokens": 5888
+      },
+      "trace": [
+        {
+          "kind": "llm.call",
+          "call_number": 1,
+          "stage": "agent selection",
+          "request_sha256": "1d994772a770a03afd2061ded1e98c31e1b7f589f02296d3af5aa42555f6d199",
+          "response_sha256": "0a949c1f5dfa3ef9c59951ea827304ce7cd7923628af9d5ff631eb4d741b2751"
+        },
+        {
+          "kind": "llm.call",
+          "call_number": 2,
+          "stage": "query planning",
+          "request_sha256": "3d5f19de7562ade0062225dc85f84354823053e991079a80402b45c61d217c68",
+          "response_sha256": "63b6da82b92901f98862a1114f0117a1ee1c152ceb7b1a6554dc74f3dd6c1909"
+        },
+        {
+          "kind": "llm.call",
+          "call_number": 3,
+          "stage": "report writing",
+          "request_sha256": "b818440c0376c0f42db2f52db957b7db7fa79384d13d397ccc338cc9e741cc95",
+          "response_sha256": "561247a4bba652acd6540c96dca9c5ae7d9e7806af689ace1eb51ad225350793"
+        }
+      ],
+      "searches": [
+        {
+          "query": "Who won the Hall Medal in 2011?",
+          "result_count": 5,
+          "urls": [
+            "https://en.wikipedia.org/wiki/Institute_of_Combinatorics_and_its_Applications",
+            "https://en.wikipedia.org/wiki/Arman_Hall",
+            "https://www.the-ica.org/citations/Olga+Polverino;h.pdf",
+            "https://www.nba.com/bulls/news/brian-mcintyre-receive-hall-fames-2011-john-w-bunn-lifetime-achievement-award.html",
+            "https://www.paloaltoonline.com/sports/2011/11/02/stanford-grad-sara-hall-honored-for-gold-medal-at-pan-am-games/"
+          ]
+        },
+        {
+          "query": "Who won the Hall Medal in 2011?",
+          "result_count": 5,
+          "urls": [
+            "https://en.wikipedia.org/wiki/Institute_of_Combinatorics_and_its_Applications",
+            "https://en.wikipedia.org/wiki/Arman_Hall",
+            "https://www.the-ica.org/citations/Olga+Polverino;h.pdf",
+            "https://www.nba.com/bulls/news/brian-mcintyre-receive-hall-fames-2011-john-w-bunn-lifetime-achievement-award.html",
+            "https://www.paloaltoonline.com/sports/2011/11/02/stanford-grad-sara-hall-honored-for-gold-medal-at-pan-am-games/"
+          ]
+        },
+        {
+          "query": "Institute of Combinatorics 2011 Hall Medal award recipient",
+          "result_count": 5,
+          "urls": [
+            "https://en.wikipedia.org/wiki/Institute_of_Combinatorics_and_its_Applications",
+            "https://www.the-ica.org/medals.php",
+            "https://www.the-ica.org/ICAindex.php",
+            "https://math.gatech.edu/news/external-news-som-alumni-jie-ma-2011-phd-awarded-2020-hall-medal-ica",
+            "https://research-repository.uwa.edu.au/en/prizes/hall-medal"
+          ]
+        },
+        {
+          "query": "Who received the 2011 Hall Medal Olga Polverino",
+          "result_count": 5,
+          "urls": [
+            "https://en.wikipedia.org/wiki/Institute_of_Combinatorics_and_its_Applications",
+            "https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Women_in_Red/Mathematics",
+            "https://www.the-ica.org/citations/Olga+Polverino;h.pdf",
+            "https://www.wikidata.org/wiki/Q102282068",
+            "https://www.the-ica.org/medals.php"
+          ]
+        },
+        {
+          "query": "2011 Hall Medal winner Institute of Combinatorics and its Applications",
+          "result_count": 5,
+          "urls": [
+            "https://en.wikipedia.org/wiki/Institute_of_Combinatorics_and_its_Applications",
+            "https://eoas.info/biogs/P007067b.htm",
+            "https://www.the-ica.org/medals.php",
+            "https://www.hellenicaworld.com/Science/Mathematics/en/InstituteofCombinatoricsanditsApplications.html",
+            "https://math.gatech.edu/news/external-news-som-alumni-jie-ma-2011-phd-awarded-2020-hall-medal-ica"
+          ]
+        }
+      ],
+      "captured_urls": [
+        "https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Women_in_Red/Mathematics",
+        "https://www.wikidata.org/wiki/Q102282068",
+        "https://eoas.info/biogs/P007067b.htm",
+        "https://www.the-ica.org/medals.php",
+        "https://research-repository.uwa.edu.au/en/prizes/hall-medal",
+        "https://math.gatech.edu/news/external-news-som-alumni-jie-ma-2011-phd-awarded-2020-hall-medal-ica",
+        "https://www.the-ica.org/ICAindex.php",
+        "https://en.wikipedia.org/wiki/Institute_of_Combinatorics_and_its_Applications",
+        "https://en.wikipedia.org/wiki/Arman_Hall",
+        "https://www.paloaltoonline.com/sports/2011/11/02/stanford-grad-sara-hall-honored-for-gold-medal-at-pan-am-games/"
+      ],
+      "raw_file_sha256": {
+        "receipt.json": "d8d3e681cfe94b8f7176774f0d02d5ceae6f767d639029fecbe5fec33ee4e3fc",
+        "search.jsonl": "0a47f1c5f23d04918a798ec054e74952ce5c7b0d0880be14901bb27c7e323066",
+        "context.txt": "761606c0c986042c633accf7cc4ec0d9b990f98acf1ee535fdcbb52fe98b9a09",
+        "report.md": "481d030fcc9bbe78efcb8bfd3a7512af1ebf6f4a78bf1477fb0072ca2414f513"
+      }
+    },
+    {
+      "case_id": "simpleqa-3787",
+      "query": "What is the surname of the individual who won the Green Chemistry Award in 2016?",
+      "answer": "Chirik",
+      "grade": {
+        "case_id": "simpleqa-3787",
+        "grade": "INCORRECT",
+        "target_correct": 0,
+        "expected_answer": "Anastas",
+        "report_sha256": "a5bdaaf44937066dd04b195d7e0e87c049d12a32a35d340b187fcf36e5c2e684",
+        "grader_model_requested": "gpt-5.6-luna",
+        "rubric": "upstream SimpleQA GRADER_TEMPLATE",
+        "limitation": "Same-model judge, not independent ground truth or complete report factuality."
+      },
+      "started_at": "2026-09-23T15:53:56.189033+00:00",
+      "ended_at": "2026-09-23T15:55:28.088930+00:00",
+      "metrics": {
+        "target_correct": 0,
+        "model_calls": 3,
+        "search_calls": 5,
+        "captured_pages": 7,
+        "elapsed_seconds": 91.90039706230164
+      },
+      "usage": {
+        "input_tokens": 24869,
+        "output_tokens": 1990,
+        "cached_input_tokens": 9728
+      },
+      "judge_usage": {
+        "input_tokens": 9843,
+        "output_tokens": 5,
+        "cached_input_tokens": 0
+      },
+      "trace": [
+        {
+          "kind": "llm.call",
+          "call_number": 1,
+          "stage": "agent selection",
+          "request_sha256": "abf5c7db245f64989bbc739fbc30612f58e492d80792831e22f6a1473c74f06d",
+          "response_sha256": "b9d009e159e6569484f0474060a7621364b909c1a0d1d35e34d3403c82e2cb00",
+          "observation": "Selected a scientific research role; did not choose an award winner.",
+          "prompt_term_counts": {
+            "Anastas": 0,
+            "Yale": 0,
+            "Royal Society of Chemistry": 0,
+            "Chirik": 0,
+            "DNSError": 0
+          }
+        },
+        {
+          "kind": "llm.call",
+          "call_number": 2,
+          "stage": "query planning",
+          "request_sha256": "cdca9d014253d98e4c66a48b47470a43a1d21e6b740466e6e20cc4029118bf99",
+          "response_sha256": "82676acf90ae2e6a5284e4c5ddc72739b33878361087c4f91a6deaa47ff6d0d6",
+          "observation": "Saw Yale and RSC leads for Paul Anastas and generated a targeted verification query.",
+          "prompt_term_counts": {
+            "Anastas": 3,
+            "Yale": 2,
+            "Royal Society of Chemistry": 2,
+            "Chirik": 1,
+            "DNSError": 0
+          },
+          "generated_queries": [
+            "2016 Green Chemistry Award winner surname",
+            "Paul Anastas 2016 Royal Society of Chemistry Green Chemistry Award",
+            "who won the Green Chemistry Award in 2016"
+          ]
+        },
+        {
+          "kind": "llm.call",
+          "call_number": 3,
+          "stage": "report writing",
+          "request_sha256": "19286c29e4f542185fd30a8c7d8b9df9b385f067e7643507abc34d85f4dbda8f",
+          "response_sha256": "a5bdaaf44937066dd04b195d7e0e87c049d12a32a35d340b187fcf36e5c2e684",
+          "observation": "Answered Chirik. The supplied prompt had no Anastas, Yale, Royal Society of Chemistry, or retrieval error notice.",
+          "prompt_term_counts": {
+            "Anastas": 0,
+            "Yale": 0,
+            "Royal Society of Chemistry": 0,
+            "Chirik": 5,
+            "DNSError": 0
+          }
+        }
+      ],
+      "searches": [
+        {
+          "query": "What is the surname of the individual who won the Green Chemistry Award in 2016?",
+          "result_count": 5,
+          "urls": [
+            "https://en.wikipedia.org/wiki/Green_Chemistry_Award",
+            "https://environment.yale.edu/news/article/paul-anastas-of-yale-wins-royal-society-of-chemistry-award",
+            "https://www.epa.gov/greenchemistry/presidential-green-chemistry-challenge-2016-academic-award",
+            "https://cen.acs.org/articles/94/i25/Green-success-stories-2016-Presidential.html",
+            "https://blogs.rsc.org/gc/2016/05/09/editorial-board-member-paul-anastas-wins-prestigious-green-chemistry-award/"
+          ]
+        },
+        {
+          "query": "who won the Green Chemistry Award in 2016",
+          "result_count": 5,
+          "urls": [
+            "https://www.epa.gov/archive/epa/newsreleases/epa-honors-winners-2016-presidential-green-chemistry-challenge-awards.html",
+            "https://www.epa.gov/greenchemistry/green-chemistry-challenge-winners",
+            "https://www.wateronline.com/doc/epa-honors-winners-presidential-green-chemistry-challenge-awards-0001",
+            "https://blogs.rsc.org/gc/2016/06/28/epa-announces-winners-of-2016-presidential-green-chemistry-challenge-awards/",
+            "https://natlawreview.com/article/2016-presidential-green-chemistry-challenge-award-winners-announced"
+          ]
+        },
+        {
+          "query": "2016 Green Chemistry Award winner surname",
+          "result_count": 5,
+          "urls": [
+            "https://www.epa.gov/greenchemistry/green-chemistry-challenge-winners",
+            "https://blogs.rsc.org/gc/2016/06/28/epa-announces-winners-of-2016-presidential-green-chemistry-challenge-awards/",
+            "https://www.wateronline.com/doc/epa-honors-winners-presidential-green-chemistry-challenge-awards-0001",
+            "https://www.fedcenter.gov/Announcements/index.cfm?id=29823",
+            "https://www.epa.gov/greenchemistry/presidential-green-chemistry-challenge-2016-academic-award"
+          ]
+        },
+        {
+          "query": "Paul Anastas 2016 Royal Society of Chemistry Green Chemistry Award",
+          "result_count": 0,
+          "urls": []
+        },
+        {
+          "query": "What is the surname of the individual who won the Green Chemistry Award in 2016?",
+          "result_count": 0,
+          "urls": []
+        }
+      ],
+      "captured_urls": [
+        "https://www.epa.gov/greenchemistry/presidential-green-chemistry-challenge-2016-academic-award",
+        "https://www.fedcenter.gov/Announcements/index.cfm?id=29823",
+        "https://www.epa.gov/archive/epa/newsreleases/epa-honors-winners-2016-presidential-green-chemistry-challenge-awards.html",
+        "https://blogs.rsc.org/gc/2016/06/28/epa-announces-winners-of-2016-presidential-green-chemistry-challenge-awards/",
+        "https://natlawreview.com/article/2016-presidential-green-chemistry-challenge-award-winners-announced",
+        "https://www.epa.gov/greenchemistry/green-chemistry-challenge-winners",
+        "https://www.wateronline.com/doc/epa-honors-winners-presidential-green-chemistry-challenge-awards-0001"
+      ],
+      "raw_file_sha256": {
+        "receipt.json": "fa6f2ece541189ff3de65524614eb6956de1ccb3c21c26cf37d5edb27a5ce457",
+        "search.jsonl": "7492fec4b68e3e913bfeb5c8a77f8871acdcd1e61d1b06cbe47daac2db0b27de",
+        "context.txt": "e614c7a5f7509d1f702a51bfcb42f91b4e046ac29c3d579c8c5eb7ff97b46456",
+        "report.md": "941f6f74fbf861a9e558146e4ec35bd551500b9379814780c7b2c8fb3c2f8269"
+      }
+    }
+  ]
+}
