@@ -17,7 +17,7 @@ reloads the result, and generates the HTML report. It makes **no model or search
 calls** and does not regenerate the original answers or judgments.
 
 The committed public report was generated with
-`--evidence-uri https://raw.githubusercontent.com/guybass/agent-eval-flow/codex/gpt-researcher-case-study/examples/data/gpt-researcher/capture.json` and copied into
+`--evidence-uri https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json` and copied into
 `examples/reports/03-gpt-researcher.html`. This keeps its evidence links portable
 and avoids publishing a machine-specific artifact-cache path.
 
@@ -107,6 +107,10 @@ The tested implementation and regression tests are available on the
 (commit `95df3f0`). To reproduce the focused regression in that checkout, install
 GPT Researcher's test dependencies and run
 `python -m pytest tests/test_planning_sources.py -q` with `GPTR_BLOCK_NETWORK=1`.
+
+Upstream review: [issue #2144](https://github.com/assafelovic/gpt-researcher/issues/2144)
+and [pull request #2145](https://github.com/assafelovic/gpt-researcher/pull/2145).
+The proposed fix is awaiting maintainer review; it is not part of upstream main.
 
 ## Provenance and publication boundaries
 
