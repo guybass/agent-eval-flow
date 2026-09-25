@@ -1,0 +1,15 @@
+{
+  "blank_issues_enabled": true,
+  "contact_links": [
+    {
+      "name": "Start contributing",
+      "url": "https://github.com/guybass/agent-eval-flow/blob/main/CONTRIBUTING.md",
+      "about": "Set up a checkout, find the right code, and open your first pull request."
+    },
+    {
+      "name": "Test and runtime setup",
+      "url": "https://github.com/guybass/agent-eval-flow/blob/main/tests/README.md",
+      "about": "Run offline tests or prepare an explicitly selected live integration."
+    }
+  ]
+}

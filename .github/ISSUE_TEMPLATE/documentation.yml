@@ -1,0 +1,42 @@
+{
+  "name": "Documentation improvement",
+  "description": "Flag unclear instructions, missing examples, or broken links.",
+  "body": [
+    {
+      "type": "markdown",
+      "attributes": {
+        "value": "Found a confusing step? You do not need a proposed fix to report it. Small documentation fixes can also go straight to a pull request. See [the contribution guide](https://github.com/guybass/agent-eval-flow/blob/main/CONTRIBUTING.md) for help getting started. Remove credentials and private data from examples."
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "location",
+      "attributes": {
+        "label": "Which page or example?",
+        "description": "Link the page, file, or section. If the documentation is missing entirely, describe where you expected to find it."
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "problem",
+      "attributes": {
+        "label": "What was unclear or missing?",
+        "description": "Describe what you were trying to do and where you got stuck. For setup instructions, include your OS and Python version if relevant."
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "suggestion",
+      "attributes": {
+        "label": "Suggested improvement (optional)",
+        "description": "Share wording, an example, or a corrected link if you have one. A suggestion is not required."
+      }
+    }
+  ]
+}

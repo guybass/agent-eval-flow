@@ -15,7 +15,8 @@ memory and environment.
 
 [Example reports](https://guybass.github.io/agent-eval-flow/) ·
 [Releases](https://github.com/guybass/agent-eval-flow/releases) ·
-[Report an issue](https://github.com/guybass/agent-eval-flow/issues)
+[Report an issue](https://github.com/guybass/agent-eval-flow/issues/new/choose) ·
+[Contribute](https://github.com/guybass/agent-eval-flow/blob/main/CONTRIBUTING.md)
 
 ## Install
 
@@ -85,12 +86,20 @@ These are small native-agent experiments on controlled synthetic tasks. They
 demonstrate specific changes, not general reliability or security accuracy.
 [Read the reports, walkthroughs and limits](https://github.com/guybass/agent-eval-flow/blob/main/examples/reports/README.md).
 
-## Development
+## Contributing
+
+Contributions are welcome, including documentation fixes, offline examples,
+regression tests, adapters, and report improvements. You can get started without
+model credentials. Small fixes can go straight to a pull request; for larger
+features, [open an issue](https://github.com/guybass/agent-eval-flow/issues/new/choose)
+to discuss the approach.
+
+Start with [the contribution guide](https://github.com/guybass/agent-eval-flow/blob/main/CONTRIBUTING.md) for setup on Windows,
+macOS, or Linux, a code map, local checks, and the steps to your first pull request.
 
 This is a developer preview. Native integrations require their own runtime setup
 and credentials; offline test success does not establish live compatibility.
 
-See [Contributing](https://github.com/guybass/agent-eval-flow/blob/main/CONTRIBUTING.md)
-for checks, [the test guide](https://github.com/guybass/agent-eval-flow/blob/main/tests/README.md)
+See [the test guide](https://github.com/guybass/agent-eval-flow/blob/main/tests/README.md)
 for live profiles, and [third-party notices](https://github.com/guybass/agent-eval-flow/blob/main/THIRD_PARTY_NOTICES.md)
 for fixture provenance and licenses.
