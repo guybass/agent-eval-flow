@@ -69,3 +69,49 @@ def test_real_stream_shapes_are_classified(tmp_path):
     assert rows[2]["content"] == "Anastas won"
     assert rows[3]["content"] == "Earlier: searched awards"
     assert w.coverage["tool_results"] and w.coverage["subagent_events"]
+
+
+from examples.deerflow_study.detector import aliases, normalize, trace_gold
+
+
+def _rows(*items):
+    return [{"seq": i, **item} for i, item in enumerate(items)]
+
+
+def test_detects_loss_between_retrieval_and_final_request():
+    r = _rows({"kind": "tool_result", "content": "Paul Anastas won the 2016 award"},
+              {"kind": "model_request", "agent": "lead", "messages": [{"type": "human", "text": "Q"},
+                                                                      {"type": "tool", "text": "Chirik EPA award"}]},
+              {"kind": "final_answer", "content": "Chirik"})
+    out = trace_gold(r, "Anastas", "Who won?", {"lead_model_requests": True})
+    assert out["retrieved"] and out["loss"] and out["in_final_request"] is False
+    assert out["loss_after"]["kind"] == "tool_result"
+
+
+def test_alias_and_normalization():
+    assert "anastas" in aliases("Paul Anastas") and "paul anastas" in aliases("Paul Anastas")
+    assert "1000" in aliases("1,000")
+    assert normalize("Vázquez  García!") == "vazquez garcia"
+
+
+def test_question_stage_ignored():
+    q = "Was it Anastas?"
+    r = _rows({"kind": "model_request", "agent": "lead",
+               "messages": [{"type": "human", "text": q + "\nAnswer concisely."}]},
+              {"kind": "final_answer", "content": "No idea"})
+    out = trace_gold(r, "Anastas", q, {"lead_model_requests": True})
+    assert out["retrieved"] is False and out["loss"] is False
+
+
+def test_unknown_coverage_is_not_loss():
+    r = _rows({"kind": "tool_result", "content": "Anastas"}, {"kind": "final_answer", "content": "Chirik"})
+    out = trace_gold(r, "Anastas", "Who?", {"lead_model_requests": False})
+    assert out["loss"] is False and "final_model_request" in out["unknown_stages"]
+
+
+def test_compaction_summary_is_a_stage():
+    r = _rows({"kind": "state_summary", "content": "Found: Anastas (RSC)"},
+              {"kind": "model_request", "agent": "lead", "messages": [{"type": "ai", "text": "Chirik"}]},
+              {"kind": "final_answer", "content": "Chirik"})
+    out = trace_gold(r, "Anastas", "Who?", {"lead_model_requests": True})
+    assert out["loss"] and out["last_seen"]["kind"] == "state_summary"
