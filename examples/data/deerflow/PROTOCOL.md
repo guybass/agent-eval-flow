@@ -32,3 +32,17 @@ A stage whose capture coverage is unknown is never counted as a loss point.
 **Budget.** OpenAI hard usage limit $5.00; the runner stops before a new question at $4.00 estimated spend.
 
 **Publication boundaries.** Only curated projections are published: counts, stage observations, URLs and hashes. Raw traces, prompts and page bodies stay local.
+
+## Experiment 2 (pre-registered 2026-09-28, before any FRAMES run)
+
+**Question.** How many lead-agent turns does DeerFlow need on multi-hop research questions, and how often is that more than the default budget allows (6 turns at `recursion_limit` 100 with `subagent_enabled=True`: 14 super-steps per turn + 9 per invocation, measured on both the study and the shipped example config)? Secondary: does evidence loss appear when sub-agents and compaction are exercised?
+
+**Questions.** Google FRAMES `test.tsv` (Hugging Face `google/frames-benchmark`, 824 rows, SHA-256 `4255093c93b595b5b04c7c8dde290b48ec87d72ca0fb0b760d9dd02740d669ff`). Rows with a gold answer of 40 characters or fewer are eligible, so answers can be graded deterministically. `select_questions(seed=20260929, n=12)` samples from the eligible rows.
+
+**Settings.** The same as experiment 1, except that `recursion_limit=300` is passed per call, so that runs can finish and their turn counts are observed. One trial per question.
+
+**Primary measure.** Lead-agent model turns per completed run, and the share of runs using more than 6 turns. A run that used more than 6 turns could not have finished under the default of 100. This is stated as "needed more than the default allows", not as a paired re-run.
+
+**Secondary.** Grade (deterministic; ambiguous answers go to manual review, recorded in DECISIONS.md), evidence-loss detector, and the Toolscore view (searches, fetches, sub-agent tasks, identical repeats).
+
+**Budget.** The runner stops before starting a question once total estimated spend (including the $0.24 already spent) reaches $3.00.

@@ -270,3 +270,14 @@ def test_identical_repeats_are_counted_separately_from_toolscore_redundancy(tmp_
     m = toolscore_metrics(rows)
     assert m["identical_repeats"] == 1          # only the second "q1" repeats a call exactly
     assert m["redundant_rate"] > 0.5            # Toolscore: calls beyond the contract's one search
+
+
+def test_selection_supports_tsv_columns_and_short_answer_filter(tmp_path):
+    path = tmp_path / "f.tsv"
+    lines = ["\tPrompt\tAnswer"] + [f"{i}\tQ{i}?\t{'A' * (5 if i % 2 else 60)}" for i in range(40)]
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    picked = select_questions(path, seed=7, n=5, expected_sha256=digest, question_col="Prompt",
+                              answer_col="Answer", delimiter="\t", max_answer_chars=40)
+    assert len(picked) == 5 and all(len(q["answer"]) <= 40 for q in picked)
+    assert all(q["question"] == f"Q{q['id']}?" for q in picked)
