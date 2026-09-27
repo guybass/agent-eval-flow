@@ -22,6 +22,9 @@ REPO = Path(__file__).resolve().parents[2]
 DATA = Path.home() / "deerflow-study-data"
 CSV_SHA256 = "feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
 SEED, N = 20260928, 15
+# Experiment 2 (PROTOCOL.md): FRAMES multi-hop questions, observed turn demand.
+FRAMES_SHA256 = "4255093c93b595b5b04c7c8dde290b48ec87d72ca0fb0b760d9dd02740d669ff"
+FRAMES_SEED, FRAMES_N, FRAMES_MAX_ANSWER, FRAMES_RECURSION_LIMIT = 20260929, 12, 40, 300
 LIMIT_USD = 3.00
 # DeerFlow surfaces provider failures as AI text; they are errors, never answers.
 PROVIDER_FAILURE = "LLM request failed"
@@ -73,12 +76,12 @@ def run_one(client_factory, question: dict, out_dir: Path, stream_kwargs: dict |
     return row
 
 
-def run_batch(questions, client_factory, out_dir, spent_usd, limit_usd, cost_fn):
+def run_batch(questions, client_factory, out_dir, spent_usd, limit_usd, cost_fn, stream_kwargs=None):
     rows = []
     for question in questions:
         if spent_usd >= limit_usd:
             break
-        row = run_one(client_factory, question, Path(out_dir))
+        row = run_one(client_factory, question, Path(out_dir), stream_kwargs=stream_kwargs)
         row["cost_usd_est"] = cost_fn(row["usage"])
         spent_usd += row["cost_usd_est"]
         rows.append(row)
@@ -97,7 +100,8 @@ def _load_env(path: Path) -> None:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--stage", type=int, choices=(1, 2), required=True)
+    parser.add_argument("--stage", type=int, choices=(1, 2))
+    parser.add_argument("--frames", action="store_true", help="run pre-registered experiment 2")
     parser.add_argument("--price-in", type=float, required=True, help="$ per 1M input tokens (DECISIONS.md)")
     parser.add_argument("--price-out", type=float, required=True, help="$ per 1M output tokens (DECISIONS.md)")
     parser.add_argument("--spent", type=float, default=0.0, help="spend so far, from the OpenAI usage page")
@@ -109,8 +113,17 @@ def main():
     from deerflow.client import DeerFlowClient
     from .questions import select_questions
 
-    questions = select_questions(DATA / "config" / "simpleqa.csv", SEED, N, CSV_SHA256)
-    questions = questions[:5] if args.stage == 1 else questions[5:]
+    if args.frames:
+        questions = select_questions(DATA / "config" / "frames_test.tsv", FRAMES_SEED, FRAMES_N, FRAMES_SHA256,
+                                     question_col="Prompt", answer_col="Answer", delimiter="\t",
+                                     max_answer_chars=FRAMES_MAX_ANSWER)
+        stream_kwargs, label = {"recursion_limit": FRAMES_RECURSION_LIMIT}, "frames"
+    elif args.stage in (1, 2):
+        questions = select_questions(DATA / "config" / "simpleqa.csv", SEED, N, CSV_SHA256)
+        questions = questions[:5] if args.stage == 1 else questions[5:]
+        stream_kwargs, label = None, f"stage{args.stage}"
+    else:
+        parser.error("choose --stage 1|2 or --frames")
 
     def factory(writer):
         return DeerFlowClient(config_path=config, thinking_enabled=False, subagent_enabled=True,
@@ -119,8 +132,8 @@ def main():
     def cost(usage):
         return usage["input_tokens"] / 1e6 * args.price_in + usage["output_tokens"] / 1e6 * args.price_out
 
-    rows = run_batch(questions, factory, DATA, args.spent, LIMIT_USD, cost)
-    out = DATA / "results" / f"stage{args.stage}.json"
+    rows = run_batch(questions, factory, DATA, args.spent, LIMIT_USD, cost, stream_kwargs=stream_kwargs)
+    out = DATA / "results" / f"{label}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(rows, indent=2, ensure_ascii=False), encoding="utf-8")
     print(json.dumps([{k: r.get(k) for k in ("id", "status", "answer", "cost_usd_est", "elapsed_s")}

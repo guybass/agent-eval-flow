@@ -281,3 +281,15 @@ def test_selection_supports_tsv_columns_and_short_answer_filter(tmp_path):
                               answer_col="Answer", delimiter="\t", max_answer_chars=40)
     assert len(picked) == 5 and all(len(q["answer"]) <= 40 for q in picked)
     assert all(q["question"] == f"Q{q['id']}?" for q in picked)
+
+
+def test_run_batch_passes_stream_kwargs_to_every_run(tmp_path):
+    clients = []
+
+    def factory(writer):
+        clients.append(KwargsRecordingClient())
+        return clients[-1]
+
+    run_batch([dict(QUESTION, id=i) for i in range(2)], factory, tmp_path, spent_usd=0, limit_usd=1,
+              cost_fn=lambda usage: 0.0, stream_kwargs={"recursion_limit": 300})
+    assert [c.kwargs for c in clients] == [{"recursion_limit": 300}] * 2
