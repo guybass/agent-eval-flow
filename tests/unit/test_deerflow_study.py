@@ -115,3 +115,51 @@ def test_compaction_summary_is_a_stage():
               {"kind": "final_answer", "content": "Chirik"})
     out = trace_gold(r, "Anastas", "Who?", {"lead_model_requests": True})
     assert out["loss"] and out["last_seen"]["kind"] == "state_summary"
+
+
+from examples.deerflow_study.grade import grade
+from examples.deerflow_study.run_pilot import run_batch, run_one
+
+
+class FakeClient:
+    """Emits deerflow.client.StreamEvent-shaped events."""
+
+    def __init__(self, fail=False):
+        self.fail = fail
+
+    def stream(self, message, thread_id=None, **kwargs):
+        if self.fail:
+            raise RuntimeError("rate limited")
+        yield Ev("messages-tuple", {"type": "tool", "name": "web_search", "content": "Anastas"})
+        yield Ev("messages-tuple", {"type": "ai", "id": "m1", "content": "Chi"})
+        yield Ev("messages-tuple", {"type": "ai", "id": "m1", "content": "rik"})
+        yield Ev("end", {"usage": {"input_tokens": 10, "output_tokens": 2, "total_tokens": 12}})
+
+
+QUESTION = {"id": 1, "question": "Who won?", "answer": "Anastas"}
+
+
+def test_answer_assembled_from_deltas_and_usage_from_end(tmp_path):
+    row = run_one(lambda writer: FakeClient(), QUESTION, tmp_path)
+    assert row["status"] == "ok" and row["answer"] == "Chirik"
+    assert row["usage"] == {"input_tokens": 10, "output_tokens": 2}
+    kinds = [json.loads(line)["kind"] for line in open(row["trace"], encoding="utf-8")]
+    assert kinds[0] == "tool_result" and kinds[-1] == "final_answer"
+
+
+def test_failed_run_recorded_not_scored(tmp_path):
+    row = run_one(lambda writer: FakeClient(fail=True), QUESTION, tmp_path)
+    assert row["status"] == "error" and "rate limited" in row["error"] and row["answer"] is None
+
+
+def test_budget_stop(tmp_path):
+    questions = [dict(QUESTION, id=i) for i in range(3)]
+    rows = run_batch(questions, lambda writer: FakeClient(), tmp_path, spent_usd=3.99, limit_usd=4.00,
+                     cost_fn=lambda usage: 0.02)
+    assert len(rows) == 1  # stops before starting a question once spend >= limit
+
+
+def test_grade():
+    assert grade("It was Paul Anastas.", "Anastas") == "correct"
+    assert grade("Chirik", "Anastas") == "incorrect"
+    assert grade("", "Anastas") == "review"
