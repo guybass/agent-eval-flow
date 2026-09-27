@@ -22,12 +22,13 @@ from .toolscore_view import evidence_tool, tool_calls, toolscore_metrics
 ANSWER_CHARS = 200
 
 
-def _gold_present(text: str, gold: str) -> bool:
+def _gold_present(text: str, gold: str, question: str) -> bool:
     padded = f" {normalize(text)} "
-    return any(f" {a} " in padded for a in aliases(gold))
+    return any(f" {a} " in padded for a in aliases(gold, question))
 
 
-def curate_run(result: dict, question: dict, *, experiment: str, recursion_limit: int) -> dict:
+def curate_run(result: dict, question: dict, *, experiment: str, recursion_limit: int,
+               manual_review: dict | None = None) -> dict:
     raw = Path(result["trace"]).read_bytes()
     rows = [json.loads(line) for line in raw.decode("utf-8").splitlines()]
     turns = sum(1 for r in rows if r["kind"] == "model_request")
@@ -41,23 +42,27 @@ def curate_run(result: dict, question: dict, *, experiment: str, recursion_limit
         "recursion_limit": recursion_limit, "status": result["status"],
         "error": (result.get("error") or "")[:200] or None,
         "answer": (result.get("answer") or "")[:ANSWER_CHARS] if ok else None,
-        "grade": grade(result["answer"], question["answer"]) if ok else None,
+        "grade": grade(result["answer"], question["answer"], question["question"]) if ok else None,
         "turns": turns, "elapsed_seconds": result.get("elapsed_s"),
         "started_at": started.isoformat(), "ended_at": ended.isoformat(), "timing": "approximate",
         "usage": result.get("usage"), "usage_complete": ok,
         "tool_calls": tool_calls(rows),
         "tool_results": [{"tool_call_id": r.get("tool_call_id"), "tool": r.get("tool"),
                           "chars": len(r.get("content") or ""),
-                          "gold_present": _gold_present(r.get("content") or "", question["answer"])}
+                          "gold_present": _gold_present(r.get("content") or "", question["answer"], question["question"])}
                          for r in rows if r["kind"] == "tool_result"],
         "subagent_events": sum(1 for r in rows if r["kind"] == "subagent_event"),
         "compaction_summaries": sum(1 for r in rows if r["kind"] == "state_summary"),
         "raw_trace_sha256": hashlib.sha256(raw).hexdigest(),
     }
     if ok:
+        row["grade_basis"] = "automatic"
+        if manual_review:
+            row.update(grade_automatic=row["grade"], grade=manual_review["grade"], grade_basis="manual review",
+                       manual_review_reason=manual_review["reason"])
         detected = trace_gold(rows, question["answer"], question["question"], result.get("coverage") or {})
         row["evidence"] = {k: detected[k] for k in ("retrieved", "in_final_request", "loss")}
-        row["evidence"]["first_tool"] = evidence_tool(rows, question["answer"])
+        row["evidence"]["first_tool"] = evidence_tool(rows, question["answer"], question["question"])
     try:
         metrics = toolscore_metrics(rows)
         row["toolscore"] = {k: metrics[k] for k in ("required_call_recall", "redundant_rate", "tool_calls",
@@ -75,13 +80,17 @@ def main():
     frames = {q["id"]: q for q in select_questions(DATA / "config/frames_test.tsv", FRAMES_SEED, FRAMES_N,
                                                     FRAMES_SHA256, question_col="Prompt", answer_col="Answer",
                                                     delimiter="\t", max_answer_chars=FRAMES_MAX_ANSWER)}
+    reviews = json.loads((Path(__file__).resolve().parents[1] / "data" / "deerflow" / "MANUAL_REVIEW.json")
+                         .read_text(encoding="utf-8"))["reviews"]
     runs = []
     for name, gold, limit, experiment in (("stage1", simpleqa, 100, "simpleqa"),
                                           ("stage2", simpleqa, 100, "simpleqa"),
                                           ("followup_rl300", simpleqa, 300, "simpleqa-followup"),
                                           ("frames", frames, FRAMES_RECURSION_LIMIT, "frames")):
         for result in json.loads((DATA / "results" / f"{name}.json").read_text(encoding="utf-8")):
-            runs.append(curate_run(result, gold[result["id"]], experiment=experiment, recursion_limit=limit))
+            case_id = f"{experiment}-{result['id']}"
+            runs.append(curate_run(result, gold[result["id"]], experiment=experiment, recursion_limit=limit,
+                                   manual_review=reviews.get(case_id)))
     capture = {
         "schema": "agent-eval-flow.deerflow-case-study/1",
         "upstream": {"repository": "bytedance/deer-flow", "commit": "827acf51dc4a713d99632f0319a62ee487598c77",

@@ -1,0 +1,9 @@
+{
+  "rule": "Answers the deterministic grader cannot decide are reviewed by hand. Each override records the automatic grade, the manual grade and the reason. Reviewed 2026-09-28, after seeing data.",
+  "reviews": {
+    "simpleqa-followup-2129": {
+      "grade": "correct",
+      "reason": "Answer 'Captain S. Kunwar' names the flight's captain by initial; the gold answer 'Surendra Kunwar' is that captain, the sole survivor of Yeti Airlines Flight 103 (Lukla, 8 Oct 2008). The automatic rule requires the full name, so it scored the initial form incorrect."
+    }
+  }
+}

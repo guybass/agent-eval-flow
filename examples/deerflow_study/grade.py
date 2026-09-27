@@ -2,8 +2,8 @@
 from .detector import aliases, normalize
 
 
-def grade(answer: str, gold: str) -> str:
+def grade(answer: str, gold: str, question: str = "") -> str:
     if not answer or not answer.strip():
         return "review"
     text = f" {normalize(answer)} "
-    return "correct" if any(f" {a} " in text for a in aliases(gold)) else "incorrect"
+    return "correct" if any(f" {a} " in text for a in aliases(gold, question)) else "incorrect"

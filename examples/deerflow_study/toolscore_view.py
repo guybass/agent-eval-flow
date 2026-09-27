@@ -20,9 +20,9 @@ def tool_calls(rows: list[dict]) -> list[dict]:
     return [call for row in rows if row["kind"] == "tool_call" for call in row.get("calls", ())]
 
 
-def evidence_tool(rows: list[dict], gold: str) -> str | None:
+def evidence_tool(rows: list[dict], gold: str, question: str = "") -> str | None:
     """The first stage that delivered the gold answer: a tool name, 'subagent' or 'summary'."""
-    names = aliases(gold)
+    names = aliases(gold, question)
     for row in rows:
         text = f" {normalize(row.get('content') or '')} "
         if not any(f" {a} " in text for a in names):

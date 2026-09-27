@@ -17,7 +17,7 @@ def normalize(text: str) -> str:
     text = unicodedata.normalize("NFKD", text or "")
     text = "".join(c for c in text if not unicodedata.combining(c)).lower()
     text = re.sub(r"(?<=\d)[,\s](?=\d{3}\b)", "", text)
-    text = re.sub(r"[^\w\s]", " ", text)
+    text = re.sub(r"[^\w\s]|_", " ", text)  # "_" is markdown emphasis, not part of a word
     return re.sub(r"\s+", " ", text).strip()
 
 
@@ -37,12 +37,15 @@ def _date_forms(base: str) -> set[str]:
     return {f"{month} {day} {year}", f"{day} {month} {year}", f"{year} {num:02d} {day:02d}"}
 
 
-def aliases(gold: str) -> set[str]:
+def aliases(gold: str, question: str = "") -> set[str]:
+    """The gold answer, equivalent date spellings, and the surname only when the
+    question itself asks for a surname or last name."""
     base = normalize(gold)
     out = {base} | _date_forms(base)
     words = base.split()
-    if not _date_forms(base) and len(words) > 1 and words[-1].isalpha() and len(words[-1]) >= 4:
-        out.add(words[-1])          # surname for person names
+    asks_surname = any(k in normalize(question) for k in ("surname", "last name", "family name"))
+    if asks_surname and len(words) > 1 and words[-1].isalpha():
+        out.add(words[-1])
     return {a for a in out if a}
 
 
@@ -59,7 +62,7 @@ def _request_text(row: dict, question: str) -> str:
 
 
 def trace_gold(rows: list[dict], gold: str, question: str, coverage: dict) -> dict:
-    names = aliases(gold)
+    names = aliases(gold, question)
     seen = []
     for row in rows:
         if row["kind"] in RETRIEVAL_KINDS:

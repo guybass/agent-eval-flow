@@ -89,7 +89,8 @@ def test_detects_loss_between_retrieval_and_final_request():
 
 
 def test_alias_and_normalization():
-    assert "anastas" in aliases("Paul Anastas") and "paul anastas" in aliases("Paul Anastas")
+    q = "What is the surname of the winner?"
+    assert "anastas" in aliases("Paul Anastas", q) and "paul anastas" in aliases("Paul Anastas", q)
     assert "1000" in aliases("1,000")
     assert normalize("Vázquez  García!") == "vazquez garcia"
 
@@ -160,7 +161,7 @@ def test_budget_stop(tmp_path):
 
 
 def test_grade():
-    assert grade("It was Paul Anastas.", "Anastas") == "correct"
+    assert grade("It was Paul Anastas.", "Anastas") == "correct"   # single-word gold needs no alias
     assert grade("Chirik", "Anastas") == "incorrect"
     assert grade("", "Anastas") == "review"
 
@@ -330,3 +331,29 @@ def test_deerflow_review_offline_roundtrip(tmp_path):
     summary = json.loads(out.stdout)
     assert summary["runs"] == 30 and summary["needed_more_than_default_in_primary_runs"] == 5
     assert (tmp_path / "report.html").exists() and (tmp_path / "tools.html").exists()
+
+
+def test_surname_alias_only_when_question_asks_for_surname():
+    assert "zulu" not in aliases("Mandlesizwe Zulu", question="Who is the seventh child?")
+    assert grade("Misuzulu Zulu", "Mandlesizwe Zulu", question="Who is the seventh child?") == "incorrect"
+    assert "anastas" in aliases("Paul Anastas", question="What is the surname of the winner?")
+    assert grade("Anastas", "Paul Anastas", question="What is the last name of the winner?") == "correct"
+
+
+def test_markdown_emphasis_does_not_block_a_match():
+    assert grade("The book is **_On the Road_ by Jack Kerouac**.", "On the Road by Jack Kerouac") == "correct"
+    assert normalize("__init__ _x_") == "init x"
+
+
+def test_manual_review_overrides_grade_with_recorded_reason(tmp_path):
+    trace = tmp_path / "raw" / "q9.jsonl"
+    w = TraceWriter(trace)
+    w.record("final_answer", content="Captain S. Kunwar")
+    w.close()
+    result = {"id": 9, "run_id": "q9", "status": "ok", "answer": "Captain S. Kunwar", "trace": str(trace),
+              "usage": {}, "elapsed_s": 1.0, "error": None, "coverage": {"lead_model_requests": True}}
+    review = {"grade": "correct", "reason": "initial S. identifies Surendra Kunwar, the captain"}
+    row = curate_run(result, {"question": "Who survived?", "answer": "Surendra Kunwar"},
+                     experiment="followup", recursion_limit=300, manual_review=review)
+    assert row["grade"] == "correct" and row["grade_basis"] == "manual review"
+    assert row["grade_automatic"] == "incorrect" and row["manual_review_reason"] == review["reason"]

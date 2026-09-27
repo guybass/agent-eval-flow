@@ -23,9 +23,9 @@ def build_table(results: list[dict], gold: dict) -> list[dict]:
         q = gold[r["id"]]
         rows = [json.loads(line) for line in Path(r["trace"]).read_text(encoding="utf-8").splitlines()]
         row = {"id": r["id"], "status": "ok", "gold": q["answer"], "answer": (r["answer"] or "")[:120],
-               "grade": grade(r["answer"], q["answer"]),
+               "grade": grade(r["answer"], q["answer"], q["question"]),
                **trace_gold(rows, q["answer"], q["question"], r["coverage"]),
-               "evidence_tool": evidence_tool(rows, q["answer"])}
+               "evidence_tool": evidence_tool(rows, q["answer"], q["question"])}
         try:
             row.update(toolscore_metrics(rows))
         except ImportError:

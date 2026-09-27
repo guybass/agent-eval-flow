@@ -220,6 +220,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "b491fc4340c2c778900014aad495b16c1559fd2a8dbd5a7a65f7031c498d76cb",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -292,6 +293,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "8850a4593146236150a5964af90183d86463c41946f9c68f9af4993a94385f9d",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -351,6 +353,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "f1eb22e9f29cb587e7344bce1d568d478ed8fe0cd71af6768a175143ea1ae02e",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -410,6 +413,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "b17091be3b5728bfe709829210f37df4f3bd34b3c0dbd4724823ba2c500b5312",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -469,6 +473,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "ff96843d95401ac259df745b2e1ac3aab5cd170423ceddc05188f612ef421254",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -573,6 +578,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "f54783ba69b17c584f5810c98bfb0b26d2263ea3aa52d72d34915bc89681e328",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": false,
         "in_final_request": false,
@@ -632,6 +638,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "fcb34cd69bd0efcc41621b3b97bccb1cfe469b0d7416b3c55f9af4b393341198",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -724,31 +731,31 @@
           "tool_call_id": "call_x1W0yyRJc7kmRjJldVGHcr9L",
           "tool": "web_search",
           "chars": 2941,
-          "gold_present": true
+          "gold_present": false
         },
         {
           "tool_call_id": "call_LlQZknnMsQ7vXX1o3NPj8soH",
           "tool": "web_search",
           "chars": 2208,
-          "gold_present": true
+          "gold_present": false
         },
         {
           "tool_call_id": "call_Ec5UDLYzPB9DwRrkRQnYR6np",
           "tool": "web_fetch",
           "chars": 4096,
-          "gold_present": true
+          "gold_present": false
         },
         {
           "tool_call_id": "call_KjsT91nEdKFzRUucMCzoYQGA",
           "tool": "web_fetch",
           "chars": 4096,
-          "gold_present": true
+          "gold_present": false
         },
         {
           "tool_call_id": "call_SJ3EokUaJIHMRg2F6nE1KR7Y",
           "tool": "web_search",
           "chars": 2075,
-          "gold_present": true
+          "gold_present": false
         }
       ],
       "subagent_events": 0,
@@ -807,6 +814,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "44f942a2fab3d3da7daf87340a42a41c9be1d0745e46e8550dc6c307759ba12f",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -881,6 +889,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "3f80391715a8752262fb029a5e91110096d724cdfcb9d763a5048f59b7a4fd67",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -1062,6 +1071,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "4725c7081b0be67378eefb2f5b5119c30fecc5454149a8ff81da9226020abd7f",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -1181,6 +1191,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "92b24f4baa5b7d02ab1be14b5c8490c44d5ca4f47b3bf30bac8ad9867d2ad412",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -1240,6 +1251,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "60f9374b06236572a4c592e75cf92053fc6079afb3f2fbf5b1885a5d5731ede5",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -1329,6 +1341,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "dc2b7843e655bf6b122204c22e05626ccd8822ff64db86770e1a27e9bac51233",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -1407,35 +1420,36 @@
           "tool_call_id": "call_c5zu0KtlIWeJ0nVfKjyCLM2A",
           "tool": "web_search",
           "chars": 2941,
-          "gold_present": true
+          "gold_present": false
         },
         {
           "tool_call_id": "call_gHUbSQq1LZMWpwsrEWVcVJi2",
           "tool": "web_search",
           "chars": 2249,
-          "gold_present": true
+          "gold_present": false
         },
         {
           "tool_call_id": "call_d8TkGBydDcogzW8s9KPtLQs3",
           "tool": "web_search",
           "chars": 2110,
-          "gold_present": true
+          "gold_present": false
         },
         {
           "tool_call_id": "call_fYOSMDtXMTsIavBTI99jObCw",
           "tool": "web_fetch",
           "chars": 4096,
-          "gold_present": true
+          "gold_present": false
         }
       ],
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "c2537a60464a827906a77c78d9198bc761078ee05dc79fbfbf3fc535dc1a6b78",
+      "grade_basis": "automatic",
       "evidence": {
-        "retrieved": true,
-        "in_final_request": true,
+        "retrieved": false,
+        "in_final_request": false,
         "loss": false,
-        "first_tool": "web_search"
+        "first_tool": null
       },
       "toolscore": {
         "required_call_recall": 1.0,
@@ -1568,23 +1582,26 @@
           "tool_call_id": "call_Araw2gz2FPHQ8fIuLZhLBYUC",
           "tool": "web_search",
           "chars": 2162,
-          "gold_present": true
+          "gold_present": false
         },
         {
           "tool_call_id": "call_DMabSyKnzmjaGpNihriXpTt0",
           "tool": "web_search",
           "chars": 2447,
-          "gold_present": true
+          "gold_present": false
         }
       ],
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "fa4fe9bf28f366d62215f6a961acbe4b54f3a8fd7cc81391951cba2192563654",
+      "grade_basis": "manual review",
+      "grade_automatic": "incorrect",
+      "manual_review_reason": "Answer 'Captain S. Kunwar' names the flight's captain by initial; the gold answer 'Surendra Kunwar' is that captain, the sole survivor of Yeti Airlines Flight 103 (Lukla, 8 Oct 2008). The automatic rule requires the full name, so it scored the initial form incorrect.",
       "evidence": {
-        "retrieved": true,
-        "in_final_request": true,
+        "retrieved": false,
+        "in_final_request": false,
         "loss": false,
-        "first_tool": "web_search"
+        "first_tool": null
       },
       "toolscore": {
         "required_call_recall": 0.5,
@@ -1693,12 +1710,13 @@
           "tool_call_id": "call_LWU0KG0Eb8zQGEiTYCNP3ThP",
           "tool": "web_search",
           "chars": 1824,
-          "gold_present": true
+          "gold_present": false
         }
       ],
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "226eacfc41b05f879948d30fadb1a690daf643a0f1082fbadb29eb7ef5c7c7ca",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -2249,6 +2267,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "4977a23a4bf82391ff77384ce75279a7b13be2b3b48107406f83624002288fa4",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": false,
         "in_final_request": false,
@@ -2308,6 +2327,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "ede6480ab4158173e0cc1f35e13c10f551c6c35951737197e3e5489530964002",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -2442,6 +2462,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "8c089eb2f96149fd8c28c7d86da225694a4c4d0b2fe6cad023aba425c6998bda",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -2484,6 +2505,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "472704b8735d780d56b18be5b3740400071050c3f33884c0a8e30e963691d6e5",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": false,
         "in_final_request": false,
@@ -2573,6 +2595,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "70b2cf9daec4441923566dffeb37afc7f1504280eea04668731b07e64f1c018f",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -2632,6 +2655,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "db4f4dd394abc8e13bcb5f8c9aedc3e1d4c5d27b645bf17de32dbdfe7ac428a5",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -2706,6 +2730,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "b39e430bccab88073d2c550ae25262f223c99936e6880101e606c4babb66d1d2",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -2795,6 +2820,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "6ba2c79fa0d7afa56845ad214dc807192594de2b17b3aa22d2639bbc57feeaaf",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
@@ -2914,6 +2940,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "f987506616c0ffcb4863f98dc9c3ae797a7515a6ea79af9099a80df36182b244",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": false,
         "in_final_request": false,
@@ -3087,6 +3114,7 @@
       "subagent_events": 0,
       "compaction_summaries": 0,
       "raw_trace_sha256": "9dacc22b167a923fd7413ddb53ffd74de74b66a373d0c52c11991a124e66143b",
+      "grade_basis": "automatic",
       "evidence": {
         "retrieved": true,
         "in_final_request": true,
