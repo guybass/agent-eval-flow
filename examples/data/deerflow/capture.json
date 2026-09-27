@@ -1,0 +1,3107 @@
+{
+  "schema": "agent-eval-flow.deerflow-case-study/1",
+  "upstream": {
+    "repository": "bytedance/deer-flow",
+    "commit": "827acf51dc4a713d99632f0319a62ee487598c77",
+    "entry_point": "deerflow.client.DeerFlowClient (embedded, backend only)"
+  },
+  "configuration": {
+    "model": "gpt-5.6-luna",
+    "api": "OpenAI Responses (langchain_openai.ChatOpenAI)",
+    "web_search": "DDG",
+    "web_fetch": "Jina",
+    "subagent_enabled": true,
+    "thinking_enabled": false,
+    "memory_enabled": false,
+    "summarization_enabled": true
+  },
+  "lead_agent_graph": {
+    "super_steps_per_turn": 14,
+    "super_steps_per_invocation": 9,
+    "turns_within_recursion_limit_100": 6,
+    "shipped_config_subagents_off": {
+      "super_steps_per_turn": 13,
+      "turns": 7
+    }
+  },
+  "datasets": {
+    "simpleqa": {
+      "file": "Simple QA Test Set.csv @ gpt-researcher 6f998577",
+      "sha256": "feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+      "seed": 20260928,
+      "n": 15,
+      "license": "MIT (openai/simple-evals)"
+    },
+    "frames": {
+      "file": "google/frames-benchmark test.tsv",
+      "sha256": "4255093c93b595b5b04c7c8dde290b48ec87d72ca0fb0b760d9dd02740d669ff",
+      "seed": 20260929,
+      "n": 12,
+      "max_answer_chars": 40,
+      "license": "Apache-2.0"
+    }
+  },
+  "runs": [
+    {
+      "case_id": "simpleqa-2295",
+      "experiment": "simpleqa",
+      "row_index": 2295,
+      "query": "In what year did Dr. William Schwartz discover that sulfanilamide also acts as a diuretic in people with congestive heart failure?",
+      "expected_answer": "1949",
+      "recursion_limit": 100,
+      "status": "error",
+      "error": "GraphRecursionError: Recursion limit of 100 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.\nFor troubleshooting, visit: https://docs.l",
+      "answer": null,
+      "grade": null,
+      "turns": 6,
+      "elapsed_seconds": 28.7,
+      "started_at": "2026-09-27T22:18:27.447343+00:00",
+      "ended_at": "2026-09-27T22:18:56.147343+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0
+      },
+      "usage_complete": false,
+      "tool_calls": [
+        {
+          "id": "call_z77NLfy9h48ADT0kJUJQ3CqQ",
+          "tool": "web_search",
+          "args": {
+            "query": "Dr. William Schwartz sulfanilamide diuretic congestive heart failure year discovered",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_lnaAh8kuvRxEeYvEhjY5qKMH",
+          "tool": "web_search",
+          "args": {
+            "query": "\"William Schwartz\" \"sulfanilamide\" 1950 congestive heart failure diuretic year AHA funding discovers",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_CFPBXke9MtnilalDKmYilrcu",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://www.heart.org/-/media/files/about-us/history/history-of-the-american-heart-association.pdf"
+          }
+        },
+        {
+          "id": "call_K896yIN8KdxxDcicxEwbxkMq",
+          "tool": "web_search",
+          "args": {
+            "query": "site:heart.org \"Dr. William Schwartz receives AHA funding\" year",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_YBEJ8ZarMsmwTCAGKSsyVJYz",
+          "tool": "web_search",
+          "args": {
+            "query": "\"sulfanilamide can act as a diuretic\" Schwartz year",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_FF8pW0ktPyA0TPigywEHIBwN",
+          "tool": "web_search",
+          "args": {
+            "query": "AHA history timeline \"William Schwartz\" \"194\" sulfanilamide",
+            "max_results": 10,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_z77NLfy9h48ADT0kJUJQ3CqQ",
+          "tool": "web_search",
+          "chars": 2447,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_lnaAh8kuvRxEeYvEhjY5qKMH",
+          "tool": "web_search",
+          "chars": 2175,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_CFPBXke9MtnilalDKmYilrcu",
+          "tool": "web_fetch",
+          "chars": 56,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_K896yIN8KdxxDcicxEwbxkMq",
+          "tool": "web_search",
+          "chars": 682,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_YBEJ8ZarMsmwTCAGKSsyVJYz",
+          "tool": "web_search",
+          "chars": 1997,
+          "gold_present": false
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "487bcf219f1cd99a6991aa632c1af920d76875fd334645d0d71b39b0519cd1a5",
+      "toolscore": {
+        "required_call_recall": 1.0,
+        "redundant_rate": 0.6666666666666666,
+        "tool_calls": 6,
+        "searches": 5,
+        "fetches": 1,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-261",
+      "experiment": "simpleqa",
+      "row_index": 261,
+      "query": "Who won the gold medal in men's foil at the first European Fencing Championships?",
+      "expected_answer": "Andrea Borella",
+      "recursion_limit": 100,
+      "status": "ok",
+      "error": null,
+      "answer": "Andrea Borella of Italy won the gold medal in men’s foil at the first European Fencing Championships in 1981. [citation:1981 European Fencing Championships](https://en.wikipedia.org/wiki/1981_European",
+      "grade": "correct",
+      "turns": 3,
+      "elapsed_seconds": 10.3,
+      "started_at": "2026-09-27T22:18:56.107341+00:00",
+      "ended_at": "2026-09-27T22:19:06.407341+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 66390,
+        "output_tokens": 492
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_4GP61qKQJQdM7UxoO1zbLLk6",
+          "tool": "web_search",
+          "args": {
+            "query": "first European Fencing Championships men's foil gold medal winner inaugural European Fencing Championships",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_aYN1OKAwPslNHIb8PhVTD9EU",
+          "tool": "web_search",
+          "args": {
+            "query": "1981 European Fencing Championships men's foil winner Foggia gold medalist",
+            "max_results": 10,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_4GP61qKQJQdM7UxoO1zbLLk6",
+          "tool": "web_search",
+          "chars": 2235,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_aYN1OKAwPslNHIb8PhVTD9EU",
+          "tool": "web_search",
+          "chars": 2297,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "b491fc4340c2c778900014aad495b16c1559fd2a8dbd5a7a65f7031c498d76cb",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.5,
+        "tool_calls": 2,
+        "searches": 2,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-1753",
+      "experiment": "simpleqa",
+      "row_index": 1753,
+      "query": "Who was the Brazilian Vice-President of the International Mathematical Union in 2012?",
+      "expected_answer": "Marcelo Viana",
+      "recursion_limit": 100,
+      "status": "ok",
+      "error": null,
+      "answer": "Marcelo Viana was the Brazilian Vice-President of the International Mathematical Union in 2012. [citation:IMU Leadership 2011–2014](https://www.mathunion.org/organization/imu-representatives/imu-leade",
+      "grade": "correct",
+      "turns": 3,
+      "elapsed_seconds": 12.1,
+      "started_at": "2026-09-27T22:19:06.437340+00:00",
+      "ended_at": "2026-09-27T22:19:18.537340+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 68786,
+        "output_tokens": 582
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_17QHtMgu0qPtCtOU2gxjCt1F",
+          "tool": "web_search",
+          "args": {
+            "query": "site:mathunion.org 2012 Brazilian Vice-President International Mathematical Union",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_DsPYZLiafXeKAQBOgJM5I6YQ",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://www.mathunion.org/organization/imu-representatives/imu-leadership-2011-2014"
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_17QHtMgu0qPtCtOU2gxjCt1F",
+          "tool": "web_search",
+          "chars": 2417,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_DsPYZLiafXeKAQBOgJM5I6YQ",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "8850a4593146236150a5964af90183d86463c41946f9c68f9af4993a94385f9d",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 1.0,
+        "redundant_rate": 0.0,
+        "tool_calls": 2,
+        "searches": 1,
+        "fetches": 1,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-775",
+      "experiment": "simpleqa",
+      "row_index": 775,
+      "query": "What year was the municipality of Alejandría, Antioquia, Colombia, founded?",
+      "expected_answer": "1886",
+      "recursion_limit": 100,
+      "status": "ok",
+      "error": null,
+      "answer": "Alejandría was founded in **1886**. [citation:Alejandría - Wikipedia](https://en.wikipedia.org/wiki/Alejandría)",
+      "grade": "correct",
+      "turns": 2,
+      "elapsed_seconds": 6.9,
+      "started_at": "2026-09-27T22:19:18.507340+00:00",
+      "ended_at": "2026-09-27T22:19:25.407340+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 43492,
+        "output_tokens": 266
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_q7YJ0X0MaRd8gVSD6Jc5zVfd",
+          "tool": "web_search",
+          "args": {
+            "query": "Alejandría Antioquia Colombia founded year municipality fundación",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_q7YJ0X0MaRd8gVSD6Jc5zVfd",
+          "tool": "web_search",
+          "chars": 3066,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "f1eb22e9f29cb587e7344bce1d568d478ed8fe0cd71af6768a175143ea1ae02e",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.0,
+        "tool_calls": 1,
+        "searches": 1,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-3640",
+      "experiment": "simpleqa",
+      "row_index": 3640,
+      "query": "What are the day, month, and year of birth of the linguist William Croft?",
+      "expected_answer": "November 13, 1956",
+      "recursion_limit": 100,
+      "status": "ok",
+      "error": null,
+      "answer": "William Croft was born on **13 November 1956**. [citation:William Croft (linguist)](https://en.wikipedia.org/wiki/William_Croft_(linguist))",
+      "grade": "correct",
+      "turns": 2,
+      "elapsed_seconds": 6.3,
+      "started_at": "2026-09-27T22:19:25.397337+00:00",
+      "ended_at": "2026-09-27T22:19:31.697337+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 43354,
+        "output_tokens": 312
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_tEDXTk4tpWPsFCfD9MdDpATS",
+          "tool": "web_search",
+          "args": {
+            "query": "William Croft linguist date of birth day month year biography",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_tEDXTk4tpWPsFCfD9MdDpATS",
+          "tool": "web_search",
+          "chars": 2137,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "b17091be3b5728bfe709829210f37df4f3bd34b3c0dbd4724823ba2c500b5312",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.0,
+        "tool_calls": 1,
+        "searches": 1,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-2882",
+      "experiment": "simpleqa",
+      "row_index": 2882,
+      "query": "In what year was the Society of Illustrators' first Annual Exhibition held?",
+      "expected_answer": "1959",
+      "recursion_limit": 100,
+      "status": "ok",
+      "error": null,
+      "answer": "The Society of Illustrators’ first Annual Exhibition was held in **1959**. [citation:Society of Illustrators](https://en.wikipedia.org/wiki/Society_of_Illustrators)",
+      "grade": "correct",
+      "turns": 2,
+      "elapsed_seconds": 5.4,
+      "started_at": "2026-09-27T22:23:20.057319+00:00",
+      "ended_at": "2026-09-27T22:23:25.457319+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 42852,
+        "output_tokens": 300
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_qENVRA3ugw07nLdkT0TQJUAM",
+          "tool": "web_search",
+          "args": {
+            "query": "Society of Illustrators first Annual Exhibition held year",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_qENVRA3ugw07nLdkT0TQJUAM",
+          "tool": "web_search",
+          "chars": 2131,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "ff96843d95401ac259df745b2e1ac3aab5cd170423ceddc05188f612ef421254",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.0,
+        "tool_calls": 1,
+        "searches": 1,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-1603",
+      "experiment": "simpleqa",
+      "row_index": 1603,
+      "query": "What was the total revenue in dollars of the 2018 \"Reputation Stadium Tour\" by the singer Taylor Swift that happened in New Zealand?",
+      "expected_answer": "$3,617,593",
+      "recursion_limit": 100,
+      "status": "ok",
+      "error": null,
+      "answer": "The 2018 *Reputation Stadium Tour* grossed approximately **$345.7 million** overall. [citation:Billboard](https://www.billboard.com/pro/taylor-swift-reputation-stadium-tour-345-million/)",
+      "grade": "incorrect",
+      "turns": 3,
+      "elapsed_seconds": 12.0,
+      "started_at": "2026-09-27T22:23:25.477322+00:00",
+      "ended_at": "2026-09-27T22:23:37.477322+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 70646,
+        "output_tokens": 946
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_KXNG07bzIWmGphR67U1cCWBC",
+          "tool": "web_search",
+          "args": {
+            "query": "Taylor Swift 2018 Reputation Stadium Tour New Zealand total revenue dollars",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_O2vKfupzv6Uh8EWGBh3Ogh8R",
+          "tool": "web_search",
+          "args": {
+            "query": "Taylor Swift Reputation Stadium Tour 2018 revenue Billboard New Zealand",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_ozoQ077wdsi47z7BeheRXz1k",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Reputation Stadium Tour\" \"$345.7 million\" revenue source",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_DJOPco6LGsCuUDGEXNdcyini",
+          "tool": "web_search",
+          "args": {
+            "query": "Taylor Swift Reputation Stadium Tour total gross $345,675,146 2018",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_KXNG07bzIWmGphR67U1cCWBC",
+          "tool": "web_search",
+          "chars": 1905,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_O2vKfupzv6Uh8EWGBh3Ogh8R",
+          "tool": "web_search",
+          "chars": 2340,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_DJOPco6LGsCuUDGEXNdcyini",
+          "tool": "web_search",
+          "chars": 1948,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_ozoQ077wdsi47z7BeheRXz1k",
+          "tool": "web_search",
+          "chars": 2880,
+          "gold_present": false
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "f54783ba69b17c584f5810c98bfb0b26d2263ea3aa52d72d34915bc89681e328",
+      "evidence": {
+        "retrieved": false,
+        "in_final_request": false,
+        "loss": false,
+        "first_tool": null
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.75,
+        "tool_calls": 4,
+        "searches": 4,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-2748",
+      "experiment": "simpleqa",
+      "row_index": 2748,
+      "query": "What are the first and last names of the designer of 50 francs with the Little Prince images?",
+      "expected_answer": "Roger Pfund",
+      "recursion_limit": 100,
+      "status": "ok",
+      "error": null,
+      "answer": "The designer was **Roger Pfund**. [citation:Billet de 50 francs Saint-Exupéry](https://fr.wikipedia.org/wiki/Billet_de_50_francs_Saint-Exupéry)",
+      "grade": "correct",
+      "turns": 2,
+      "elapsed_seconds": 6.4,
+      "started_at": "2026-09-27T22:23:37.457311+00:00",
+      "ended_at": "2026-09-27T22:23:43.857311+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 44228,
+        "output_tokens": 472
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_M4lFqSGEs94NPjy2GXqCOeuX",
+          "tool": "web_search",
+          "args": {
+            "query": "50 franc banknote Little Prince designer name Saint-Exupéry 50 francs designer",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_M4lFqSGEs94NPjy2GXqCOeuX",
+          "tool": "web_search",
+          "chars": 4077,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "fcb34cd69bd0efcc41621b3b97bccb1cfe469b0d7416b3c55f9af4b393341198",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.0,
+        "tool_calls": 1,
+        "searches": 1,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-4190",
+      "experiment": "simpleqa",
+      "row_index": 4190,
+      "query": "What is the name of King Goodwill Zwelithini's seventh child by his wife, Queen Mantfombi Dlamini?",
+      "expected_answer": "Mandlesizwe Zulu",
+      "recursion_limit": 100,
+      "status": "error",
+      "error": "GraphRecursionError: Recursion limit of 100 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.\nFor troubleshooting, visit: https://docs.l",
+      "answer": null,
+      "grade": null,
+      "turns": 6,
+      "elapsed_seconds": 20.4,
+      "started_at": "2026-09-27T22:23:43.877296+00:00",
+      "ended_at": "2026-09-27T22:24:04.277296+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0
+      },
+      "usage_complete": false,
+      "tool_calls": [
+        {
+          "id": "call_x1W0yyRJc7kmRjJldVGHcr9L",
+          "tool": "web_search",
+          "args": {
+            "query": "King Goodwill Zwelithini Queen Mantfombi Dlamini seventh child name",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_LlQZknnMsQ7vXX1o3NPj8soH",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Mantfombi\" \"seventh\" child Zwelithini daughter son list children",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_Ec5UDLYzPB9DwRrkRQnYR6np",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://answersafrica.com/who-are-king-goodwill-zwelithinis-sons-meet-the-14-princes.html"
+          }
+        },
+        {
+          "id": "call_KjsT91nEdKFzRUucMCzoYQGA",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://briefly.co.za/96525-list-king-zwelithini-wives-children-images.html"
+          }
+        },
+        {
+          "id": "call_SJ3EokUaJIHMRg2F6nE1KR7Y",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Mantfombi Dlamini\" children \"Princess\" \"Prince\" Misuzulu siblings names",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_cmkOtiuZZXhFTrv9mg4WGZci",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/Mantfombi_Dlamini"
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_x1W0yyRJc7kmRjJldVGHcr9L",
+          "tool": "web_search",
+          "chars": 2941,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_LlQZknnMsQ7vXX1o3NPj8soH",
+          "tool": "web_search",
+          "chars": 2208,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_Ec5UDLYzPB9DwRrkRQnYR6np",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_KjsT91nEdKFzRUucMCzoYQGA",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_SJ3EokUaJIHMRg2F6nE1KR7Y",
+          "tool": "web_search",
+          "chars": 2075,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "9d85a263a25c9258e28f2835f2e361de305d087ec857cf42b8c23d3ba808177c",
+      "toolscore": {
+        "required_call_recall": 1.0,
+        "redundant_rate": 0.6666666666666666,
+        "tool_calls": 6,
+        "searches": 3,
+        "fetches": 3,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-3790",
+      "experiment": "simpleqa",
+      "row_index": 3790,
+      "query": "On which day, month, and year did Indu Malhotra retire as a judge of the Supreme Court of India?",
+      "expected_answer": "13 March 2021",
+      "recursion_limit": 100,
+      "status": "ok",
+      "error": null,
+      "answer": "Indu Malhotra retired on **13 March 2021**. [citation:Times of India](https://timesofindia.indiatimes.com/india/choked-with-emotion-justice-indu-malhotra-retires-from-sc/articleshow/81463483.cms)",
+      "grade": "correct",
+      "turns": 2,
+      "elapsed_seconds": 6.8,
+      "started_at": "2026-09-27T22:24:04.317288+00:00",
+      "ended_at": "2026-09-27T22:24:11.117288+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 43130,
+        "output_tokens": 352
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_xufSw9feVQRHmBEyl43Hf7hL",
+          "tool": "web_search",
+          "args": {
+            "query": "Indu Malhotra retired judge Supreme Court of India date 2021",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_xufSw9feVQRHmBEyl43Hf7hL",
+          "tool": "web_search",
+          "chars": 2173,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "44f942a2fab3d3da7daf87340a42a41c9be1d0745e46e8550dc6c307759ba12f",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.0,
+        "tool_calls": 1,
+        "searches": 1,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-238",
+      "experiment": "simpleqa",
+      "row_index": 238,
+      "query": "What year did Elizabeth Esteve-Coll become the first female director of the University of Surrey Library?",
+      "expected_answer": "1982",
+      "recursion_limit": 100,
+      "status": "ok",
+      "error": null,
+      "answer": "Elizabeth Esteve-Coll became the first female director of the University of Surrey Library in **1982**. [citation:Birkbeck Perspectives](https://perspectives.blogs.bbk.ac.uk/2023/12/14/200th-anniversa",
+      "grade": "correct",
+      "turns": 3,
+      "elapsed_seconds": 9.3,
+      "started_at": "2026-09-27T22:24:11.157287+00:00",
+      "ended_at": "2026-09-27T22:24:20.457287+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 67254,
+        "output_tokens": 442
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_UeQNZmM5srVqLDLsrdYg0RGG",
+          "tool": "web_search",
+          "args": {
+            "query": "Elizabeth Esteve-Coll first female director University of Surrey Library year",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_BM6ELaxH1M9FzSTf8gMxny8A",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Esteve-Coll\" \"University of Surrey Library\" director year",
+            "max_results": 10,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_UeQNZmM5srVqLDLsrdYg0RGG",
+          "tool": "web_search",
+          "chars": 2280,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_BM6ELaxH1M9FzSTf8gMxny8A",
+          "tool": "web_search",
+          "chars": 4393,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "3f80391715a8752262fb029a5e91110096d724cdfcb9d763a5048f59b7a4fd67",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.5,
+        "tool_calls": 2,
+        "searches": 2,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-2129",
+      "experiment": "simpleqa",
+      "row_index": 2129,
+      "query": "What is the name of the sole survivor of the 2008 Yeti Airlines Flight 103 crash?",
+      "expected_answer": "Surendra Kunwar",
+      "recursion_limit": 100,
+      "status": "error",
+      "error": "GraphRecursionError: Recursion limit of 100 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.\nFor troubleshooting, visit: https://docs.l",
+      "answer": null,
+      "grade": null,
+      "turns": 6,
+      "elapsed_seconds": 23.0,
+      "started_at": "2026-09-27T22:24:20.497269+00:00",
+      "ended_at": "2026-09-27T22:24:43.497269+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0
+      },
+      "usage_complete": false,
+      "tool_calls": [
+        {
+          "id": "call_Uin3qtZ2WBuTxzfJkz0uk5nN",
+          "tool": "web_search",
+          "args": {
+            "query": "2008 Yeti Airlines Flight 103 crash sole survivor name",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_DBPsvOyQofa9dIHS39mgsRGL",
+          "tool": "web_search",
+          "args": {
+            "query": "Yeti Airlines 103 sole survivor name 2008 Lukla crash survivor pilot co-pilot engineer",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_QnyWG4Hr5dSFC5gqJE3JAbQ2",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Yeti Airlines Flight 103\" survivor name",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_0iFtFIDzR6IUx9rqtJml3mp4",
+          "tool": "web_search",
+          "args": {
+            "query": "October 8 2008 Lukla plane crash sole survivor name Yeti pilot",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_LwSmJeM3YS6puwfgJrTvyi0i",
+          "tool": "web_search",
+          "args": {
+            "query": "\"only one\" survived \"Yeti Airlines\" 2008 name Lukla",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_4R5p0rt7Vi5kuXzWZsWknQQQ",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Yeti Airlines Flight 101\" \"survivor\" name 2008",
+            "max_results": 10,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_Uin3qtZ2WBuTxzfJkz0uk5nN",
+          "tool": "web_search",
+          "chars": 2093,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_DBPsvOyQofa9dIHS39mgsRGL",
+          "tool": "web_search",
+          "chars": 2095,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_QnyWG4Hr5dSFC5gqJE3JAbQ2",
+          "tool": "web_search",
+          "chars": 1895,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_0iFtFIDzR6IUx9rqtJml3mp4",
+          "tool": "web_search",
+          "chars": 2272,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_LwSmJeM3YS6puwfgJrTvyi0i",
+          "tool": "web_search",
+          "chars": 2303,
+          "gold_present": false
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "36fb6e8e11b0302ca6b39132ffdbeac295dae352a13a41b9d6193bed8845e505",
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.8333333333333334,
+        "tool_calls": 6,
+        "searches": 6,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-3295",
+      "experiment": "simpleqa",
+      "row_index": 3295,
+      "query": "In what year did Dennis Ichiyama become the designer-in-residence at the Hamilton Wood Type and Printing Museum in Two Rivers, Wisconsin, working with historic wood type?",
+      "expected_answer": "1999",
+      "recursion_limit": 100,
+      "status": "ok",
+      "error": null,
+      "answer": "Dennis Ichiyama became the designer-in-residence in **1999**. [citation:Katherine Small Gallery](https://ksmallgallery.com/products/a-woodtype-print-by-dennis-y-ichiyama-white)",
+      "grade": "correct",
+      "turns": 2,
+      "elapsed_seconds": 4.3,
+      "started_at": "2026-09-27T22:24:43.497277+00:00",
+      "ended_at": "2026-09-27T22:24:47.797277+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 43262,
+        "output_tokens": 272
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_cLnJSvI53105k34bz4KVndIH",
+          "tool": "web_search",
+          "args": {
+            "query": "Dennis Ichiyama designer-in-residence Hamilton Wood Type and Printing Museum year",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_cLnJSvI53105k34bz4KVndIH",
+          "tool": "web_search",
+          "chars": 2176,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "4725c7081b0be67378eefb2f5b5119c30fecc5454149a8ff81da9226020abd7f",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.0,
+        "tool_calls": 1,
+        "searches": 1,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-4321",
+      "experiment": "simpleqa",
+      "row_index": 4321,
+      "query": "The book \"Rhine\" by Anselm Kiefer is from what year?",
+      "expected_answer": "1981.",
+      "recursion_limit": 100,
+      "status": "ok",
+      "error": null,
+      "answer": "*Rhine* by Anselm Kiefer is from **1981**. [citation:Tate](https://www.tate.org.uk/art/artworks/kiefer-the-rhine-t04128)",
+      "grade": "correct",
+      "turns": 5,
+      "elapsed_seconds": 16.9,
+      "started_at": "2026-09-27T22:24:47.847273+00:00",
+      "ended_at": "2026-09-27T22:25:04.747273+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 122886,
+        "output_tokens": 830
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_8H7Gvi6EnR3PtEscT0T4J78Z",
+          "tool": "web_search",
+          "args": {
+            "query": "Anselm Kiefer book Rhine year publication \"Rhine\"",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_MuoAawJ6xAFz6iaWlwdNl3wJ",
+          "tool": "web_search",
+          "args": {
+            "query": "Anselm Kiefer \"Rhine\" book publication year",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_7B9VRPRThVAvU7HrBfDOwetY",
+          "tool": "web_search",
+          "args": {
+            "query": "Anselm Kiefer bibliography Rhine book",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_arnzZuwmDmnrrJyDGR31rqmi",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Rhine\" \"Anselm Kiefer\" book ISBN",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_8yGniYROeRprGhm9nq1MCb7L",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Rhine\" \"Anselm Kiefer\" publication",
+            "max_results": 10,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_8H7Gvi6EnR3PtEscT0T4J78Z",
+          "tool": "web_search",
+          "chars": 2265,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_7B9VRPRThVAvU7HrBfDOwetY",
+          "tool": "web_search",
+          "chars": 2232,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_MuoAawJ6xAFz6iaWlwdNl3wJ",
+          "tool": "web_search",
+          "chars": 2117,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_arnzZuwmDmnrrJyDGR31rqmi",
+          "tool": "web_search",
+          "chars": 2030,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_8yGniYROeRprGhm9nq1MCb7L",
+          "tool": "web_search",
+          "chars": 2052,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "92b24f4baa5b7d02ab1be14b5c8490c44d5ca4f47b3bf30bac8ad9867d2ad412",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.8,
+        "tool_calls": 5,
+        "searches": 5,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-800",
+      "experiment": "simpleqa",
+      "row_index": 800,
+      "query": "What was the name of Claudio Bunster Weitzman, the Chilean theoretical physicist, until 2005?",
+      "expected_answer": "Claudio Teitelboim Weitzman",
+      "recursion_limit": 100,
+      "status": "ok",
+      "error": null,
+      "answer": "Until 2005, he was named **Claudio Teitelboim Weitzman**. [citation:Tel Aviv University profile](https://ias.tau.ac.il/Prof_Claudio_Bunster)",
+      "grade": "correct",
+      "turns": 2,
+      "elapsed_seconds": 5.3,
+      "started_at": "2026-09-27T22:25:04.747274+00:00",
+      "ended_at": "2026-09-27T22:25:10.047274+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 43368,
+        "output_tokens": 298
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_sznoqZmMCfT01G8vaCuPqlab",
+          "tool": "web_search",
+          "args": {
+            "query": "Claudio Bunster Weitzman name until 2005 formerly named",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_sznoqZmMCfT01G8vaCuPqlab",
+          "tool": "web_search",
+          "chars": 2231,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "60f9374b06236572a4c592e75cf92053fc6079afb3f2fbf5b1885a5d5731ede5",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.0,
+        "tool_calls": 1,
+        "searches": 1,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-followup-2295",
+      "experiment": "simpleqa-followup",
+      "row_index": 2295,
+      "query": "In what year did Dr. William Schwartz discover that sulfanilamide also acts as a diuretic in people with congestive heart failure?",
+      "expected_answer": "1949",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "Dr. William Schwartz made this discovery in **1949**. [citation:Thiazides in chronic kidney disease](https://pmc.ncbi.nlm.nih.gov/articles/PMC9871840/)",
+      "grade": "correct",
+      "turns": 4,
+      "elapsed_seconds": 14.5,
+      "started_at": "2026-09-27T22:30:09.197200+00:00",
+      "ended_at": "2026-09-27T22:30:23.697200+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 91832,
+        "output_tokens": 556
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_pMvLGF3Em42YgVHxdSo7oPAc",
+          "tool": "web_search",
+          "args": {
+            "query": "Dr. William Schwartz sulfanilamide diuretic congestive heart failure year discovered",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_1AkVYdncqUGxx55MLZDPoQPb",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Schwartz\" \"sulfanilamide\" diuretic heart failure history",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_FEvvpPs8sNiRjmD2b2vFrj6f",
+          "tool": "web_search",
+          "args": {
+            "query": "\"The effect of sulfanilamide on salt and water excretion\" Schwartz year",
+            "max_results": 10,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_pMvLGF3Em42YgVHxdSo7oPAc",
+          "tool": "web_search",
+          "chars": 2046,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_1AkVYdncqUGxx55MLZDPoQPb",
+          "tool": "web_search",
+          "chars": 2234,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_FEvvpPs8sNiRjmD2b2vFrj6f",
+          "tool": "web_search",
+          "chars": 2389,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "dc2b7843e655bf6b122204c22e05626ccd8822ff64db86770e1a27e9bac51233",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.6666666666666666,
+        "tool_calls": 3,
+        "searches": 3,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-followup-4190",
+      "experiment": "simpleqa-followup",
+      "row_index": 4190,
+      "query": "What is the name of King Goodwill Zwelithini's seventh child by his wife, Queen Mantfombi Dlamini?",
+      "expected_answer": "Mandlesizwe Zulu",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "The seventh child is **Prince Mandlesizwe Zulu**. [citation:Mantfombi Dlamini](https://en.wikipedia.org/wiki/Mantfombi_Dlamini)",
+      "grade": "correct",
+      "turns": 5,
+      "elapsed_seconds": 17.5,
+      "started_at": "2026-09-27T22:30:23.667199+00:00",
+      "ended_at": "2026-09-27T22:30:41.167199+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 123858,
+        "output_tokens": 848
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_c5zu0KtlIWeJ0nVfKjyCLM2A",
+          "tool": "web_search",
+          "args": {
+            "query": "King Goodwill Zwelithini Queen Mantfombi Dlamini seventh child name",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_gHUbSQq1LZMWpwsrEWVcVJi2",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Queen Mantfombi\" \"seventh\" child daughter son Zwelithini",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_d8TkGBydDcogzW8s9KPtLQs3",
+          "tool": "web_search",
+          "args": {
+            "query": "King Zwelithini Mantfombi children names \"Prince Misuzulu\" \"Princess\" list",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_fYOSMDtXMTsIavBTI99jObCw",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/Mantfombi_Dlamini"
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_c5zu0KtlIWeJ0nVfKjyCLM2A",
+          "tool": "web_search",
+          "chars": 2941,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_gHUbSQq1LZMWpwsrEWVcVJi2",
+          "tool": "web_search",
+          "chars": 2249,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_d8TkGBydDcogzW8s9KPtLQs3",
+          "tool": "web_search",
+          "chars": 2110,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_fYOSMDtXMTsIavBTI99jObCw",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "c2537a60464a827906a77c78d9198bc761078ee05dc79fbfbf3fc535dc1a6b78",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 1.0,
+        "redundant_rate": 0.5,
+        "tool_calls": 4,
+        "searches": 3,
+        "fetches": 1,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "simpleqa-followup-2129",
+      "experiment": "simpleqa-followup",
+      "row_index": 2129,
+      "query": "What is the name of the sole survivor of the 2008 Yeti Airlines Flight 103 crash?",
+      "expected_answer": "Surendra Kunwar",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "The sole survivor was **Captain S. Kunwar**. [citation:The Himalayan Times](https://thehimalayantimes.com/kathmandu/lukla-plane-crash-eight-victims-identified)",
+      "grade": "correct",
+      "turns": 8,
+      "elapsed_seconds": 27.2,
+      "started_at": "2026-09-27T22:30:41.217181+00:00",
+      "ended_at": "2026-09-27T22:31:08.417181+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 205782,
+        "output_tokens": 1068
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_GJbQJyVScLkkcu4YpCwBhUto",
+          "tool": "web_search",
+          "args": {
+            "query": "2008 Yeti Airlines Flight 103 crash sole survivor name",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_CwM99O97KCeWnQBOaEYs7UV8",
+          "tool": "web_search",
+          "args": {
+            "query": "Yeti Airlines Flight 103 sole survivor name 2008 Lukla crash survivor aircraft crew member",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_znaeOqgIRtdeFAVBFaMYR2BV",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Yeti Airlines Flight 101\" captain only survivor name 2008 captain survived Lukla",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_8d3Ju75psCX6pI3hPmQEVPCA",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Yeti Airlines\" \"sole survivor\" captain name Lukla 2008",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_rI29jMbir94UDvTOekg4G5xi",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Flight 103\" Yeti Airlines 2008 survivor captain name",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_Araw2gz2FPHQ8fIuLZhLBYUC",
+          "tool": "web_search",
+          "args": {
+            "query": "Lukla Yeti crash 8 October 2008 captain survived name pilot",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_DMabSyKnzmjaGpNihriXpTt0",
+          "tool": "web_search",
+          "args": {
+            "query": "\"S Kunwar\" captain Yeti Airlines Lukla 2008",
+            "max_results": 10,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_GJbQJyVScLkkcu4YpCwBhUto",
+          "tool": "web_search",
+          "chars": 2093,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_CwM99O97KCeWnQBOaEYs7UV8",
+          "tool": "web_search",
+          "chars": 2343,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_znaeOqgIRtdeFAVBFaMYR2BV",
+          "tool": "web_search",
+          "chars": 2360,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_8d3Ju75psCX6pI3hPmQEVPCA",
+          "tool": "web_search",
+          "chars": 1624,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_rI29jMbir94UDvTOekg4G5xi",
+          "tool": "web_search",
+          "chars": 2024,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_Araw2gz2FPHQ8fIuLZhLBYUC",
+          "tool": "web_search",
+          "chars": 2162,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_DMabSyKnzmjaGpNihriXpTt0",
+          "tool": "web_search",
+          "chars": 2447,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "fa4fe9bf28f366d62215f6a961acbe4b54f3a8fd7cc81391951cba2192563654",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.8571428571428571,
+        "tool_calls": 7,
+        "searches": 7,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "frames-462",
+      "experiment": "frames",
+      "row_index": 462,
+      "query": "Since the turn of the 21st century, there has only been one year in which the Pulitzer Prize for Fiction has not been awarded. Among the finalists that year, one novel was published posthumously. The author of this posthumous publication is best known for a different novel published 15 years prior. The opening lines of this book later inspired a song by a band. The name of this band can be determined with the following calculation: find the age of the author on January 1 of the year the latter book was published, add four, and subtract the sum from the year this author was a Pulitzer Prize finalist. The name of this band was inspired by yet another book. What is the name of this book and its author?",
+      "expected_answer": "On the Road by Jack Kerouac",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "The book is **_On the Road_ by Jack Kerouac**. The calculation points to the band **The 1975**, whose name was inspired by a note found in a copy of Kerouac’s novel. [citation:American Songwriter](htt",
+      "grade": "correct",
+      "turns": 4,
+      "elapsed_seconds": 18.7,
+      "started_at": "2026-09-27T22:47:55.466946+00:00",
+      "ended_at": "2026-09-27T22:48:14.166946+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 102460,
+        "output_tokens": 1526
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_pyUVnXeuuoCaiFuMzi3E6Ryd",
+          "tool": "web_search",
+          "args": {
+            "query": "The 1975 band name inspired by book author name inspired by book \"1975\" book Kerouac opening lines Infinite Jest song references calculation 2012 37 1975",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_QItqGWl32QGPCeihTyFdEiGW",
+          "tool": "web_search",
+          "args": {
+            "query": "\"opening lines\" \"Infinite Jest\" song band inspired",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_jYyhELLTLdmqJHdCID8Oiacf",
+          "tool": "web_search",
+          "args": {
+            "query": "David Foster Wallace Infinite Jest opening lines inspired song",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_vj9Dcj888cx6bqGP4vqQAVJa",
+          "tool": "web_search",
+          "args": {
+            "query": "2012 Pulitzer fiction finalists The Pale King posthumously published",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_LWU0KG0Eb8zQGEiTYCNP3ThP",
+          "tool": "web_search",
+          "args": {
+            "query": "The 1975 name inspired by Jack Kerouac On the Road interview Matty Healy source",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_pyUVnXeuuoCaiFuMzi3E6Ryd",
+          "tool": "web_search",
+          "chars": 4208,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_jYyhELLTLdmqJHdCID8Oiacf",
+          "tool": "web_search",
+          "chars": 1987,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_QItqGWl32QGPCeihTyFdEiGW",
+          "tool": "web_search",
+          "chars": 2187,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_vj9Dcj888cx6bqGP4vqQAVJa",
+          "tool": "web_search",
+          "chars": 1998,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_LWU0KG0Eb8zQGEiTYCNP3ThP",
+          "tool": "web_search",
+          "chars": 1824,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "226eacfc41b05f879948d30fadb1a690daf643a0f1082fbadb29eb7ef5c7c7ca",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.8,
+        "tool_calls": 5,
+        "searches": 5,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "frames-633",
+      "experiment": "frames",
+      "row_index": 633,
+      "query": "There is a famous Texas city where a Stadium built in 1930 hosted six games for the 1994 World Cup, but only after widening the field and permanently installing natural grass on the playing surface. What was the average (mean) number of attendance for these six games?",
+      "expected_answer": "58,692",
+      "recursion_limit": 300,
+      "status": "error",
+      "error": "GraphRecursionError: Recursion limit of 300 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.\nFor troubleshooting, visit: https://docs.l",
+      "answer": null,
+      "grade": null,
+      "turns": 19,
+      "elapsed_seconds": 101.0,
+      "started_at": "2026-09-27T22:48:14.196928+00:00",
+      "ended_at": "2026-09-27T22:49:55.196928+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0
+      },
+      "usage_complete": false,
+      "tool_calls": [
+        {
+          "id": "call_kD1uxql81PXa3bZ89DLRdqkF",
+          "tool": "web_search",
+          "args": {
+            "query": "1994 World Cup Cotton Bowl six matches attendance Dallas attendance list 1930 widened field natural grass mean attendance",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_nLh6uYz4dQ5Nep5MQv6MsWBR",
+          "tool": "web_search",
+          "args": {
+            "query": "1994 World Cup Dallas Cotton Bowl matches attendance 1994 FIFA match report",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_DPvATGqjHoPiWYjVg1cGfyyT",
+          "tool": "web_search",
+          "args": {
+            "query": "Cotton Bowl 1994 World Cup attendance 6 matches",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_isnjJhHTP5BinXL3CxnJf9bD",
+          "tool": "web_search",
+          "args": {
+            "query": "site:fifa.com 1994 World Cup Dallas Cotton Bowl attendance",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_i2TQH3gwzWQ4YfoVGGEh0kdB",
+          "tool": "web_search",
+          "args": {
+            "query": "1994 FIFA World Cup matches Dallas Cotton Bowl \"Attendance\" 1994 6 games Brazil Netherlands Spain Korea Bolivia Germany Belgium Saudi Arabia Mexico Ireland Norway Sweden Bulgaria Russia",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_96x9R6uLmxY890lCcpIW2Yf8",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/Cotton_Bowl_(stadium)"
+          }
+        },
+        {
+          "id": "call_oTM9FGAuBVChnAxdwUukLEmG",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/1994_FIFA_World_Cup"
+          }
+        },
+        {
+          "id": "call_j8DmSFIACa8pXXsQRtnxsxYt",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Dallas / Cotton Bowl\" \"1994\" \"spectators\" World Cup matches 60277 63998",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_qgs962lxbnXNh3rVZmxLdLU3",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://statfaneuro.narod.ru/001-WORLDCUP/106-1994/1994_usa_worldcup.html"
+          }
+        },
+        {
+          "id": "call_te48hdjgslFsJpOVkvt4hU7l",
+          "tool": "web_search",
+          "args": {
+            "query": "1994 World Cup Dallas June 1994 Cotton Bowl attendance 63998 60277 1994 matches",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_zvZBctevEwZK1orn6c8pZftV",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/1994_FIFA_World_Cup_Group_C"
+          }
+        },
+        {
+          "id": "call_MD4He72eJIjPeJbkECU3e7y6",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/1994_FIFA_World_Cup_Group_D"
+          }
+        },
+        {
+          "id": "call_x0w5tqBmvFR6rBQW7sLZ7ojD",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/1994_FIFA_World_Cup_Group_E"
+          }
+        },
+        {
+          "id": "call_NfVK4DDIyv4bUESgHWB6S26H",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/1994_FIFA_World_Cup_Group_F"
+          }
+        },
+        {
+          "id": "call_Jck5UoVrLbs5qxioik3YmcwM",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/1994_FIFA_World_Cup_knockout_stage"
+          }
+        },
+        {
+          "id": "call_1cGy9htXwB6oSUAjUAEWqF8e",
+          "tool": "web_search",
+          "args": {
+            "query": "1994 World Cup \"Dallas\" \"Cotton Bowl\" \"Attendance\" Brazil Netherlands Germany Korea Spain Bolivia matches",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_UXIZWN8NK4RsJtHiKqJbZcRV",
+          "tool": "web_search",
+          "args": {
+            "query": "site:web.archive.org/web/20170822213311/http://www.fifa.com/worldcup/matches \"Dallas /Cotton Bowl\" 1994",
+            "max_results": 20,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_xRaNThmlsbsaBrjaT3yh088m",
+          "tool": "web_search",
+          "args": {
+            "query": "1994 FIFA World Cup match attendance Dallas Cotton Bowl Spain Korea 63898 Brazil Netherlands 1994 attendance list",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_hZmo141xrA280S3qv9ZAkgMS",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://www.playworldcupgames.com/1994_world_cup_games_dallas/"
+          }
+        },
+        {
+          "id": "call_gkZ4sKSpUkkr49boy59wQ8WJ",
+          "tool": "web_search",
+          "args": {
+            "query": "1994 World Cup Cotton Bowl Dallas matches \"17 June\" \"27 June\" \"2 July\"",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_b2tFJ6OGMvwYL7nUTnFGvzFz",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Dallas /Cotton Bowl\" \"1994\" FIFA matches -Spain",
+            "max_results": 20,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_EsITeXIgnwBeIiGCG7YHQVoD",
+          "tool": "web_search",
+          "args": {
+            "query": "github world cup 1994 csv attendance venue Cotton Bowl Dallas Spain Korea",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_6tvQD829Fik2Dbm7XJpbgc7w",
+          "tool": "web_search",
+          "args": {
+            "query": "site:11v11.com/matches \"Cotton Bowl, Dallas\" \"1994\" \"Attendance\" World Cup",
+            "max_results": 20,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_9WKhzUm1eWEvrGDrGd6EjAwQ",
+          "tool": "web_search",
+          "args": {
+            "query": "site:11v11.com/matches/spain-v-south-korea-17-june-1994 attendance Cotton Bowl",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_irROUZEJ0UPYrfPPpto7bYEp",
+          "tool": "web_search",
+          "args": {
+            "query": "site:11v11.com/matches/argentina-v-bulgaria-30-june-1994 attendance venue",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_W3sUfG6e17LbadI4TcxrxZEA",
+          "tool": "web_search",
+          "args": {
+            "query": "site:11v11.com/matches/sweden-v-saudi-arabia-03-july-1994 attendance venue",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_MIVK1rB2zcTPz1nUFs8sfZmg",
+          "tool": "web_search",
+          "args": {
+            "query": "site:11v11.com/matches/brazil-v-netherlands-09-july-1994 attendance venue",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_0gtl8X5zOCQwXEErjAukUn71",
+          "tool": "web_search",
+          "args": {
+            "query": "site:11v11.com/matches/germany-v-south-korea-27-june-1994 attendance venue",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_On0YI7N96n0Jw38kGNfUaNOy",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://www.11v11.com/matches/brazil-v-netherlands-09-july-1994-245165/"
+          }
+        },
+        {
+          "id": "call_ONe3BSdtA3HYD5EJlEI3ywo9",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://www.11v11.com/matches/argentina-v-bulgaria-30-june-1994-245155/"
+          }
+        },
+        {
+          "id": "call_veGRss6gt3TATKKiBIPjLpAG",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://www.11v11.com/matches/sweden-v-saudi-arabia-03-july-1994-245158/"
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_kD1uxql81PXa3bZ89DLRdqkF",
+          "tool": "web_search",
+          "chars": 1769,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_nLh6uYz4dQ5Nep5MQv6MsWBR",
+          "tool": "web_search",
+          "chars": 2048,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_DPvATGqjHoPiWYjVg1cGfyyT",
+          "tool": "web_search",
+          "chars": 2179,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_isnjJhHTP5BinXL3CxnJf9bD",
+          "tool": "web_search",
+          "chars": 591,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_i2TQH3gwzWQ4YfoVGGEh0kdB",
+          "tool": "web_search",
+          "chars": 2263,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_96x9R6uLmxY890lCcpIW2Yf8",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_oTM9FGAuBVChnAxdwUukLEmG",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_j8DmSFIACa8pXXsQRtnxsxYt",
+          "tool": "web_search",
+          "chars": 1444,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_qgs962lxbnXNh3rVZmxLdLU3",
+          "tool": "web_fetch",
+          "chars": 56,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_te48hdjgslFsJpOVkvt4hU7l",
+          "tool": "web_search",
+          "chars": 1972,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_zvZBctevEwZK1orn6c8pZftV",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_x0w5tqBmvFR6rBQW7sLZ7ojD",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_NfVK4DDIyv4bUESgHWB6S26H",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_MD4He72eJIjPeJbkECU3e7y6",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_Jck5UoVrLbs5qxioik3YmcwM",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_1cGy9htXwB6oSUAjUAEWqF8e",
+          "tool": "web_search",
+          "chars": 2167,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_UXIZWN8NK4RsJtHiKqJbZcRV",
+          "tool": "web_search",
+          "chars": 462,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_xRaNThmlsbsaBrjaT3yh088m",
+          "tool": "web_search",
+          "chars": 2075,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_hZmo141xrA280S3qv9ZAkgMS",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_gkZ4sKSpUkkr49boy59wQ8WJ",
+          "tool": "web_search",
+          "chars": 1943,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_b2tFJ6OGMvwYL7nUTnFGvzFz",
+          "tool": "web_search",
+          "chars": 2216,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_EsITeXIgnwBeIiGCG7YHQVoD",
+          "tool": "web_search",
+          "chars": 1824,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_6tvQD829Fik2Dbm7XJpbgc7w",
+          "tool": "web_search",
+          "chars": 2688,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_MIVK1rB2zcTPz1nUFs8sfZmg",
+          "tool": "web_search",
+          "chars": 115,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_0gtl8X5zOCQwXEErjAukUn71",
+          "tool": "web_search",
+          "chars": 116,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_irROUZEJ0UPYrfPPpto7bYEp",
+          "tool": "web_search",
+          "chars": 444,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_W3sUfG6e17LbadI4TcxrxZEA",
+          "tool": "web_search",
+          "chars": 454,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_9WKhzUm1eWEvrGDrGd6EjAwQ",
+          "tool": "web_search",
+          "chars": 120,
+          "gold_present": false
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "64126db9ee2ebb6f03deceb466889a154cc724288b5379552fdf74ba3cc7cc3c",
+      "toolscore": {
+        "required_call_recall": 1.0,
+        "redundant_rate": 0.9354838709677419,
+        "tool_calls": 31,
+        "searches": 19,
+        "fetches": 12,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "frames-354",
+      "experiment": "frames",
+      "row_index": 354,
+      "query": "How old was the 31st President of the United States when the second nuclear weapon ever used in warfare was dropped?",
+      "expected_answer": "70 years old",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "Herbert Hoover, the 31st president, was **70 years old** when the second nuclear weapon was dropped on Nagasaki on August 9, 1945—one day before his 71st birthday. [citation:Herbert Hoover Presidentia",
+      "grade": "correct",
+      "turns": 3,
+      "elapsed_seconds": 10.2,
+      "started_at": "2026-09-27T22:49:55.206928+00:00",
+      "ended_at": "2026-09-27T22:50:05.406928+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 67588,
+        "output_tokens": 698
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_rEl4MAzrgzWFrLnvwYbv5X3N",
+          "tool": "web_search",
+          "args": {
+            "query": "Herbert Hoover born August 10 1874 Nagasaki atomic bomb dropped August 9 1945 second nuclear weapon used in warfare official sources",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_rhj8EQoNs8kMcIwLTaebvbTI",
+          "tool": "web_search",
+          "args": {
+            "query": "site:hoover.archives.gov Herbert Hoover born August 10 1874 31st president",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_cw2r9apPpKSdT8LqTE72qlTT",
+          "tool": "web_search",
+          "args": {
+            "query": "site:whitehouse.gov Herbert Hoover 31st president born August 10 1874",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_rEl4MAzrgzWFrLnvwYbv5X3N",
+          "tool": "web_search",
+          "chars": 2240,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_cw2r9apPpKSdT8LqTE72qlTT",
+          "tool": "web_search",
+          "chars": 1750,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_rhj8EQoNs8kMcIwLTaebvbTI",
+          "tool": "web_search",
+          "chars": 2277,
+          "gold_present": false
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "4977a23a4bf82391ff77384ce75279a7b13be2b3b48107406f83624002288fa4",
+      "evidence": {
+        "retrieved": false,
+        "in_final_request": false,
+        "loss": false,
+        "first_tool": null
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.6666666666666666,
+        "tool_calls": 3,
+        "searches": 3,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "frames-556",
+      "experiment": "frames",
+      "row_index": 556,
+      "query": "As of August 3rd 2024, the only documented genus of poison dart frog to be used in blow darts by Aboriginal South Americans contains many alkaloids, the most toxic of which, when exposed, irreversibly opens what kind of channels within nerve cells?",
+      "expected_answer": "Sodium",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "**Voltage-gated sodium (Na⁺) channels**—batrachotoxin irreversibly holds them open. [citation:Batrachotoxin](https://en.wikipedia.org/wiki/Batrachotoxin)",
+      "grade": "correct",
+      "turns": 2,
+      "elapsed_seconds": 6.3,
+      "started_at": "2026-09-27T22:50:05.426927+00:00",
+      "ended_at": "2026-09-27T22:50:11.726927+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 43350,
+        "output_tokens": 442
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_jwk5OtFRQCVVdqsDM3HZqZP1",
+          "tool": "web_search",
+          "args": {
+            "query": "batrachotoxin irreversibly opens voltage-gated sodium channels poison dart frog Phyllobates blow darts Aboriginal South Americans genus alkaloids most toxicively opens channels nerve cells source 2024-08-03",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_jwk5OtFRQCVVdqsDM3HZqZP1",
+          "tool": "web_search",
+          "chars": 2324,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "ede6480ab4158173e0cc1f35e13c10f551c6c35951737197e3e5489530964002",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.0,
+        "tool_calls": 1,
+        "searches": 1,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "frames-180",
+      "experiment": "frames",
+      "row_index": 180,
+      "query": "When did the actress with multiple sclerosis who starred in the comedy about killing her husband receive a star on the Hollywood Walk of Fame?",
+      "expected_answer": "November 14, 2022",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "Christina Applegate received her Hollywood Walk of Fame star on **November 14, 2022**. [citation:ABC7](https://abc7.com/post/christina-applegate-hollywood-walk-of-fame-star-ceremony-married-with-child",
+      "grade": "correct",
+      "turns": 5,
+      "elapsed_seconds": 25.7,
+      "started_at": "2026-09-27T22:50:11.736931+00:00",
+      "ended_at": "2026-09-27T22:50:37.436931+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 133354,
+        "output_tokens": 1746
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_JOHc09pLMxFPNVFo5BPNSSRd",
+          "tool": "web_search",
+          "args": {
+            "query": "actress \"multiple sclerosis\" comedy \"killing her husband\" Hollywood Walk of Fame star received when actress starred comedy about killing her husband*",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_GU6np0uqtr7hLhka2z5GoZEQ",
+          "tool": "web_search",
+          "args": {
+            "query": "actress diagnosed with multiple sclerosis \"Hollywood Walk of Fame\" comedy film murder husband",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_DADzQUIYKQonS8WHg6bF2eo4",
+          "tool": "web_search",
+          "args": {
+            "query": "actress multiple sclerosis starred in \"killing her husband\" comedy film",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_P3imKFiffX3OcEHQemQZP7xJ",
+          "tool": "web_search",
+          "args": {
+            "query": "actress multiple sclerosis \"Walk of Fame\" star actress film comedy murder husband",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_GdFyZJYfSZXqU92I30zJzppK",
+          "tool": "web_search",
+          "args": {
+            "query": "Christina Applegate comedy \"kill her husband\" film starred in comedy about killing husband",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_OM9GgMUsYssq05YZtxIj9NEF",
+          "tool": "web_search",
+          "args": {
+            "query": "Christina Applegate received Hollywood Walk of Fame star November 14 2022 official",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_JOHc09pLMxFPNVFo5BPNSSRd",
+          "tool": "web_search",
+          "chars": 2424,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_P3imKFiffX3OcEHQemQZP7xJ",
+          "tool": "web_search",
+          "chars": 2106,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_GU6np0uqtr7hLhka2z5GoZEQ",
+          "tool": "web_search",
+          "chars": 2309,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_DADzQUIYKQonS8WHg6bF2eo4",
+          "tool": "web_search",
+          "chars": 2054,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_GdFyZJYfSZXqU92I30zJzppK",
+          "tool": "web_search",
+          "chars": 6049,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_OM9GgMUsYssq05YZtxIj9NEF",
+          "tool": "web_search",
+          "chars": 2418,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "8c089eb2f96149fd8c28c7d86da225694a4c4d0b2fe6cad023aba425c6998bda",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.8333333333333334,
+        "tool_calls": 6,
+        "searches": 6,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "frames-525",
+      "experiment": "frames",
+      "row_index": 525,
+      "query": "What popular ice cream dessert shares its birthplace with Fred Rogers?",
+      "expected_answer": "The Banana Split",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "The **banana split**—both originated in Latrobe, Pennsylvania.",
+      "grade": "correct",
+      "turns": 1,
+      "elapsed_seconds": 2.4,
+      "started_at": "2026-09-27T22:50:37.396931+00:00",
+      "ended_at": "2026-09-27T22:50:39.796931+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 20818,
+        "output_tokens": 138
+      },
+      "usage_complete": true,
+      "tool_calls": [],
+      "tool_results": [],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "472704b8735d780d56b18be5b3740400071050c3f33884c0a8e30e963691d6e5",
+      "evidence": {
+        "retrieved": false,
+        "in_final_request": false,
+        "loss": false,
+        "first_tool": null
+      },
+      "toolscore": {
+        "required_call_recall": 0.0,
+        "redundant_rate": 0.0,
+        "tool_calls": 0,
+        "searches": 0,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "frames-292",
+      "experiment": "frames",
+      "row_index": 292,
+      "query": "Out of every team that has won at least one official global Valorant tournament, which team has also won at least one League of Legends World Championship and at least one CS:GO Major Championship as of 2024? ",
+      "expected_answer": "Fnatic",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "**Fnatic** — it won VALORANT LOCK//IN 2023, the inaugural *League of Legends* World Championship in 2011, and three CS:GO Majors (2013–2015). [citation:Fnatic VALORANT](https://fnatic.com/esports/valo",
+      "grade": "correct",
+      "turns": 2,
+      "elapsed_seconds": 9.5,
+      "started_at": "2026-09-27T22:50:39.766929+00:00",
+      "ended_at": "2026-09-27T22:50:49.266929+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 46134,
+        "output_tokens": 1100
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_uswGUbagbkLvM5JpQ1K8NuLJ",
+          "tool": "web_search",
+          "args": {
+            "query": "Fnatic Valorant LOCK//IN 2023 winner official Riot",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_2uRvyxgNZG1oWV0ehUXWKkye",
+          "tool": "web_search",
+          "args": {
+            "query": "Fnatic League of Legends World Championship 2011 winner official",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_mKAP7NVYaVOL1cF15UchewpF",
+          "tool": "web_search",
+          "args": {
+            "query": "Fnatic CS:GO Major championships winners 2013 2015 official",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_uswGUbagbkLvM5JpQ1K8NuLJ",
+          "tool": "web_search",
+          "chars": 2168,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_mKAP7NVYaVOL1cF15UchewpF",
+          "tool": "web_search",
+          "chars": 1998,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_2uRvyxgNZG1oWV0ehUXWKkye",
+          "tool": "web_search",
+          "chars": 2296,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "70b2cf9daec4441923566dffeb37afc7f1504280eea04668731b07e64f1c018f",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.6666666666666666,
+        "tool_calls": 3,
+        "searches": 3,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "frames-738",
+      "experiment": "frames",
+      "row_index": 738,
+      "query": "Who wrote the first movie that Chris Columbus ever directed?",
+      "expected_answer": "David Simkins.",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "Chris Columbus’s first directed movie was *Adventures in Babysitting* (1987), written by **David Simkins**. [citation:Adventures in Babysitting](https://en.wikipedia.org/wiki/Adventures_in_Babysitting",
+      "grade": "correct",
+      "turns": 2,
+      "elapsed_seconds": 6.3,
+      "started_at": "2026-09-27T22:50:49.306928+00:00",
+      "ended_at": "2026-09-27T22:50:55.606928+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 43006,
+        "output_tokens": 394
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_nXOLmkCvFIHqGHx74zRPgF9Y",
+          "tool": "web_search",
+          "args": {
+            "query": "Chris Columbus first film directed Adventures in Babysitting written by who",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_nXOLmkCvFIHqGHx74zRPgF9Y",
+          "tool": "web_search",
+          "chars": 2140,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "db4f4dd394abc8e13bcb5f8c9aedc3e1d4c5d27b645bf17de32dbdfe7ac428a5",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.0,
+        "tool_calls": 1,
+        "searches": 1,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "frames-441",
+      "experiment": "frames",
+      "row_index": 441,
+      "query": "Who was the successor of the Egyptian Pharaoh that was in power when the Treasury of Atreus was completed?",
+      "expected_answer": "Merneptah",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "The successor was **Merneptah**, who succeeded **Ramesses II**. [citation:Merneptah—Britannica](https://www.britannica.com/biography/Merneptah)",
+      "grade": "correct",
+      "turns": 3,
+      "elapsed_seconds": 11.5,
+      "started_at": "2026-09-27T22:50:55.576923+00:00",
+      "ended_at": "2026-09-27T22:51:07.076923+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 67030,
+        "output_tokens": 588
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_1G1yLLGxosOYJC84Sf2XoILd",
+          "tool": "web_search",
+          "args": {
+            "query": "Treasury of Atreus completed date Egyptian pharaoh in power 1250 BCE successor Ramses II Merneptah",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_8snJlJxWfaac9dIDBNBrXWy8",
+          "tool": "web_search",
+          "args": {
+            "query": "Treasury of Atreus built around 1250 BCE source museum Britannica Ramesses II reign 1279 1213 successor Merneptah official",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_1G1yLLGxosOYJC84Sf2XoILd",
+          "tool": "web_search",
+          "chars": 2312,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_8snJlJxWfaac9dIDBNBrXWy8",
+          "tool": "web_search",
+          "chars": 2165,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "b39e430bccab88073d2c550ae25262f223c99936e6880101e606c4babb66d1d2",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.5,
+        "tool_calls": 2,
+        "searches": 2,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "frames-582",
+      "experiment": "frames",
+      "row_index": 582,
+      "query": "Where was Robert Vesco living when Bank of Credit and Commerce International was formally liquidated?",
+      "expected_answer": "Cuba",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "Robert Vesco was living in **Havana, Cuba** when BCCI was formally liquidated. [citation:Britannica](https://www.britannica.com/biography/Robert-L-Vesco)",
+      "grade": "correct",
+      "turns": 3,
+      "elapsed_seconds": 11.0,
+      "started_at": "2026-09-27T22:51:07.106920+00:00",
+      "ended_at": "2026-09-27T22:51:18.106920+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 67870,
+        "output_tokens": 614
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_5lNzsgOTGkbaKs1v4L7lbCFc",
+          "tool": "web_search",
+          "args": {
+            "query": "Robert Vesco living when Bank of Credit and Commerce International was formally liquidated where was he living",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_0ikN6KSnTSImrwZ2yOIC5RZF",
+          "tool": "web_search",
+          "args": {
+            "query": "BCCI formally liquidated date 1991 Robert Vesco Cuba living",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_y7rlyFW76ZXPeJHrmy9BXW2g",
+          "tool": "web_search",
+          "args": {
+            "query": "\"formally liquidated\" \"Bank of Credit and Commerce International\"",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_5lNzsgOTGkbaKs1v4L7lbCFc",
+          "tool": "web_search",
+          "chars": 2167,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_0ikN6KSnTSImrwZ2yOIC5RZF",
+          "tool": "web_search",
+          "chars": 2252,
+          "gold_present": true
+        },
+        {
+          "tool_call_id": "call_y7rlyFW76ZXPeJHrmy9BXW2g",
+          "tool": "web_search",
+          "chars": 1059,
+          "gold_present": false
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "6ba2c79fa0d7afa56845ad214dc807192594de2b17b3aa22d2639bbc57feeaaf",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_search"
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.6666666666666666,
+        "tool_calls": 3,
+        "searches": 3,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "frames-78",
+      "experiment": "frames",
+      "row_index": 78,
+      "query": "Of the two wonders of the ancient world that were statues, how much shorter was the taller of the two compared to the tallest statue in Japan as of 2024?",
+      "expected_answer": "222 ft",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "The taller statue was the **Colossus of Rhodes**, about 33 m tall. Japan’s tallest statue, the **Ushiku Daibutsu**, is 120 m tall, so the Colossus was **about 87 meters shorter**. [citation:Colossus o",
+      "grade": "incorrect",
+      "turns": 3,
+      "elapsed_seconds": 12.7,
+      "started_at": "2026-09-27T22:51:18.056915+00:00",
+      "ended_at": "2026-09-27T22:51:30.756915+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 73326,
+        "output_tokens": 1010
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_nplaAUl33kYQBsgIKmOqjxeL",
+          "tool": "web_search",
+          "args": {
+            "query": "Colossus of Rhodes height 33 metres Statue of Zeus height 13 metres source Britannica",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_cMNo5omcJgyMXEduAMFYBKYX",
+          "tool": "web_search",
+          "args": {
+            "query": "tallest statue in Japan Ushiku Daibutsu 120 metres official",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_4Og8Gw5m1875f8EIhdN9V8T9",
+          "tool": "web_search",
+          "args": {
+            "query": "site:ushikukankou.com Ushiku Daibutsu 120m tallest statue Japan English",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_laB5LqD9qEiod2h17TuNkdyK",
+          "tool": "web_search",
+          "args": {
+            "query": "Japan tallest statue 120 m Ushiku Daibutsu source encyclopedia",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_ftrtDeoABySGr8Vkps9QXd0J",
+          "tool": "web_search",
+          "args": {
+            "query": "Seven Wonders ancient world two statues Colossus Rhodes Statue Zeus height 33 meters",
+            "max_results": 5,
+            "time_range": null
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_nplaAUl33kYQBsgIKmOqjxeL",
+          "tool": "web_search",
+          "chars": 2161,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_cMNo5omcJgyMXEduAMFYBKYX",
+          "tool": "web_search",
+          "chars": 2247,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_laB5LqD9qEiod2h17TuNkdyK",
+          "tool": "web_search",
+          "chars": 2353,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_4Og8Gw5m1875f8EIhdN9V8T9",
+          "tool": "web_search",
+          "chars": 2478,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_ftrtDeoABySGr8Vkps9QXd0J",
+          "tool": "web_search",
+          "chars": 2253,
+          "gold_present": false
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "f987506616c0ffcb4863f98dc9c3ae797a7515a6ea79af9099a80df36182b244",
+      "evidence": {
+        "retrieved": false,
+        "in_final_request": false,
+        "loss": false,
+        "first_tool": null
+      },
+      "toolscore": {
+        "required_call_recall": 0.5,
+        "redundant_rate": 0.8,
+        "tool_calls": 5,
+        "searches": 5,
+        "fetches": 0,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    },
+    {
+      "case_id": "frames-618",
+      "experiment": "frames",
+      "row_index": 618,
+      "query": "How many votes did the opposition party get in the Brant riding the election before Justin Trudeau was elected Prime Minister?",
+      "expected_answer": "16,351",
+      "recursion_limit": 300,
+      "status": "ok",
+      "error": null,
+      "answer": "The New Democratic Party, Canada’s official opposition in 2011, received **16,351 votes** in the Brant riding. [citation:Elections Canada](https://elections.ca/Scripts/VIS/HistoricalResults/35009_e.ht",
+      "grade": "correct",
+      "turns": 10,
+      "elapsed_seconds": 42.0,
+      "started_at": "2026-09-27T22:51:30.706907+00:00",
+      "ended_at": "2026-09-27T22:52:12.706907+00:00",
+      "timing": "approximate",
+      "usage": {
+        "input_tokens": 296238,
+        "output_tokens": 1836
+      },
+      "usage_complete": true,
+      "tool_calls": [
+        {
+          "id": "call_w606SaPBGCIwwtjGwfjhTBt5",
+          "tool": "web_search",
+          "args": {
+            "query": "Brant riding 2011 federal election results votes opposition party",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_Djve1E28067HgWJCFIyx1WDL",
+          "tool": "web_search",
+          "args": {
+            "query": "2011 Canadian federal election Brant results Conservative Liberal NDP votes Elections Canada",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_Moo7yhHovDUrCEphtLALR8fk",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://www.elections.ca/content.aspx?section=res&dir=rep/off/41gedata&document=bypro&lang=e"
+          }
+        },
+        {
+          "id": "call_MFH6xdG8Hxrehv4hWWZqWNPV",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Brant\" \"2011\" \"Phil McColeman\" votes Liberal NDP election results",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_HptrJqDvO2cybPwKX0A9KadK",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/Brantford%E2%80%94Brant_(federal_electoral_district)"
+          }
+        },
+        {
+          "id": "call_6zBseGu0p1nooBxwNG4fWIhL",
+          "tool": "web_search",
+          "args": {
+            "query": "site:en.wikipedia.org/wiki/Brantford%E2%80%94Brant \"2011 Canadian federal election\" \"Votes\" 26849",
+            "max_results": 5,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_XsLcxnhx7TIh5pemnAoYYVeh",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Brant\" \"26,849\" election 2011 Canada",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_p83vb4OaOMzDGbccxbGOjU3p",
+          "tool": "web_search",
+          "args": {
+            "query": "2011 election Brant Ontario \"Liberal\" votes \"McColeman\"",
+            "max_results": 10,
+            "time_range": null
+          }
+        },
+        {
+          "id": "call_PXmAovxhrvjjquoj7VFuL4NT",
+          "tool": "web_fetch",
+          "args": {
+            "url": "https://elections.ca/Scripts/VIS/HistoricalResults/35009_e.html"
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool_call_id": "call_w606SaPBGCIwwtjGwfjhTBt5",
+          "tool": "web_search",
+          "chars": 2181,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_Djve1E28067HgWJCFIyx1WDL",
+          "tool": "web_search",
+          "chars": 3241,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_Moo7yhHovDUrCEphtLALR8fk",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_MFH6xdG8Hxrehv4hWWZqWNPV",
+          "tool": "web_search",
+          "chars": 2038,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_HptrJqDvO2cybPwKX0A9KadK",
+          "tool": "web_fetch",
+          "chars": 4096,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_6zBseGu0p1nooBxwNG4fWIhL",
+          "tool": "web_search",
+          "chars": 143,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_XsLcxnhx7TIh5pemnAoYYVeh",
+          "tool": "web_search",
+          "chars": 2237,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_p83vb4OaOMzDGbccxbGOjU3p",
+          "tool": "web_search",
+          "chars": 2079,
+          "gold_present": false
+        },
+        {
+          "tool_call_id": "call_PXmAovxhrvjjquoj7VFuL4NT",
+          "tool": "web_fetch",
+          "chars": 2411,
+          "gold_present": true
+        }
+      ],
+      "subagent_events": 0,
+      "compaction_summaries": 0,
+      "raw_trace_sha256": "9dacc22b167a923fd7413ddb53ffd74de74b66a373d0c52c11991a124e66143b",
+      "evidence": {
+        "retrieved": true,
+        "in_final_request": true,
+        "loss": false,
+        "first_tool": "web_fetch"
+      },
+      "toolscore": {
+        "required_call_recall": 1.0,
+        "redundant_rate": 0.7777777777777778,
+        "tool_calls": 9,
+        "searches": 6,
+        "fetches": 3,
+        "subagent_tasks": 0,
+        "identical_repeats": 0
+      }
+    }
+  ]
+}

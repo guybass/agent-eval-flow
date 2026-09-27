@@ -293,3 +293,40 @@ def test_run_batch_passes_stream_kwargs_to_every_run(tmp_path):
     run_batch([dict(QUESTION, id=i) for i in range(2)], factory, tmp_path, spent_usd=0, limit_usd=1,
               cost_fn=lambda usage: 0.0, stream_kwargs={"recursion_limit": 300})
     assert [c.kwargs for c in clients] == [{"recursion_limit": 300}] * 2
+
+
+from examples.deerflow_study.curate import curate_run
+
+
+def test_curated_run_keeps_observations_not_bodies_or_paths(tmp_path):
+    trace = tmp_path / "raw" / "q7.jsonl"
+    w = TraceWriter(trace)
+    record_stream_event(w, Ev("messages-tuple", {"type": "ai", "content": "", "tool_calls": [
+        {"id": "c1", "name": "web_fetch", "args": {"url": "https://example.org/a"}}]}))
+    record_stream_event(w, Ev("messages-tuple", {"type": "tool", "name": "web_fetch", "tool_call_id": "c1",
+                                                 "content": "SECRET PAGE BODY about Paul Anastas " * 20}))
+    w.record("model_request", agent="lead", messages=[{"type": "system", "text": "SYSTEM PROMPT"}])
+    w.record("final_answer", content="Paul Anastas")
+    w.close()
+    result = {"id": 7, "run_id": "q7-x", "status": "ok", "answer": "Paul Anastas", "trace": str(trace),
+              "usage": {"input_tokens": 10, "output_tokens": 2}, "elapsed_s": 3.0, "error": None,
+              "coverage": {"lead_model_requests": True}}
+    row = curate_run(result, {"question": "Who?", "answer": "Anastas"}, experiment="simpleqa",
+                     recursion_limit=100)
+    text = json.dumps(row)
+    assert "SECRET PAGE BODY" not in text and "SYSTEM PROMPT" not in text and str(tmp_path) not in text
+    assert row["tool_calls"] == [{"id": "c1", "tool": "web_fetch", "args": {"url": "https://example.org/a"}}]
+    assert row["tool_results"][0]["gold_present"] is True and row["tool_results"][0]["chars"] > 100
+    assert row["grade"] == "correct" and row["turns"] == 1 and len(row["raw_trace_sha256"]) == 64
+
+
+def test_deerflow_review_offline_roundtrip(tmp_path):
+    pytest.importorskip("toolscore")
+    import subprocess
+    import sys
+    out = subprocess.run([sys.executable, "examples/deerflow_review.py", "--output", str(tmp_path)],
+                         capture_output=True, text=True)
+    assert out.returncode == 0, out.stderr[-2000:]
+    summary = json.loads(out.stdout)
+    assert summary["runs"] == 30 and summary["needed_more_than_default_in_primary_runs"] == 5
+    assert (tmp_path / "report.html").exists() and (tmp_path / "tools.html").exists()
