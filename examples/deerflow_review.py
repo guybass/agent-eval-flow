@@ -21,7 +21,7 @@ from agent_eval_flow.storage.artifacts import ArtifactCache
 
 SOURCE = Path(__file__).resolve().parent / "data/deerflow/capture.json"
 BOUNDARY = "deerflow.lead.requests"
-DEFAULT_TURNS = 6  # recursion_limit 100 at 827acf51: 14 super-steps per turn + 9 per invocation
+DEFAULT_TURNS = 6  # recursion_limit 100 at 827acf51: completes with <= 5 tool rounds (<= 6 model calls); see capacity_probe.py
 CONTRACT = {"schema_version": "1", "id": "deerflow-research", "revision": "1",
             "calls": [{"tool": "web_search"}, {"tool": "web_fetch"}]}
 
