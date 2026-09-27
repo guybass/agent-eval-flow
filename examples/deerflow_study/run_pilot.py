@@ -33,7 +33,7 @@ def _event_parts(event):
     return etype, data
 
 
-def run_one(client_factory, question: dict, out_dir: Path) -> dict:
+def run_one(client_factory, question: dict, out_dir: Path, stream_kwargs: dict | None = None) -> dict:
     run_id = f"q{question['id']}-{uuid.uuid4().hex[:8]}"
     writer = TraceWriter(Path(out_dir) / "raw" / f"{run_id}.jsonl")
     row = {"id": question["id"], "run_id": run_id, "status": "ok", "answer": None,
@@ -42,7 +42,8 @@ def run_one(client_factory, question: dict, out_dir: Path) -> dict:
     texts, order = {}, []
     try:
         client = client_factory(writer)
-        for event in client.stream(question["question"] + "\nAnswer concisely.", thread_id=run_id):
+        for event in client.stream(question["question"] + "\nAnswer concisely.", thread_id=run_id,
+                                   **(stream_kwargs or {})):
             record_stream_event(writer, event)
             etype, data = _event_parts(event)
             if etype == "messages-tuple" and data.get("type") == "ai" and data.get("content"):

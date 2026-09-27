@@ -243,3 +243,19 @@ def test_date_gold_matches_other_day_month_orders():
     assert grade("William Croft was born on 13 November 1956.", "November 13, 1956") == "correct"
     assert grade("Born 1956-11-13", "November 13, 1956") == "correct"
     assert grade("Born 14 November 1956", "November 13, 1956") == "incorrect"
+
+
+class KwargsRecordingClient(FakeClient):
+    def __init__(self):
+        super().__init__()
+        self.kwargs = None
+
+    def stream(self, message, thread_id=None, **kwargs):
+        self.kwargs = kwargs
+        yield from super().stream(message, thread_id=thread_id)
+
+
+def test_stream_kwargs_are_passed_through(tmp_path):
+    client = KwargsRecordingClient()
+    run_one(lambda writer: client, QUESTION, tmp_path, stream_kwargs={"recursion_limit": 300})
+    assert client.kwargs == {"recursion_limit": 300}
