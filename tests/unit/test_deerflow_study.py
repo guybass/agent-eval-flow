@@ -237,3 +237,9 @@ class ErrorAnswerClient:
 def test_provider_error_text_is_recorded_as_error_not_answer(tmp_path):
     row = run_one(lambda writer: ErrorAnswerClient(), QUESTION, tmp_path)
     assert row["status"] == "error" and row["error"].startswith("LLM request failed")
+
+
+def test_date_gold_matches_other_day_month_orders():
+    assert grade("William Croft was born on 13 November 1956.", "November 13, 1956") == "correct"
+    assert grade("Born 1956-11-13", "November 13, 1956") == "correct"
+    assert grade("Born 14 November 1956", "November 13, 1956") == "incorrect"

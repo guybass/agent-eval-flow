@@ -21,11 +21,27 @@ def normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
+MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august",
+          "september", "october", "november", "december"]
+_DATE = re.compile(r"^(?:(?P<m1>[a-z]+) (?P<d1>\d{1,2})|(?P<d2>\d{1,2}) (?P<m2>[a-z]+)) (?P<y>\d{4})$")
+
+
+def _date_forms(base: str) -> set[str]:
+    """Equivalent spellings of a full calendar date derived from the gold string itself."""
+    m = _DATE.match(base)
+    month = m and (m.group("m1") or m.group("m2"))
+    if not m or month not in MONTHS:
+        return set()
+    day, year = int(m.group("d1") or m.group("d2")), m.group("y")
+    num = MONTHS.index(month) + 1
+    return {f"{month} {day} {year}", f"{day} {month} {year}", f"{year} {num:02d} {day:02d}"}
+
+
 def aliases(gold: str) -> set[str]:
     base = normalize(gold)
-    out = {base}
+    out = {base} | _date_forms(base)
     words = base.split()
-    if len(words) > 1 and words[-1].isalpha() and len(words[-1]) >= 4:
+    if not _date_forms(base) and len(words) > 1 and words[-1].isalpha() and len(words[-1]) >= 4:
         out.add(words[-1])          # surname for person names
     return {a for a in out if a}
 
