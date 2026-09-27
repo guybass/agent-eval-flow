@@ -223,3 +223,17 @@ def test_report_joins_grade_evidence_loss_and_tool_path(tmp_path):
     assert row["grade"] == "incorrect" and row["loss"] is True and row["evidence_tool"] == "web_search"
     assert row["searches"] == 1 and row["fetches"] == 0
     assert table[1] == {"id": 8, "status": "error"}
+
+
+class ErrorAnswerClient:
+    """DeerFlow surfaces provider failures as AI text; that is an error, not an answer."""
+
+    def stream(self, message, thread_id=None, **kwargs):
+        yield Ev("messages-tuple", {"type": "ai", "id": "m1",
+                                    "content": "LLM request failed: Error code: 400 - {...}"})
+        yield Ev("end", {"usage": {"input_tokens": 0, "output_tokens": 0}})
+
+
+def test_provider_error_text_is_recorded_as_error_not_answer(tmp_path):
+    row = run_one(lambda writer: ErrorAnswerClient(), QUESTION, tmp_path)
+    assert row["status"] == "error" and row["error"].startswith("LLM request failed")

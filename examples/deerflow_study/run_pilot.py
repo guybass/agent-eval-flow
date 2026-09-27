@@ -23,6 +23,8 @@ DATA = Path.home() / "deerflow-study-data"
 CSV_SHA256 = "feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
 SEED, N = 20260928, 15
 LIMIT_USD = 3.00
+# DeerFlow surfaces provider failures as AI text; they are errors, never answers.
+PROVIDER_FAILURE = "LLM request failed"
 
 
 def _event_parts(event):
@@ -53,10 +55,15 @@ def run_one(client_factory, question: dict, out_dir: Path) -> dict:
                 usage = data.get("usage") or {}
                 for k in ("input_tokens", "output_tokens"):
                     row["usage"][k] = int(usage.get(k) or 0)
-        row["answer"] = texts[order[-1]] if order else ""
+        answer = texts[order[-1]] if order else ""
+        if answer.startswith(PROVIDER_FAILURE):
+            raise RuntimeError(answer[:500])
+        row["answer"] = answer
         writer.record("final_answer", content=row["answer"])
     except Exception as exc:  # recorded, never scored
-        row.update(status="error", error=f"{type(exc).__name__}: {exc}")
+        message = str(exc)
+        row.update(status="error", error=message if message.startswith(PROVIDER_FAILURE)
+                   else f"{type(exc).__name__}: {exc}")
         writer.record("error", message=row["error"])
     finally:
         row["coverage"] = dict(writer.coverage)
