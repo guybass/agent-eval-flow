@@ -7,6 +7,7 @@ Scored with the pinned tool-scorer package; arguments are not compared.
 from __future__ import annotations
 
 from collections import Counter
+import json
 
 from .detector import aliases, normalize
 
@@ -47,4 +48,8 @@ def toolscore_metrics(rows: list[dict]) -> dict:
             "required_call_recall": sum((needed & counts).values()) / len(expected),
             "redundant_rate": float(result.metrics["efficiency_metrics"]["redundant_rate"]),
             "tool_calls": len(actual), "searches": counts["web_search"], "fetches": counts["web_fetch"],
-            "subagent_tasks": counts["task"], "toolscore_score": float(result.score)}
+            "subagent_tasks": counts["task"], "toolscore_score": float(result.score),
+            # Toolscore's redundant_rate counts calls beyond the contract's per-tool
+            # expectation (names only). Identical (tool, args) repeats are the loop signal.
+            "identical_repeats": len(actual) - len({(c["tool"], json.dumps(c["args"], sort_keys=True))
+                                                    for c in actual})}

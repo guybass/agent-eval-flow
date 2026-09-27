@@ -259,3 +259,14 @@ def test_stream_kwargs_are_passed_through(tmp_path):
     client = KwargsRecordingClient()
     run_one(lambda writer: client, QUESTION, tmp_path, stream_kwargs={"recursion_limit": 300})
     assert client.kwargs == {"recursion_limit": 300}
+
+
+def test_identical_repeats_are_counted_separately_from_toolscore_redundancy(tmp_path):
+    pytest.importorskip("toolscore")
+    rows = _stream_rows(tmp_path, [Ev("messages-tuple", {"type": "ai", "content": "", "tool_calls": [
+        {"id": "a", "name": "web_search", "args": {"query": "q1"}},
+        {"id": "b", "name": "web_search", "args": {"query": "q2"}},
+        {"id": "c", "name": "web_search", "args": {"query": "q1"}}]})])
+    m = toolscore_metrics(rows)
+    assert m["identical_repeats"] == 1          # only the second "q1" repeats a call exactly
+    assert m["redundant_rate"] > 0.5            # Toolscore: calls beyond the contract's one search
