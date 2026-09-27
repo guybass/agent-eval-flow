@@ -22,7 +22,7 @@ REPO = Path(__file__).resolve().parents[2]
 DATA = Path.home() / "deerflow-study-data"
 CSV_SHA256 = "feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
 SEED, N = 20260928, 15
-LIMIT_USD = 4.00
+LIMIT_USD = 3.00
 
 
 def _event_parts(event):
