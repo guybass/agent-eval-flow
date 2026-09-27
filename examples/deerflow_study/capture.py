@@ -77,9 +77,12 @@ def record_stream_event(writer: TraceWriter, event: Any) -> None:
     dtype = data.get("type") if isinstance(data, dict) else None
     if etype == "messages-tuple" and dtype == "tool":
         writer.coverage["tool_results"] = True
-        writer.record("tool_result", tool=data.get("name"), content=_text(data.get("content")))
+        writer.record("tool_result", tool=data.get("name"), tool_call_id=data.get("tool_call_id"),
+                      content=_text(data.get("content")))
     elif etype == "messages-tuple" and dtype == "ai" and data.get("tool_calls"):
-        writer.record("tool_call", calls=data.get("tool_calls"))
+        calls = [{"id": c.get("id"), "tool": c.get("name"), "args": c.get("args")}
+                 for c in data.get("tool_calls") or () if isinstance(c, dict)]
+        writer.record("tool_call", calls=calls)
     elif etype == "custom" and dtype in SUBAGENT_EVENTS:
         writer.coverage["subagent_events"] = True
         message = data.get("message")

@@ -163,3 +163,63 @@ def test_grade():
     assert grade("It was Paul Anastas.", "Anastas") == "correct"
     assert grade("Chirik", "Anastas") == "incorrect"
     assert grade("", "Anastas") == "review"
+
+
+from examples.deerflow_study.toolscore_view import CONTRACT, evidence_tool, tool_calls, toolscore_metrics
+
+
+def _stream_rows(tmp_path, events):
+    w = TraceWriter(tmp_path / "run.jsonl")
+    for event in events:
+        record_stream_event(w, event)
+    w.close()
+    return [json.loads(line) for line in (tmp_path / "run.jsonl").read_text().splitlines()]
+
+
+def test_tool_calls_keep_ids_names_and_args_in_request_order(tmp_path):
+    rows = _stream_rows(tmp_path, [
+        Ev("messages-tuple", {"type": "ai", "content": "", "tool_calls": [
+            {"id": "c1", "name": "web_search", "args": {"query": "2016 green chemistry award"}},
+            {"id": "c2", "name": "web_fetch", "args": {"url": "https://rsc.org/x"}}]}),
+        Ev("messages-tuple", {"type": "tool", "name": "web_fetch", "tool_call_id": "c2", "content": "Paul Anastas"}),
+        Ev("messages-tuple", {"type": "tool", "name": "web_search", "tool_call_id": "c1", "content": "results"})])
+    assert tool_calls(rows) == [{"id": "c1", "tool": "web_search", "args": {"query": "2016 green chemistry award"}},
+                                {"id": "c2", "tool": "web_fetch", "args": {"url": "https://rsc.org/x"}}]
+    assert rows[1]["tool_call_id"] == "c2"
+    assert evidence_tool(rows, "Anastas") == "web_fetch"
+
+
+def test_toolscore_metrics_against_name_level_contract(tmp_path):
+    pytest.importorskip("toolscore")
+    rows = _stream_rows(tmp_path, [Ev("messages-tuple", {"type": "ai", "content": "", "tool_calls": [
+        {"id": "a", "name": "web_search", "args": {"query": "q"}},
+        {"id": "b", "name": "web_search", "args": {"query": "q"}}]})])
+    m = toolscore_metrics(rows)
+    assert CONTRACT["calls"] == [{"tool": "web_search"}, {"tool": "web_fetch"}]
+    assert m["required_call_recall"] == 0.5          # searched but never fetched a page
+    assert m["searches"] == 2 and m["fetches"] == 0
+    assert 0.0 <= m["redundant_rate"] <= 1.0
+
+
+from examples.deerflow_study.report import build_table
+
+
+def test_report_joins_grade_evidence_loss_and_tool_path(tmp_path):
+    trace = tmp_path / "t.jsonl"
+    w = TraceWriter(trace)
+    record_stream_event(w, Ev("messages-tuple", {"type": "ai", "content": "", "tool_calls": [
+        {"id": "c1", "name": "web_search", "args": {"query": "q"}}]}))
+    record_stream_event(w, Ev("messages-tuple", {"type": "tool", "name": "web_search", "tool_call_id": "c1",
+                                                 "content": "Paul Anastas won"}))
+    w.record("model_request", agent="lead", messages=[{"type": "ai", "text": "Chirik"}])
+    w.record("final_answer", content="Chirik")
+    w.close()
+    results = [{"id": 7, "status": "ok", "answer": "Chirik", "trace": str(trace),
+                "coverage": {"lead_model_requests": True}},
+               {"id": 8, "status": "error", "answer": None, "trace": str(trace), "coverage": {}}]
+    gold = {7: {"question": "Who won?", "answer": "Anastas"}, 8: {"question": "Q?", "answer": "X"}}
+    table = build_table(results, gold)
+    row = table[0]
+    assert row["grade"] == "incorrect" and row["loss"] is True and row["evidence_tool"] == "web_search"
+    assert row["searches"] == 1 and row["fetches"] == 0
+    assert table[1] == {"id": 8, "status": "error"}
