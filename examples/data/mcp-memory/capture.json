@@ -1,0 +1,3200 @@
+{
+ "schema": "mcp-memory-scope-matrix/1",
+ "recorded_on": "2026-09-28",
+ "upstream": {
+  "repository": "https://github.com/modelcontextprotocol/servers",
+  "main": "f46d957",
+  "fix_branch_commit": "0ef28b0",
+  "published_package": "@modelcontextprotocol/server-memory@2026.8.31",
+  "regression_introduced_by": "#4717 (merged 2026-09-03)"
+ },
+ "driver": {
+  "client": "Toolscore MCPStdioClient",
+  "toolscore": "1.9.0 + fix/mcp-union-types (40ca160)"
+ },
+ "builds": {
+  "published-2026.8.31": "npx -y @modelcontextprotocol/server-memory@2026.8.31",
+  "main-f46d957": "node builds/main/src/memory/dist/index.js",
+  "fix-0ef28b0": "node builds/fix/src/memory/dist/index.js"
+ },
+ "scenarios": [
+  {
+   "id": "clean",
+   "line": null,
+   "facts": [],
+   "origin": "control: no unreadable line"
+  },
+  {
+   "id": "null_observation",
+   "line": "{\"type\":\"entity\",\"name\":\"Bob\",\"entityType\":\"person\",\"observations\":[\"Allergic to penicillin\",\"Lives in Haifa\",null]}",
+   "facts": [
+    "Allergic to penicillin",
+    "Lives in Haifa"
+   ],
+   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations"
+  },
+  {
+   "id": "missing_entity_type",
+   "line": "{\"type\":\"entity\",\"name\":\"Project X\",\"observations\":[\"Deadline 2026-10-01\",\"Budget 40k\"]}",
+   "facts": [
+    "Deadline 2026-10-01",
+    "Budget 40k"
+   ],
+   "origin": "#4717 names entities missing entityType as legacy entries"
+  },
+  {
+   "id": "truncated_line",
+   "line": "{\"type\":\"entity\",\"name\":\"Dana\",\"entityType\":\"person\",\"observations\":[\"Speaks Hebrew\",\"Birthday 3 May\"",
+   "facts": [
+    "Speaks Hebrew",
+    "Birthday 3 May"
+   ],
+   "origin": "writes interrupted before atomic saves (#4642); #1481"
+  },
+  {
+   "id": "two_objects_one_line",
+   "line": "{\"type\":\"entity\",\"name\":\"Eli\",\"entityType\":\"person\",\"observations\":[\"Owns a cat\"]}{\"type\":\"entity\",\"name\":\"Fay\",\"entityType\":\"person\",\"observations\":[\"Plays chess\"]}",
+   "facts": [
+    "Owns a cat",
+    "Plays chess"
+   ],
+   "origin": "interleaved concurrent writes (#1819); parse error reported in #3173"
+  },
+  {
+   "id": "unknown_record_type",
+   "line": "{\"type\":\"note\",\"text\":\"Quarterly review every Friday\"}",
+   "facts": [
+    "Quarterly review every Friday"
+   ],
+   "origin": "records written by other tools or future versions"
+  },
+  {
+   "id": "relation_missing_type",
+   "line": "{\"type\":\"relation\",\"from\":\"Alice\",\"to\":\"Alice\"}",
+   "facts": [
+    "\"from\":\"Alice\",\"to\":\"Alice\""
+   ],
+   "origin": "#4717 names relations missing relationType"
+  },
+  {
+   "id": "extra_field",
+   "line": "{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"],\"createdAt\":\"2026-01-01\"}",
+   "facts": [
+    "Vegetarian",
+    "createdAt"
+   ],
+   "origin": "valid entity with an extra field (out of scope for the fix; checked for completeness)"
+  }
+ ],
+ "writes": {
+  "create_entities": {
+   "entities": [
+    {
+     "name": "Carol",
+     "entityType": "person",
+     "observations": [
+      "New hire"
+     ]
+    }
+   ]
+  },
+  "add_observations": {
+   "observations": [
+    {
+     "entityName": "Alice",
+     "contents": [
+      "Moved to Berlin"
+     ]
+    }
+   ]
+  }
+ },
+ "cells": [
+  {
+   "build": "published-2026.8.31",
+   "scenario": "clean",
+   "write": "create_entities",
+   "origin": "control: no unreadable line",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": null,
+   "facts_total": 0,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}",
+   "seconds": 0.41
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "clean",
+   "write": "add_observations",
+   "origin": "control: no unreadable line",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": null,
+   "facts_total": 0,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}",
+   "seconds": 0.37
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "null_observation",
+   "write": "create_entities",
+   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations",
+   "read_graph": "error",
+   "entities_seen_by_agent": [],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": true,
+     "text": "MCP error -32602: Output validation error: Invalid structured content for tool read_graph: Invalid input: expected string, received null at entities[1].observations[2]",
+     "structured": null
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Bob\",\"entityType\":\"person\",\"observations\":[\"Allergic to penicillin\",\"Lives in Haifa\",null]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Bob\",\"entityType\":\"person\",\"observations\":[\"Allergic to penicillin\",\"Lives in Haifa\",null]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}",
+   "seconds": 0.4
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "null_observation",
+   "write": "add_observations",
+   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations",
+   "read_graph": "error",
+   "entities_seen_by_agent": [],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": true,
+     "text": "MCP error -32602: Output validation error: Invalid structured content for tool read_graph: Invalid input: expected string, received null at entities[1].observations[2]",
+     "structured": null
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Bob\",\"entityType\":\"person\",\"observations\":[\"Allergic to penicillin\",\"Lives in Haifa\",null]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n{\"type\":\"entity\",\"name\":\"Bob\",\"entityType\":\"person\",\"observations\":[\"Allergic to penicillin\",\"Lives in Haifa\",null]}",
+   "seconds": 0.37
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "missing_entity_type",
+   "write": "create_entities",
+   "origin": "#4717 names entities missing entityType as legacy entries",
+   "read_graph": "error",
+   "entities_seen_by_agent": [],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": true,
+     "text": "MCP error -32602: Output validation error: Invalid structured content for tool read_graph: Invalid input: expected string, received undefined at entities[1].entityType",
+     "structured": null
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Project X\",\"observations\":[\"Deadline 2026-10-01\",\"Budget 40k\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Project X\",\"observations\":[\"Deadline 2026-10-01\",\"Budget 40k\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}",
+   "seconds": 0.38
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "missing_entity_type",
+   "write": "add_observations",
+   "origin": "#4717 names entities missing entityType as legacy entries",
+   "read_graph": "error",
+   "entities_seen_by_agent": [],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": true,
+     "text": "MCP error -32602: Output validation error: Invalid structured content for tool read_graph: Invalid input: expected string, received undefined at entities[1].entityType",
+     "structured": null
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Project X\",\"observations\":[\"Deadline 2026-10-01\",\"Budget 40k\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n{\"type\":\"entity\",\"name\":\"Project X\",\"observations\":[\"Deadline 2026-10-01\",\"Budget 40k\"]}",
+   "seconds": 0.38
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "truncated_line",
+   "write": "create_entities",
+   "origin": "writes interrupted before atomic saves (#4642); #1481",
+   "read_graph": "error",
+   "entities_seen_by_agent": [],
+   "write_reported_error": true,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": false,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": true,
+     "text": "Expected ',' or ']' after array element in JSON at position 101 (line 1 column 102)",
+     "structured": null
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": true,
+     "text": "Expected ',' or ']' after array element in JSON at position 101 (line 1 column 102)",
+     "structured": null
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Dana\",\"entityType\":\"person\",\"observations\":[\"Speaks Hebrew\",\"Birthday 3 May\"\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Dana\",\"entityType\":\"person\",\"observations\":[\"Speaks Hebrew\",\"Birthday 3 May\"\n",
+   "seconds": 0.38
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "truncated_line",
+   "write": "add_observations",
+   "origin": "writes interrupted before atomic saves (#4642); #1481",
+   "read_graph": "error",
+   "entities_seen_by_agent": [],
+   "write_reported_error": true,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": false,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": true,
+     "text": "Expected ',' or ']' after array element in JSON at position 101 (line 1 column 102)",
+     "structured": null
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": true,
+     "text": "Expected ',' or ']' after array element in JSON at position 101 (line 1 column 102)",
+     "structured": null
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Dana\",\"entityType\":\"person\",\"observations\":[\"Speaks Hebrew\",\"Birthday 3 May\"\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Dana\",\"entityType\":\"person\",\"observations\":[\"Speaks Hebrew\",\"Birthday 3 May\"\n",
+   "seconds": 0.37
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "two_objects_one_line",
+   "write": "create_entities",
+   "origin": "interleaved concurrent writes (#1819); parse error reported in #3173",
+   "read_graph": "error",
+   "entities_seen_by_agent": [],
+   "write_reported_error": true,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": false,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": true,
+     "text": "Unexpected non-whitespace character after JSON at position 82 (line 1 column 83)",
+     "structured": null
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": true,
+     "text": "Unexpected non-whitespace character after JSON at position 82 (line 1 column 83)",
+     "structured": null
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Eli\",\"entityType\":\"person\",\"observations\":[\"Owns a cat\"]}{\"type\":\"entity\",\"name\":\"Fay\",\"entityType\":\"person\",\"observations\":[\"Plays chess\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Eli\",\"entityType\":\"person\",\"observations\":[\"Owns a cat\"]}{\"type\":\"entity\",\"name\":\"Fay\",\"entityType\":\"person\",\"observations\":[\"Plays chess\"]}\n",
+   "seconds": 0.37
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "two_objects_one_line",
+   "write": "add_observations",
+   "origin": "interleaved concurrent writes (#1819); parse error reported in #3173",
+   "read_graph": "error",
+   "entities_seen_by_agent": [],
+   "write_reported_error": true,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": false,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": true,
+     "text": "Unexpected non-whitespace character after JSON at position 82 (line 1 column 83)",
+     "structured": null
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": true,
+     "text": "Unexpected non-whitespace character after JSON at position 82 (line 1 column 83)",
+     "structured": null
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Eli\",\"entityType\":\"person\",\"observations\":[\"Owns a cat\"]}{\"type\":\"entity\",\"name\":\"Fay\",\"entityType\":\"person\",\"observations\":[\"Plays chess\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Eli\",\"entityType\":\"person\",\"observations\":[\"Owns a cat\"]}{\"type\":\"entity\",\"name\":\"Fay\",\"entityType\":\"person\",\"observations\":[\"Plays chess\"]}\n",
+   "seconds": 0.37
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "unknown_record_type",
+   "write": "create_entities",
+   "origin": "records written by other tools or future versions",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 1,
+   "facts_lost": [
+    "Quarterly review every Friday"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"note\",\"text\":\"Quarterly review every Friday\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}",
+   "seconds": 0.37
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "unknown_record_type",
+   "write": "add_observations",
+   "origin": "records written by other tools or future versions",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 1,
+   "facts_lost": [
+    "Quarterly review every Friday"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"note\",\"text\":\"Quarterly review every Friday\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}",
+   "seconds": 0.39
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "relation_missing_type",
+   "write": "create_entities",
+   "origin": "#4717 names relations missing relationType",
+   "read_graph": "error",
+   "entities_seen_by_agent": [],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 1,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": true,
+     "text": "MCP error -32602: Output validation error: Invalid structured content for tool read_graph: Invalid input: expected string, received undefined at relations[0].relationType",
+     "structured": null
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"relation\",\"from\":\"Alice\",\"to\":\"Alice\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n{\"type\":\"relation\",\"from\":\"Alice\",\"to\":\"Alice\"}",
+   "seconds": 0.39
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "relation_missing_type",
+   "write": "add_observations",
+   "origin": "#4717 names relations missing relationType",
+   "read_graph": "error",
+   "entities_seen_by_agent": [],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 1,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": true,
+     "text": "MCP error -32602: Output validation error: Invalid structured content for tool read_graph: Invalid input: expected string, received undefined at relations[0].relationType",
+     "structured": null
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"relation\",\"from\":\"Alice\",\"to\":\"Alice\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n{\"type\":\"relation\",\"from\":\"Alice\",\"to\":\"Alice\"}",
+   "seconds": 0.38
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "extra_field",
+   "write": "create_entities",
+   "origin": "valid entity with an extra field (out of scope for the fix; checked for completeness)",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice",
+    "Gil"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "createdAt"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    },\n    {\n      \"name\": \"Gil\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Vegetarian\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       },
+       {
+        "name": "Gil",
+        "entityType": "person",
+        "observations": [
+         "Vegetarian"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"],\"createdAt\":\"2026-01-01\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}",
+   "seconds": 0.38
+  },
+  {
+   "build": "published-2026.8.31",
+   "scenario": "extra_field",
+   "write": "add_observations",
+   "origin": "valid entity with an extra field (out of scope for the fix; checked for completeness)",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice",
+    "Gil"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "createdAt"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    },\n    {\n      \"name\": \"Gil\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Vegetarian\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       },
+       {
+        "name": "Gil",
+        "entityType": "person",
+        "observations": [
+         "Vegetarian"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"],\"createdAt\":\"2026-01-01\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"]}",
+   "seconds": 0.39
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "clean",
+   "write": "create_entities",
+   "origin": "control: no unreadable line",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": null,
+   "facts_total": 0,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n",
+   "seconds": 0.12
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "clean",
+   "write": "add_observations",
+   "origin": "control: no unreadable line",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": null,
+   "facts_total": 0,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n",
+   "seconds": 0.12
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "null_observation",
+   "write": "create_entities",
+   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "Allergic to penicillin",
+    "Lives in Haifa"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Bob\",\"entityType\":\"person\",\"observations\":[\"Allergic to penicillin\",\"Lives in Haifa\",null]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n",
+   "seconds": 0.12
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "null_observation",
+   "write": "add_observations",
+   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "Allergic to penicillin",
+    "Lives in Haifa"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Bob\",\"entityType\":\"person\",\"observations\":[\"Allergic to penicillin\",\"Lives in Haifa\",null]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "missing_entity_type",
+   "write": "create_entities",
+   "origin": "#4717 names entities missing entityType as legacy entries",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "Deadline 2026-10-01",
+    "Budget 40k"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Project X\",\"observations\":[\"Deadline 2026-10-01\",\"Budget 40k\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n",
+   "seconds": 0.12
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "missing_entity_type",
+   "write": "add_observations",
+   "origin": "#4717 names entities missing entityType as legacy entries",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "Deadline 2026-10-01",
+    "Budget 40k"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Project X\",\"observations\":[\"Deadline 2026-10-01\",\"Budget 40k\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n",
+   "seconds": 0.12
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "truncated_line",
+   "write": "create_entities",
+   "origin": "writes interrupted before atomic saves (#4642); #1481",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "Speaks Hebrew",
+    "Birthday 3 May"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Dana\",\"entityType\":\"person\",\"observations\":[\"Speaks Hebrew\",\"Birthday 3 May\"\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "truncated_line",
+   "write": "add_observations",
+   "origin": "writes interrupted before atomic saves (#4642); #1481",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "Speaks Hebrew",
+    "Birthday 3 May"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Dana\",\"entityType\":\"person\",\"observations\":[\"Speaks Hebrew\",\"Birthday 3 May\"\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "two_objects_one_line",
+   "write": "create_entities",
+   "origin": "interleaved concurrent writes (#1819); parse error reported in #3173",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "Owns a cat",
+    "Plays chess"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Eli\",\"entityType\":\"person\",\"observations\":[\"Owns a cat\"]}{\"type\":\"entity\",\"name\":\"Fay\",\"entityType\":\"person\",\"observations\":[\"Plays chess\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "two_objects_one_line",
+   "write": "add_observations",
+   "origin": "interleaved concurrent writes (#1819); parse error reported in #3173",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "Owns a cat",
+    "Plays chess"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Eli\",\"entityType\":\"person\",\"observations\":[\"Owns a cat\"]}{\"type\":\"entity\",\"name\":\"Fay\",\"entityType\":\"person\",\"observations\":[\"Plays chess\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "unknown_record_type",
+   "write": "create_entities",
+   "origin": "records written by other tools or future versions",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 1,
+   "facts_lost": [
+    "Quarterly review every Friday"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"note\",\"text\":\"Quarterly review every Friday\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n",
+   "seconds": 0.12
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "unknown_record_type",
+   "write": "add_observations",
+   "origin": "records written by other tools or future versions",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 1,
+   "facts_lost": [
+    "Quarterly review every Friday"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"note\",\"text\":\"Quarterly review every Friday\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "relation_missing_type",
+   "write": "create_entities",
+   "origin": "#4717 names relations missing relationType",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 1,
+   "facts_lost": [
+    "\"from\":\"Alice\",\"to\":\"Alice\""
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"relation\",\"from\":\"Alice\",\"to\":\"Alice\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "relation_missing_type",
+   "write": "add_observations",
+   "origin": "#4717 names relations missing relationType",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 1,
+   "facts_lost": [
+    "\"from\":\"Alice\",\"to\":\"Alice\""
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"relation\",\"from\":\"Alice\",\"to\":\"Alice\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "extra_field",
+   "write": "create_entities",
+   "origin": "valid entity with an extra field (out of scope for the fix; checked for completeness)",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice",
+    "Gil"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "createdAt"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    },\n    {\n      \"name\": \"Gil\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Vegetarian\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       },
+       {
+        "name": "Gil",
+        "entityType": "person",
+        "observations": [
+         "Vegetarian"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"],\"createdAt\":\"2026-01-01\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n",
+   "seconds": 0.12
+  },
+  {
+   "build": "main-f46d957",
+   "scenario": "extra_field",
+   "write": "add_observations",
+   "origin": "valid entity with an extra field (out of scope for the fix; checked for completeness)",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice",
+    "Gil"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "createdAt"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    },\n    {\n      \"name\": \"Gil\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Vegetarian\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       },
+       {
+        "name": "Gil",
+        "entityType": "person",
+        "observations": [
+         "Vegetarian"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"],\"createdAt\":\"2026-01-01\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "clean",
+   "write": "create_entities",
+   "origin": "control: no unreadable line",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": null,
+   "facts_total": 0,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n",
+   "seconds": 0.12
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "clean",
+   "write": "add_observations",
+   "origin": "control: no unreadable line",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": null,
+   "facts_total": 0,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "null_observation",
+   "write": "create_entities",
+   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Bob\",\"entityType\":\"person\",\"observations\":[\"Allergic to penicillin\",\"Lives in Haifa\",null]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n{\"type\":\"entity\",\"name\":\"Bob\",\"entityType\":\"person\",\"observations\":[\"Allergic to penicillin\",\"Lives in Haifa\",null]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "null_observation",
+   "write": "add_observations",
+   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Bob\",\"entityType\":\"person\",\"observations\":[\"Allergic to penicillin\",\"Lives in Haifa\",null]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n{\"type\":\"entity\",\"name\":\"Bob\",\"entityType\":\"person\",\"observations\":[\"Allergic to penicillin\",\"Lives in Haifa\",null]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "missing_entity_type",
+   "write": "create_entities",
+   "origin": "#4717 names entities missing entityType as legacy entries",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Project X\",\"observations\":[\"Deadline 2026-10-01\",\"Budget 40k\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n{\"type\":\"entity\",\"name\":\"Project X\",\"observations\":[\"Deadline 2026-10-01\",\"Budget 40k\"]}\n",
+   "seconds": 0.12
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "missing_entity_type",
+   "write": "add_observations",
+   "origin": "#4717 names entities missing entityType as legacy entries",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Project X\",\"observations\":[\"Deadline 2026-10-01\",\"Budget 40k\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n{\"type\":\"entity\",\"name\":\"Project X\",\"observations\":[\"Deadline 2026-10-01\",\"Budget 40k\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "truncated_line",
+   "write": "create_entities",
+   "origin": "writes interrupted before atomic saves (#4642); #1481",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Dana\",\"entityType\":\"person\",\"observations\":[\"Speaks Hebrew\",\"Birthday 3 May\"\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n{\"type\":\"entity\",\"name\":\"Dana\",\"entityType\":\"person\",\"observations\":[\"Speaks Hebrew\",\"Birthday 3 May\"\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "truncated_line",
+   "write": "add_observations",
+   "origin": "writes interrupted before atomic saves (#4642); #1481",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Dana\",\"entityType\":\"person\",\"observations\":[\"Speaks Hebrew\",\"Birthday 3 May\"\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n{\"type\":\"entity\",\"name\":\"Dana\",\"entityType\":\"person\",\"observations\":[\"Speaks Hebrew\",\"Birthday 3 May\"\n",
+   "seconds": 0.12
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "two_objects_one_line",
+   "write": "create_entities",
+   "origin": "interleaved concurrent writes (#1819); parse error reported in #3173",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Eli\",\"entityType\":\"person\",\"observations\":[\"Owns a cat\"]}{\"type\":\"entity\",\"name\":\"Fay\",\"entityType\":\"person\",\"observations\":[\"Plays chess\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n{\"type\":\"entity\",\"name\":\"Eli\",\"entityType\":\"person\",\"observations\":[\"Owns a cat\"]}{\"type\":\"entity\",\"name\":\"Fay\",\"entityType\":\"person\",\"observations\":[\"Plays chess\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "two_objects_one_line",
+   "write": "add_observations",
+   "origin": "interleaved concurrent writes (#1819); parse error reported in #3173",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 2,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Eli\",\"entityType\":\"person\",\"observations\":[\"Owns a cat\"]}{\"type\":\"entity\",\"name\":\"Fay\",\"entityType\":\"person\",\"observations\":[\"Plays chess\"]}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n{\"type\":\"entity\",\"name\":\"Eli\",\"entityType\":\"person\",\"observations\":[\"Owns a cat\"]}{\"type\":\"entity\",\"name\":\"Fay\",\"entityType\":\"person\",\"observations\":[\"Plays chess\"]}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "unknown_record_type",
+   "write": "create_entities",
+   "origin": "records written by other tools or future versions",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 1,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"note\",\"text\":\"Quarterly review every Friday\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n{\"type\":\"note\",\"text\":\"Quarterly review every Friday\"}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "unknown_record_type",
+   "write": "add_observations",
+   "origin": "records written by other tools or future versions",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 1,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"note\",\"text\":\"Quarterly review every Friday\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n{\"type\":\"note\",\"text\":\"Quarterly review every Friday\"}\n",
+   "seconds": 0.12
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "relation_missing_type",
+   "write": "create_entities",
+   "origin": "#4717 names relations missing relationType",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 1,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"relation\",\"from\":\"Alice\",\"to\":\"Alice\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n{\"type\":\"relation\",\"from\":\"Alice\",\"to\":\"Alice\"}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "relation_missing_type",
+   "write": "add_observations",
+   "origin": "#4717 names relations missing relationType",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": true,
+   "facts_total": 1,
+   "facts_lost": [],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"relation\",\"from\":\"Alice\",\"to\":\"Alice\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n{\"type\":\"relation\",\"from\":\"Alice\",\"to\":\"Alice\"}\n",
+   "seconds": 0.11
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "extra_field",
+   "write": "create_entities",
+   "origin": "valid entity with an extra field (out of scope for the fix; checked for completeness)",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice",
+    "Gil"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "createdAt"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    },\n    {\n      \"name\": \"Gil\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Vegetarian\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       },
+       {
+        "name": "Gil",
+        "entityType": "person",
+        "observations": [
+         "Vegetarian"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "create_entities",
+     "args": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"name\": \"Carol\",\n    \"entityType\": \"person\",\n    \"observations\": [\n      \"New hire\"\n    ]\n  }\n]",
+     "structured": {
+      "entities": [
+       {
+        "name": "Carol",
+        "entityType": "person",
+        "observations": [
+         "New hire"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"],\"createdAt\":\"2026-01-01\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"]}\n{\"type\":\"entity\",\"name\":\"Carol\",\"entityType\":\"person\",\"observations\":[\"New hire\"]}\n",
+   "seconds": 0.12
+  },
+  {
+   "build": "fix-0ef28b0",
+   "scenario": "extra_field",
+   "write": "add_observations",
+   "origin": "valid entity with an extra field (out of scope for the fix; checked for completeness)",
+   "read_graph": "ok",
+   "entities_seen_by_agent": [
+    "Alice",
+    "Gil"
+   ],
+   "write_reported_error": false,
+   "unreadable_line_kept": false,
+   "facts_total": 2,
+   "facts_lost": [
+    "createdAt"
+   ],
+   "valid_data_kept": true,
+   "write_applied": true,
+   "calls": [
+    {
+     "tool": "read_graph",
+     "args": {},
+     "is_error": false,
+     "text": "{\n  \"entities\": [\n    {\n      \"name\": \"Alice\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Works at Acme\",\n        \"Prefers email\"\n      ]\n    },\n    {\n      \"name\": \"Gil\",\n      \"entityType\": \"person\",\n      \"observations\": [\n        \"Vegetarian\"\n      ]\n    }\n  ],\n  \"relations\": []\n}",
+     "structured": {
+      "entities": [
+       {
+        "name": "Alice",
+        "entityType": "person",
+        "observations": [
+         "Works at Acme",
+         "Prefers email"
+        ]
+       },
+       {
+        "name": "Gil",
+        "entityType": "person",
+        "observations": [
+         "Vegetarian"
+        ]
+       }
+      ],
+      "relations": []
+     }
+    },
+    {
+     "tool": "add_observations",
+     "args": {
+      "observations": [
+       {
+        "entityName": "Alice",
+        "contents": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     },
+     "is_error": false,
+     "text": "[\n  {\n    \"entityName\": \"Alice\",\n    \"addedObservations\": [\n      \"Moved to Berlin\"\n    ]\n  }\n]",
+     "structured": {
+      "results": [
+       {
+        "entityName": "Alice",
+        "addedObservations": [
+         "Moved to Berlin"
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "file_before": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\"]}\n{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"],\"createdAt\":\"2026-01-01\"}\n",
+   "file_after": "{\"type\":\"entity\",\"name\":\"Alice\",\"entityType\":\"person\",\"observations\":[\"Works at Acme\",\"Prefers email\",\"Moved to Berlin\"]}\n{\"type\":\"entity\",\"name\":\"Gil\",\"entityType\":\"person\",\"observations\":[\"Vegetarian\"]}\n",
+   "seconds": 0.11
+  }
+ ]
+}
