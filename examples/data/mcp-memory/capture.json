@@ -31,7 +31,7 @@
     "Allergic to penicillin",
     "Lives in Haifa"
    ],
-   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations"
+   "origin": "#2044 (user memory files with undefined fields); #4717 names null observations"
   },
   {
    "id": "missing_entity_type",
@@ -246,7 +246,7 @@
    "build": "published-2026.8.31",
    "scenario": "null_observation",
    "write": "create_entities",
-   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations",
+   "origin": "#2044 (user memory files with undefined fields); #4717 names null observations",
    "read_graph": "error",
    "entities_seen_by_agent": [],
    "write_reported_error": false,
@@ -299,7 +299,7 @@
    "build": "published-2026.8.31",
    "scenario": "null_observation",
    "write": "add_observations",
-   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations",
+   "origin": "#2044 (user memory files with undefined fields); #4717 names null observations",
    "read_graph": "error",
    "entities_seen_by_agent": [],
    "write_reported_error": false,
@@ -1148,7 +1148,7 @@
    "build": "main-f46d957",
    "scenario": "null_observation",
    "write": "create_entities",
-   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations",
+   "origin": "#2044 (user memory files with undefined fields); #4717 names null observations",
    "read_graph": "ok",
    "entities_seen_by_agent": [
     "Alice"
@@ -1218,7 +1218,7 @@
    "build": "main-f46d957",
    "scenario": "null_observation",
    "write": "add_observations",
-   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations",
+   "origin": "#2044 (user memory files with undefined fields); #4717 names null observations",
    "read_graph": "ok",
    "entities_seen_by_agent": [
     "Alice"
@@ -2256,7 +2256,7 @@
    "build": "fix-0ef28b0",
    "scenario": "null_observation",
    "write": "create_entities",
-   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations",
+   "origin": "#2044 (user memory files with undefined fields); #4717 names null observations",
    "read_graph": "ok",
    "entities_seen_by_agent": [
     "Alice"
@@ -2323,7 +2323,7 @@
    "build": "fix-0ef28b0",
    "scenario": "null_observation",
    "write": "add_observations",
-   "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations",
+   "origin": "#2044 (user memory files with undefined fields); #4717 names null observations",
    "read_graph": "ok",
    "entities_seen_by_agent": [
     "Alice"

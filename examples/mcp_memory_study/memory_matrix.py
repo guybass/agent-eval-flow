@@ -38,7 +38,7 @@ SCENARIOS = [
     {"id": "null_observation",
      "line": '{"type":"entity","name":"Bob","entityType":"person","observations":["Allergic to penicillin","Lives in Haifa",null]}',
      "facts": ["Allergic to penicillin", "Lives in Haifa"],
-     "origin": "#2044 (Claude Desktop / Claude Code users with undefined fields); #4717 names null observations"},
+     "origin": "#2044 (user memory files with undefined fields); #4717 names null observations"},
     {"id": "missing_entity_type",
      "line": '{"type":"entity","name":"Project X","observations":["Deadline 2026-10-01","Budget 40k"]}',
      "facts": ["Deadline 2026-10-01", "Budget 40k"],
