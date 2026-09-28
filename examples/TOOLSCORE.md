@@ -1,7 +1,7 @@
 # Tool calling evaluation with Toolscore
 
 Install `agent-eval-flow[toolscore]` (or `pip install -e ".[toolscore]"` in a
-checkout). This extra pins `tool-scorer==1.8.1`. Importing Agent Eval Flow and
+checkout). This extra pins `tool-scorer==1.9.0`. Importing Agent Eval Flow and
 rendering saved reports do not require Toolscore. A requested evaluation with a
 missing or unsupported dependency produces an explicit error measurement.
 

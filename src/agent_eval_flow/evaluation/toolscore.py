@@ -13,7 +13,7 @@ from ..objects.tool_trace import trace_for_run, scoring_calls
 from ..objects.values import zero_resources
 
 
-SUPPORTED_VERSION = "1.8.1"
+SUPPORTED_VERSION = "1.9.0"
 RECEIPT_TYPE = "application/vnd.agent-eval-flow.toolscore+json"
 METRICS = ("score", "invocation_accuracy", "selection_accuracy", "argument_f1",
            "sequence_accuracy", "redundant_rate", "required_call_recall")
@@ -116,7 +116,7 @@ class ToolscoreEvaluator:
     ties resolved by declaration order. No model, server, or side-effect checker
     is invoked. Other outcome checks remain independent.
     """
-    ref = o.VersionRef(name="agent-eval-flow.toolscore", revision="1+tool-scorer.1.8.1")
+    ref = o.VersionRef(name="agent-eval-flow.toolscore", revision="1+tool-scorer.1.9.0")
 
     def __init__(self, *, artifacts):
         self.artifacts = artifacts

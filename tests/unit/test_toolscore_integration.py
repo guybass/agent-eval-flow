@@ -115,7 +115,9 @@ def test_no_tool_contract_is_successful_invocation_without_misleading_composite(
     row, receipt, _ = scenario[0]([], [])
     assert row.status == "not_applicable" and row.value is None
     assert receipt["metrics"]["invocation_accuracy"]["value"] == 1.0
-    assert receipt["alternatives"][0]["raw_score"] == pytest.approx(0.7)
+    # Toolscore >= 1.9.0 scores an empty expected and empty actual trace as a full match
+    # (1.8.1 gave argument_f1 0.0 and a raw composite of 0.7). The row above stays not_applicable.
+    assert receipt["alternatives"][0]["raw_score"] == pytest.approx(1.0)
 
 
 @requires_toolscore
@@ -236,7 +238,7 @@ def test_pipeline_persistence_portable_reports_and_assessment(tmp_path, monkeypa
     assert all(len(row["receipts"]) == 1 for row in data["runs"])
     assert 'href="tools.html"' in html and 'href="report.html#run-0"' in tools
     assert "Completion unknown" in tools and "No calls expected or observed" in tools
-    assert "Tool latency: unknown" in tools and "Toolscore 1.8.1" in tools
+    assert "Tool latency: unknown" in tools and "Toolscore 1.9.0" in tools
     assert all(entry["bundled_uri"] for entry in data["evidence"])
     assert loaded.fingerprint() == before
     from agent_eval_flow.evaluation.assessment_projection import wrap_behavior_result
