@@ -13,10 +13,10 @@ from ..objects.tool_trace import trace_for_run, scoring_calls
 from ..objects.values import zero_resources
 
 
-SUPPORTED_VERSION = "1.8.1"
+SUPPORTED_VERSION = "1.9.0"
 RECEIPT_TYPE = "application/vnd.agent-eval-flow.toolscore+json"
 METRICS = ("score", "invocation_accuracy", "selection_accuracy", "argument_f1",
-           "sequence_accuracy", "redundant_rate", "required_call_recall")
+           "sequence_accuracy", "redundant_rate", "required_call_recall", "identical_rate")
 DEFAULT_WEIGHTS = {"selection_accuracy": 0.4, "argument_f1": 0.3,
                    "sequence_accuracy": 0.2, "redundant_rate": 0.1}
 
@@ -40,7 +40,7 @@ class _Contract(_Model):
 
 class _Request(_Model):
     metric: Literal["score", "invocation_accuracy", "selection_accuracy", "argument_f1",
-                    "sequence_accuracy", "redundant_rate", "required_call_recall"] = "score"
+                    "sequence_accuracy", "redundant_rate", "required_call_recall", "identical_rate"] = "score"
     reference_table: str = "tool_expectations"
     boundary: str = Field(min_length=1)
     strict: bool = True
@@ -87,19 +87,18 @@ def _score(evaluate, expected, actual, request, weights):
     values = {"score": float(result.score), "invocation_accuracy": float(result.metrics["invocation_accuracy"]),
         "selection_accuracy": float(result.selection_accuracy), "argument_f1": float(result.argument_f1),
         "sequence_accuracy": float(result.sequence_accuracy),
-        "redundant_rate": float(result.metrics["efficiency_metrics"]["redundant_rate"])}
+        "redundant_rate": float(result.metrics["efficiency_metrics"]["redundant_rate"]),
+        "identical_rate": float(result.metrics["efficiency_metrics"]["identical_rate"])}
     needed, used = Counter(c["tool"] for c in expected), Counter(c["tool"] for c in actual)
     values["required_call_recall"] = sum((needed & used).values()) / len(expected) if expected else None
     statuses = {name: "ok" if value is not None else "not_applicable" for name, value in values.items()}
-    reasons = {}
+    reasons = {"identical_rate": "Fraction of requests repeating an earlier tool and its arguments; "
+               "includes declared retries and does not affect the composite score"}
     if not expected:
         reasons["required_call_recall"] = "No required tool calls in this contract"
     if not expected and not actual:
-        # Upstream gives argument F1 zero here. Keep its raw score, but do not
-        # grade an intentionally empty trace with an argument-weighted composite.
-        for name in ("score", "argument_f1"):
-            values[name], statuses[name] = None, "not_applicable"
-            reasons[name] = "No calls expected or observed; invocation accuracy establishes correct no-tool behavior"
+        for name in ("score", "argument_f1", "invocation_accuracy"):
+            reasons[name] = "No calls expected or observed; complete coverage establishes correct no-tool behavior"
     if request.ordering == "unordered":
         values["sequence_accuracy"], statuses["sequence_accuracy"] = None, "not_applicable"
         reasons["sequence_accuracy"] = "Contract ignores call order; sequence has zero weight"
@@ -116,7 +115,7 @@ class ToolscoreEvaluator:
     ties resolved by declaration order. No model, server, or side-effect checker
     is invoked. Other outcome checks remain independent.
     """
-    ref = o.VersionRef(name="agent-eval-flow.toolscore", revision="1+tool-scorer.1.8.1")
+    ref = o.VersionRef(name="agent-eval-flow.toolscore", revision=f"2+tool-scorer.{SUPPORTED_VERSION}")
 
     def __init__(self, *, artifacts):
         self.artifacts = artifacts
@@ -174,10 +173,7 @@ class ToolscoreEvaluator:
                         expected = [call.model_dump() for call in calls]
                         scored = _score(evaluate, expected, actual, request, weights)
                         alternatives.append({"expected": expected, **scored})
-                    # A deliberately empty matching alternative wins over an
-                    # inapplicable native composite, without changing raw values.
-                    index = max(range(len(alternatives)), key=lambda i: (
-                        1.0 if not alternatives[i]["expected"] and not actual else alternatives[i]["raw_score"]))
+                    index = max(range(len(alternatives)), key=lambda i: alternatives[i]["raw_score"])
                     selected = alternatives[index]
                     receipt.update(status="ok", reason="Scored captured requests against the declared tool contract; "
                         "completion and task success are separate evidence", selected_alternative=index,

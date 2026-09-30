@@ -104,18 +104,66 @@ def test_unavailable_dependency_is_explicit_error(scenario, monkeypatch):
     assert receipt["toolscore_version"] is None
 
 
-def test_unsupported_dependency_version_is_explicit_error(scenario, monkeypatch):
-    monkeypatch.setattr(integration.metadata, "version", lambda _: "99.0")
+@pytest.mark.parametrize("version", ["1.8.1", "99.0"])
+def test_unsupported_dependency_version_is_explicit_error(scenario, monkeypatch, version):
+    monkeypatch.setattr(integration.metadata, "version", lambda _: version)
     row, _, _ = scenario[0]([], [])
     assert row.status == "error" and "Unsupported" in row.reason
 
 
 @requires_toolscore
-def test_no_tool_contract_is_successful_invocation_without_misleading_composite(scenario):
+def test_no_tool_contract_has_perfect_native_scores(scenario):
     row, receipt, _ = scenario[0]([], [])
-    assert row.status == "not_applicable" and row.value is None
+    assert row.status == "ok" and row.value == pytest.approx(1.0)
     assert receipt["metrics"]["invocation_accuracy"]["value"] == 1.0
-    assert receipt["alternatives"][0]["raw_score"] == pytest.approx(0.7)
+    assert receipt["metrics"]["argument_f1"]["value"] == 1.0
+    assert receipt["metrics"]["required_call_recall"]["status"] == "not_applicable"
+    assert receipt["metrics"]["identical_rate"]["value"] == 0.0
+    assert receipt["alternatives"][0]["raw_score"] == pytest.approx(1.0)
+    _, receipt, _ = scenario[0]([{"tool": "read", "args": {}}], [], alternatives=([],))
+    assert receipt["selected_alternative"] == 1
+    assert receipt["metrics"]["score"]["value"] == pytest.approx(1.0)
+
+
+@requires_toolscore
+@pytest.mark.parametrize("expected,actual,value", [
+    ([{"tool": "search", "args": {"q": "x"}}, {"tool": "read", "args": {"id": 1}}],
+     [{"tool": "read", "args": {"id": 1}}], 2 / 3),
+    ([{"tool": "search", "args": {"q": "a"}}, {"tool": "search", "args": {"q": "b"}}],
+     [{"tool": "search", "args": {"q": "b"}}, {"tool": "search", "args": {"q": "a"}}], 1.0),
+    ([{"tool": "search", "args": {"q": "right"}}],
+     [{"tool": "search", "args": {"q": "wrong"}}, {"tool": "search", "args": {"q": "right"}}], 1.0),
+    ([{"tool": "search", "args": {"q": "a"}}, {"tool": "search", "args": {"q": "a"}}],
+     [{"tool": "search", "args": {"q": "a"}}], 2 / 3),
+    ([], [{"tool": "search", "args": {"q": "unexpected"}}], 0.0),
+])
+def test_one_to_one_argument_pairing_is_preserved_in_receipts(scenario, expected, actual, value):
+    row, receipt, _ = scenario[0](expected, actual, metric="argument_f1")
+    assert row.status == "ok" and row.value == pytest.approx(value)
+    assert receipt["actual"] == actual
+    assert receipt["evaluator"]["revision"] == "2+tool-scorer.1.9.0"
+    assert receipt["alternatives"][0]["values"]["argument_f1"] == pytest.approx(value)
+
+
+@requires_toolscore
+@pytest.mark.parametrize("actual,identical,expected_count", [
+    ([{"tool": "search", "args": {"q": "a"}}, {"tool": "search", "args": {"q": "b"}}], 0.0, 1),
+    ([{"tool": "search", "args": {"q": "a", "n": 5}},
+      {"tool": "search", "args": {"n": 5, "q": "a"}}], 0.5, 1),
+    ([{"tool": "search", "args": {"q": "a"}}, {"tool": "search", "args": {"q": "a"}}], 0.5, 2),
+    ([{"tool": "search", "args": {}}, {"tool": "other", "args": {}}], 0.0, 1),
+])
+def test_identical_rate_distinguishes_repeats_from_excess_calls(scenario, actual, identical, expected_count):
+    row, receipt, _ = scenario[0]([{"tool": "search"}] * expected_count, actual, metric="identical_rate")
+    assert row.status == "ok" and row.value == identical
+    raw = receipt["alternatives"][0]["raw_metrics"]["efficiency_metrics"]
+    assert raw["identical_rate"] == identical and raw["identical_count"] == identical * len(actual)
+    assert receipt["metrics"]["redundant_rate"]["value"] == (0.0 if expected_count == 2 else 0.5)
+    assert "identical_rate" not in receipt["settings"]["weights"]
+    assert receipt["metrics"]["score"]["value"] == pytest.approx(
+        sum(weight * (1 - receipt["metrics"][name]["value"] if name == "redundant_rate"
+                      else receipt["metrics"][name]["value"])
+            for name, weight in receipt["settings"]["weights"].items()))
 
 
 @requires_toolscore
@@ -236,7 +284,11 @@ def test_pipeline_persistence_portable_reports_and_assessment(tmp_path, monkeypa
     assert all(len(row["receipts"]) == 1 for row in data["runs"])
     assert 'href="tools.html"' in html and 'href="report.html#run-0"' in tools
     assert "Completion unknown" in tools and "No calls expected or observed" in tools
-    assert "Tool latency: unknown" in tools and "Toolscore 1.8.1" in tools
+    assert "Tool latency: unknown" in tools and "Toolscore 1.9.0" in tools
+    assert "identical_rate" in tools
+    assert all(row["observed"] == 2 and row["not_applicable"] == 0 for row in data["summaries"])
+    assert sum(row.metric == "tools.identical_rate" for row in loaded.measurements) == 4
+    assert all("identical_rate" in row["receipts"][0]["receipt"]["metrics"] for row in data["runs"])
     assert all(entry["bundled_uri"] for entry in data["evidence"])
     assert loaded.fingerprint() == before
     from agent_eval_flow.evaluation.assessment_projection import wrap_behavior_result

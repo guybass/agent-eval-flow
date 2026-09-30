@@ -105,7 +105,8 @@ class DockerOpenSRERuntime:
         name = "aef-opensre-" + uuid4().hex
         mounts = ((self.project / "src", "/workspace/src", True),
                   (self.project / "examples", "/workspace/examples", True),
-                  (self.project / "tests/e2e/fixtures/opensre", "/workspace/tests/e2e/fixtures/opensre", True),
+                  (Path(self.config.get("fixture_dir", self.project / "tests/e2e/fixtures/opensre")),
+                   "/workspace/tests/e2e/fixtures/opensre", True),
                   (self.auth, "/aef/auth", True),
                   (workspace, str(CONTAINER_WORKSPACE), False))
         command = ["create", "--name", name, "--label", f"{OWNER_LABEL}={invocation}", "--init", "--interactive",

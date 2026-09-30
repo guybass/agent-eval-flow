@@ -1,7 +1,7 @@
 # Tool calling evaluation with Toolscore
 
 Install `agent-eval-flow[toolscore]` (or `pip install -e ".[toolscore]"` in a
-checkout). This extra pins `tool-scorer==1.8.1`. Importing Agent Eval Flow and
+checkout). This extra pins `tool-scorer==1.9.0`. Importing Agent Eval Flow and
 rendering saved reports do not require Toolscore. A requested evaluation with a
 missing or unsupported dependency produces an explicit error measurement.
 
@@ -51,8 +51,8 @@ Omitting `args` or using null disables argument checking for that expected call;
 plain JSON; executable Toolscore matcher objects are not supported in this
 version. Predeclare alternate valid traces using `"alternatives": [[...], [...]]`.
 All alternatives and their scores are retained. The highest native composite
-wins, ties use declaration order, and a matching empty alternative takes
-precedence. Freeze the contract before comparing candidates.
+wins and ties use declaration order. A matching empty alternative scores 1.0.
+Freeze the contract before comparing candidates.
 
 ## Capture requests and coverage
 
@@ -87,11 +87,19 @@ is not invoked by this integration.
 
 ## Metric meanings
 
-The seven diagnostics are native composite score, invocation accuracy,
-selection accuracy, argument F1, sequence accuracy, redundant rate, and our
-additional required-call recall. Recall uses tool-name multiplicities so a
+The eight diagnostics are native composite score, invocation accuracy,
+selection accuracy, argument F1, sequence accuracy, redundant rate,
+required-call recall, and identical-call rate (`identical_rate`). Recall uses tool-name multiplicities so a
 missing repeated invocation is not hidden by perfect selection accuracy; it
 does not validate arguments or side effects.
+
+`redundant_rate` counts calls beyond the contract's per-tool expectations.
+`identical_rate` measures the fraction of observed calls that repeat an earlier
+call with the same tool and arguments, ignoring dictionary key order. Distinct
+searches can therefore be redundant by count without being identical. Declared
+retries still count as identical repeats; this is a diagnostic, not proof of a
+loop. It adds no composite weight. The native `identical_count` is also retained
+in each alternative's raw efficiency metrics.
 
 Strict argument matching is the default. Set `strict=False` explicitly to use
 Toolscore's lenient comparisons. Default weights are selection 0.4, arguments
@@ -99,10 +107,12 @@ Toolscore's lenient comparisons. Default weights are selection 0.4, arguments
 keys (`selection_accuracy`, `argument_f1`, `sequence_accuracy`, `redundant_rate`)
 and are normalized. `ordering="unordered"` sorts calls deterministically by
 name and JSON arguments and gives sequence zero weight; its sequence metric is
-not applicable. This is canonical-list scoring, not dependency-graph evaluation
-or optimal matching of repeated tool names. Toolscore's positional argument
-matching can behave unexpectedly with repeated names; inspect the retained
-expected/actual calls and keep independent outcome checks.
+not applicable. This is canonical-list scoring, not dependency-graph evaluation.
+Toolscore 1.9.0 pairs expected and actual calls of each tool one-to-one to
+maximize argument matches, independently of order. Pairing is exact for up to
+12 actual calls per tool and greedy above that limit. A missing earlier call
+does not hide a correct later call, and an actual call cannot satisfy two
+expected calls. Inspect the retained calls and keep independent outcome checks.
 
 Retries remain separate calls. Legitimate retries can be declared in expected
 or alternative traces; they are not silently removed. Completion status and
@@ -110,10 +120,20 @@ returned results are displayed, but the in-memory Toolscore API scores requests.
 The adapter never runs tools, side-effect validators, MCP tests, or an LLM judge.
 
 For an explicit empty expectation and a complete empty trace, invocation
-accuracy is 1. Composite score and argument F1 are marked not applicable;
-Toolscore's raw composite of approximately 0.7 is retained in the receipt.
+accuracy, composite score and argument F1 are 1.0. Required-call recall is not
+applicable, and redundant and identical rates are zero. Correct no-tool runs
+now contribute to candidate composite means.
 Unknown per-tool timing/cost remain unknown. Offline grading's model cost is
 zero, which is distinct from the cost of the captured agent run.
+
+### Upgrading from 1.8.1
+
+The adapter revision is now `2+tool-scorer.1.9.0`. One-to-one argument pairing
+can raise scores for existing traces, and correct no-tool runs now have an
+applicable perfect score. Re-evaluate retained runs for both candidates with
+the new evaluator before comparing scores or recalibrating gates. Saved 1.8.1
+receipts still render their original metrics and statuses without regrading.
+See the [Toolscore 1.9.0 release notes](https://github.com/yotambraun/Toolscore/releases/tag/v1.9.0).
 
 ## Saved reports and evidence
 

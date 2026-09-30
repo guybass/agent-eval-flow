@@ -37,6 +37,26 @@ def load_incident_module(root):
     return module
 
 
+def input_artifacts(root, configured=None):
+    """Retain declared inputs without allowing a fixture to export other files."""
+    root = Path(root).resolve()
+    names = configured if configured is not None else {
+        "incident.source_logs": "upstream/HDFS_2k.log", "incident.context": "context.json",
+        "incident.provenance": "SOURCES.json", "incident.license": "upstream/LOGHUB_LICENSE",
+        "incident.mission": "incidents.json", "incident.tools_source": "incident_store.py"}
+    if not isinstance(names, dict) or not names:
+        raise o.ConfigurationError("Native input artifacts must be a nonempty mapping")
+    result = {}
+    for name, relative in names.items():
+        if not isinstance(name, str) or not name.startswith("incident.") or not isinstance(relative, str):
+            raise o.ConfigurationError("Invalid native input artifact name or path")
+        path = (root / relative).resolve()
+        if not path.is_relative_to(root) or not path.is_file():
+            raise o.ConfigurationError("Native input artifact is missing or outside its fixture")
+        result[name] = path
+    return result
+
+
 class NativeCallIdentity:
     """Carry a native hook's call identity into the same-thread tool executor."""
     def __init__(self):
@@ -218,6 +238,7 @@ def _make_native_session(*, request, workspace, observer):
         raise o.ConfigurationError("Local OpenSRE requires a model and native_max_iterations between 3 and 64")
     root = Path(settings.get("native_fixture_dir", settings.get("fixture_dir", ""))).resolve()
     module = load_incident_module(root)
+    retained_inputs = input_artifacts(root, settings.get("native_input_artifacts"))
     store = module.IncidentStore(root, workspace / "incident", invocation_id=observer.invocation_id)
     identity, sink = NativeCallIdentity(), BufferOutputSink()
     provider = IncidentToolProvider(module, store, identity)
@@ -258,10 +279,7 @@ def _make_native_session(*, request, workspace, observer):
 
     def artifacts():
         _write_json(workspace / "native-output.json", {"lines": sink.lines, "streamed": sink.streamed})
-        files = {"incident.source_logs": root / "upstream/HDFS_2k.log",
-            "incident.context": root / "context.json", "incident.provenance": root / "SOURCES.json",
-            "incident.license": root / "upstream/LOGHUB_LICENSE", "incident.mission": root / "incidents.json",
-            "incident.tools_source": root / "incident_store.py", "native.output": workspace / "native-output.json",
+        files = {**retained_inputs, "native.output": workspace / "native-output.json",
             "native.session_binding": Path(__file__).resolve()}
         for name, path in {"incident.tool_audit": store.work / "tool-audit.jsonl",
                 "incident.report": store.work / "investigation.json", "native.goal": workspace / "native-goal.json",

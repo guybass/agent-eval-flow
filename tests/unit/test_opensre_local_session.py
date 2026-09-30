@@ -9,11 +9,27 @@ import pytest
 
 from agent_eval_flow.objects import CaptureValidationError
 from examples.integrations.opensre_local_session import (
-    NativeCallIdentity, NativeProcessCapture, load_incident_module,
+    NativeCallIdentity, NativeProcessCapture, input_artifacts, load_incident_module,
 )
 
 
 FIXTURE = Path(__file__).resolve().parents[1] / "e2e/fixtures/opensre"
+
+
+def test_custom_incident_inputs_retain_only_declared_fixture_files(tmp_path):
+    from agent_eval_flow.objects import ConfigurationError
+    root = tmp_path / "fixture"
+    root.mkdir()
+    (root / "observations.log").write_text("actual local observation")
+    (tmp_path / "private.json").write_text("not an input")
+    assert input_artifacts(root, {"incident.source_logs": "observations.log"}) == {
+        "incident.source_logs": root / "observations.log"}
+    for invalid in ({"incident.private": "../private.json"}, {"native.output": "observations.log"},
+                    {"incident.missing": "missing.log"}, {}):
+        with pytest.raises(ConfigurationError):
+            input_artifacts(root, invalid)
+    defaults = input_artifacts(FIXTURE)
+    assert defaults["incident.source_logs"].name == "HDFS_2k.log"
 
 
 def test_native_identity_is_required_consumed_and_thread_scoped():
