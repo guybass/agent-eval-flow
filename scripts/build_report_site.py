@@ -23,6 +23,10 @@ SOURCE_FILES = (
     "examples/assets/agent-eval-flow-banner.svg",
     "examples/assets/agent-eval-flow-banner.png",
     *(f"examples/reports/{name}" for name in REPORT_FILES),
+    "examples/reports/03-gpt-researcher.html",
+    "examples/data/gpt-researcher/capture.json",
+    "examples/data/gpt-researcher/SIMPLE-EVALS-LICENSE",
+    "examples/data/gpt-researcher/GPT-RESEARCHER-LICENSE",
 )
 OUTPUT_SOURCES = {
     **{name.removeprefix("examples/"): name for name in SOURCE_FILES},

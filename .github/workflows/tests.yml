@@ -28,6 +28,7 @@ jobs:
       - run: python scripts/verify_acceptance_checkpoint.py
       - run: python -m pytest --junitxml=test-artifacts/pytest.xml
       - run: python examples/archive_review.py --output demo-output
+      - run: python examples/gpt_researcher_review.py --output demo-output/gpt-researcher
       - run: python -m build
       - run: python scripts/verify_distribution.py
 
