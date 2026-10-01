@@ -82,7 +82,7 @@ class AgentRunImporter:
 
             calls = tuple(ToolRequest(call_id=f"{execution_id}/call/{i}", execution_id=execution_id,
                 tool=c["tool"], arguments=c["args"], evidence=(evidence(f"runs/{index}/calls/{i}"),),
-                completion="completed", result={"is_error": c["is_error"]},
+                completion="error" if c["is_error"] else "completed", result={"is_error": c["is_error"]},
                 result_evidence=(evidence(f"runs/{index}/calls/{i}"),)) for i, c in enumerate(row["calls"]))
             trace = ToolTrace(collector=a.VersionRef(name="toolscore.mcp-stdio-client", revision="1"),
                 boundary=BOUNDARY, scope="Every tool call the agent made to the memory server in this run",

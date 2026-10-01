@@ -121,7 +121,8 @@ def main() -> None:
         pin, pout, cap = REPLICATION[args.model]
         MODEL, PRICE_IN, PRICE_OUT, BUDGET_USD = args.model, pin / 1e6, pout / 1e6, cap
         OUT = ROOT / "data" / f"agent_runs_{args.model}.jsonl"
-    spec = json.loads((ROOT / "data" / "agent_scenarios.json").read_text())
+    spec = json.loads((ROOT / "agent_scenarios.json").read_text(encoding="utf-8"))
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     system = readme_prompt()
     client = OpenAI(max_retries=4, timeout=120)
     done = set()

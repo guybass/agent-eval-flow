@@ -31,7 +31,8 @@ def unit_id(cell):
 
 def tool_trace(cell, index, evidence, execution_id):
     calls = tuple(ToolRequest(call_id=f"{execution_id}/call/{i}", execution_id=execution_id, tool=call["tool"],
-        arguments=call["args"], evidence=(evidence(f"cells/{index}/calls/{i}"),), completion="completed",
+        arguments=call["args"], evidence=(evidence(f"cells/{index}/calls/{i}"),),
+        completion="error" if call["is_error"] else "completed",
         result={"is_error": call["is_error"]}, result_evidence=(evidence(f"cells/{index}/calls/{i}"),))
         for i, call in enumerate(cell["calls"]))
     return ToolTrace(collector=a.VersionRef(name="toolscore.mcp-stdio-client", revision="1"),
