@@ -29,7 +29,7 @@ SERVERS = {
     "c1": ["node", os.environ.get("MEMORY_C1_JS", str(ROOT / "builds/c1/src/memory/dist/index.js"))],
 }
 MODEL = "gpt-5.6-luna"
-PRICE_IN, PRICE_OUT = 0.20 / 1e6, 1.20 / 1e6  # Addendum B used the older recorded output price
+PRICE_IN, PRICE_OUT = 0.20 / 1e6, 1.20 / 1e6  # gpt-5.6-luna list price
 BUDGET_USD = 1.00
 REPLICATION = {  # Addendum C: model -> (input $/1M, output $/1M, cap $)
     "gpt-4.1-mini": (0.40, 1.60, 0.60),
