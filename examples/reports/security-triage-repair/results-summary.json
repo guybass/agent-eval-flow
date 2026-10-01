@@ -1,0 +1,1236 @@
+{
+  "schema_version": 1,
+  "harness": "anthropics/defending-code-reference-harness",
+  "upstream_revision": "d3bea6b5793b5f3d59a75ebe69a58efa88383145",
+  "intervention": "Codex static triage port, revision 3",
+  "policy_sha256": "b5f75e9a18f2705ee492dcfcc4fb42af7270a3df74d42fc362bfe3058eec147a",
+  "population": "Four previously discarded reference diagnoses and their repaired-source claim controls, plus one previously successful PostCSS diagnosis",
+  "split": "development",
+  "final_repeats_per_task": 1,
+  "model": "gpt-6-astra",
+  "reasoning": "xhigh",
+  "root_budget_seconds": 2400,
+  "audited_at": "2026-10-01T11:37:48.613660+00:00",
+  "audit": {
+    "durable_attempts": 23,
+    "completed_native_reviews": 22,
+    "preserved_setup_failures": 1,
+    "artifact_references_checked": 286,
+    "accepted_verifier_vote_records": 93,
+    "reported_excluded_verifier_attempts": 1,
+    "peak_overlapping_root_intervals": 8,
+    "final_policy_regressions_passed": 9,
+    "offline_checks_passed": 26,
+    "errors": [],
+    "trace_limit": "Parent exports and recorded votes are preserved. Complete child/retry inventory and independence remain unverified. Counts are recorded votes, not audited independent executions."
+  },
+  "final_policy_outcomes": [
+    {
+      "case": "lov-08",
+      "variant": "vulnerable",
+      "run_id": "b9194862-6df1-4c2c-8632-f1da4a7582df",
+      "label": "triage-v3-contract-r1",
+      "expected": "supported_local",
+      "actual": "supported_local",
+      "exposure": "conditional",
+      "diagnosis_reviewed": true,
+      "passed": true
+    },
+    {
+      "case": "lov-08",
+      "variant": "patched",
+      "run_id": "d903597f-38d0-4766-a080-9dafc55798a6",
+      "label": "triage-v3-contract-r1",
+      "expected": "false_positive",
+      "actual": "false_positive",
+      "exposure": "unknown",
+      "diagnosis_reviewed": true,
+      "passed": true
+    },
+    {
+      "case": "lov-05",
+      "variant": "vulnerable",
+      "run_id": "fe1c858e-205a-4cfc-a7d4-d022aebbf56a",
+      "label": "triage-v3-regression-r1",
+      "expected": "supported_local",
+      "actual": "supported_local",
+      "exposure": "conditional",
+      "diagnosis_reviewed": true,
+      "passed": true
+    },
+    {
+      "case": "lov-03",
+      "variant": "patched",
+      "run_id": "576afc3d-4938-4102-aa0e-2ebc1e599268",
+      "label": "triage-v3-regression-r1",
+      "expected": "false_positive",
+      "actual": "false_positive",
+      "exposure": "unknown",
+      "diagnosis_reviewed": true,
+      "passed": true
+    },
+    {
+      "case": "lov-10",
+      "variant": "patched",
+      "run_id": "e21864fe-d499-4711-a5ee-921674f99fbb",
+      "label": "triage-v3-regression-recovery-r1",
+      "expected": "false_positive",
+      "actual": "false_positive",
+      "exposure": "unknown",
+      "diagnosis_reviewed": true,
+      "passed": true
+    },
+    {
+      "case": "lov-10",
+      "variant": "vulnerable",
+      "run_id": "75c441ed-701e-4b5d-ab95-64648afdf300",
+      "label": "triage-v3-regression-recovery-r1",
+      "expected": "supported_local",
+      "actual": "supported_local",
+      "exposure": "conditional",
+      "diagnosis_reviewed": true,
+      "passed": true
+    },
+    {
+      "case": "lov-03",
+      "variant": "vulnerable",
+      "run_id": "3dfa551c-c28b-4463-adfd-3cff941c7762",
+      "label": "triage-v3-regression-recovery-r1",
+      "expected": "supported_local",
+      "actual": "supported_local",
+      "exposure": "conditional",
+      "diagnosis_reviewed": true,
+      "passed": true
+    },
+    {
+      "case": "lov-11",
+      "variant": "patched",
+      "run_id": "f5c4e282-ee16-451a-8d74-58505b0d1a71",
+      "label": "triage-v3-regression-recovery-r1",
+      "expected": "false_positive",
+      "actual": "false_positive",
+      "exposure": "unknown",
+      "diagnosis_reviewed": true,
+      "passed": true
+    },
+    {
+      "case": "lov-11",
+      "variant": "vulnerable",
+      "run_id": "7a5098be-635b-4be6-b6f1-47fd6753fdce",
+      "label": "triage-v3-regression-recovery-r1",
+      "expected": "supported_local",
+      "actual": "supported_local",
+      "exposure": "conditional",
+      "diagnosis_reviewed": true,
+      "passed": true
+    }
+  ],
+  "runs": [
+    {
+      "label": "triage-v2-patched-claims-r1",
+      "run_id": "0e304b8b-ae60-4eee-8282-b569106e93b7",
+      "case": "lov-10",
+      "repo": "vercel/next.js",
+      "variant": "patched",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "false_positive": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "a00051e409a1c3d5224902f3887d3e92edbc1f2b6510b5879adbbc9c8e7fc8d3",
+        "review.manifest": "4d2a434add41fdbd82badc2cae8738a7dd599e4de4d124e37c3e7e0f1d905cb7",
+        "repair.scan_input": "5bc62b24778c8d9f0a00c099f8b8dddc841e85a4b5bd7ee1c7f994a5702a4781",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "06be3f2c0c37007ae269b6158a0d2d771580e2ddb9d24311b27fe30300b6aea5",
+        "native.output": "c38f9cda0c1cd8e43904b53cc412b3c68fc35c38aafaaa1b2a51e9685e81e093",
+        "harness.scan": "5bc62b24778c8d9f0a00c099f8b8dddc841e85a4b5bd7ee1c7f994a5702a4781",
+        "harness.triage": "c36f2f2f0de9c1c5cd98b74c8ebaadd56a0a0321fce2cba12e864d99e5cf346f",
+        "harness.triage_md": "0e84500ccb0535bf90dedda8aedb10b8d16d20475cc4a24ca0ee73e135c6b8a6",
+        "native.trace": "b2722155cb041debe2f751b9204094f1d9516a89a5b1987c2f2a1f8c18655416",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "444d61fbaabd90adf02ce54aefbb91988f3a6781e3285ab3f4117921f2c4a7b2"
+      }
+    },
+    {
+      "label": "triage-v2-patched-claims-r1",
+      "run_id": "3cd9327b-8fc5-4106-a03c-faa66494f447",
+      "case": "lov-03",
+      "repo": "go-gitea/gitea",
+      "variant": "patched",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "false_positive": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "55ec4a062441744f4f517065127b79ba27589230b2c4504d1d58761f06f9b5bc",
+        "review.manifest": "b73d4fdfc95fa7d072753693debc342b2df718bda0fe5e378074d19ef181bd70",
+        "repair.scan_input": "c196a5e8e1cb69be3e9fe7cafa9b45a6049ae2540fb7df69607e0ccf31974f76",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "0497c19a2deed5cf617efa2d33c98b0b6270852ee01d49c60fe965387f3b3c5b",
+        "native.output": "fde6f6dfb2bb5aa09c8696a1bd59d5df7591827bd33917967e0564c74510657a",
+        "harness.scan": "c196a5e8e1cb69be3e9fe7cafa9b45a6049ae2540fb7df69607e0ccf31974f76",
+        "harness.triage": "13749697b1ca7276cafbbf79460a1403c0368f1828bfc1e5f7827f5c39e8a2cf",
+        "harness.triage_md": "aa03bdda959009bb2bae80ea68f904b0d9675152953d265be3870dc1f657ed35",
+        "native.trace": "7bb7e197f9e75950b03a980f903482e5d6229951512ada6eb08a87c387133659",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "48518d913e9397e35125a76c706b09964fb6446768dfd52665d9467310fdd7f1"
+      }
+    },
+    {
+      "label": "triage-v2-patched-claims-r1",
+      "run_id": "4b6dc5a4-1769-4253-b29e-71d3eca3d8a1",
+      "case": "lov-08",
+      "repo": "encode/django-rest-framework",
+      "variant": "patched",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "false_positive": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "abecb35b0816e5cdb16f25b5851b1e9a9491eb7b36c294f02d45f3af2fab9645",
+        "review.manifest": "e4c436655de44e49b4937cad12b6beecb2e35148915c6ac11389092ef11bfca0",
+        "repair.scan_input": "bebd038f8f9bd918c2d7afe522a7f89232703b932417a79f55ea6444b7733a88",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "753210b3c7610485483e2a1cc4e0fac6a2e954e32435e3ee3f28961afcfeb571",
+        "native.output": "9353cd75e38ff6e3884e4dee1f96835394fe938d81ef1b209bb7bbfa1778b88c",
+        "harness.scan": "bebd038f8f9bd918c2d7afe522a7f89232703b932417a79f55ea6444b7733a88",
+        "harness.triage": "9b21b0b360d81a8aaaf42fef3ebb5cfabbfa4d512e025e7ab75f72d2a4cfef96",
+        "harness.triage_md": "ce43d25b5df2ba267101dc60d3756558ed6c32c7f2f1de943cf8462920f76b97",
+        "native.trace": "7c6d0a21cb0fc3ea774523b0511929e4cb048f7255e260bf533733924ed017c3",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "062b8eaf3debcbee8e8447d819871262f07abb6278e35db2fdf89f6e9a7bac7e"
+      }
+    },
+    {
+      "label": "triage-v2-patched-claims-r1",
+      "run_id": "cadbe885-36cb-4f92-82d0-4a155088324f",
+      "case": "lov-11",
+      "repo": "typeorm/typeorm",
+      "variant": "patched",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "false_positive": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "f7a6ff9a2c7e7f5c5aacb6cfaf275962434128ec3eb6802e50c7608c50c014b5",
+        "review.manifest": "11a1b2061543476911e8c16f5285fecf3c50ff8c98e7757177d3fd4d097b5bbd",
+        "repair.scan_input": "aa86ffc675fc7df56f40d843ea2b3752672a4143f059253121fb0ba1ad33ecc8",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "8c67ee1430b28c1bfd6668dd1329996ffd3dbd3cb1d361a9937aa87a95272cb9",
+        "native.output": "93d71178f943093c4dd2c9f6ca69f6a8c2c1075978b220581db8f26b6655ce4a",
+        "harness.scan": "aa86ffc675fc7df56f40d843ea2b3752672a4143f059253121fb0ba1ad33ecc8",
+        "harness.triage": "5f1eb9fc6a4fec6b434f7a15b960d9b57f9e6bf52ef79cfe45641abceb404e32",
+        "harness.triage_md": "cadccc47bb5776e9e864a0a01e6dbcd4015cf0b1d71a40f843d5dd9fc9fc5fa8",
+        "native.trace": "1fd2e85a488e3e590078486c58ef570cdeaba1cc59c182f0c92c42f4bf25d27e",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "2fd74e8bab9b93d6832e627e3841a2cbfff22070a67b824fa2d9c5811401fb07"
+      }
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "5f5df774-f245-4198-aab9-df79504e8ef7",
+      "case": "lov-11",
+      "repo": "typeorm/typeorm",
+      "variant": "vulnerable",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "supported_local": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "a469de28e39bf939e2ea1104e055b349dfb4824eb6ccab1dd7b34ba33de6bc7d",
+        "review.manifest": "2a37c73b34f8d6acbdee2f924add95e98575b07c803e2a9be258ae6c8deca827",
+        "repair.scan_input": "055a7e156d677bb55a71e1a85642085be29311a3ca76eaee15eab87c7e03878b",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "1827e781aac32c4237b2899ac00e83ec6622f4c4a199f236306193cfff7f9fef",
+        "native.output": "bb7274d98c32cd1812113ecaf7044daf73652590763e4734a5764c2165e64c38",
+        "harness.scan": "055a7e156d677bb55a71e1a85642085be29311a3ca76eaee15eab87c7e03878b",
+        "harness.triage": "b435d9911fa01aa89b85df5fd14199647baea8cb9ccc3071f54bfff9503c4378",
+        "harness.triage_md": "72d9718d308390556f1e397dac7edda4b41d5e00afc6857296fae1aa9ebc6ff7",
+        "native.trace": "6bdb702a032a1c3e687a279b36a540aedbac7ee21a50070b212f137861cce755",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "f5905bd52befaef1c86c35ee7a3c044c03d44d6b62c7d947f8694952c5dd4e71"
+      }
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "d97c2584-f996-4add-9441-2ce67e41acef",
+      "case": "lov-10",
+      "repo": "vercel/next.js",
+      "variant": "vulnerable",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "supported_local": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "26713ec868c71eda83cc5d81f3da0e4cedc0ef8a99f31318f97533a1d40f5513",
+        "review.manifest": "e14bb804d2676224eb14d383a1870337cda248ea6242f4843a7c6d2f20e4034f",
+        "repair.scan_input": "c5d1af0fdcd8472b04d9eebaa7faf66bee4d1153558edcad6af24b8b4ff71495",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "72f4b076f50cc0c4e4bdc83624e45798392b11abf55b32deac8366ca7369661d",
+        "native.output": "1884af66d641689cf1988808ec70c4d5791fabadd250aaee049c757531510fee",
+        "harness.scan": "c5d1af0fdcd8472b04d9eebaa7faf66bee4d1153558edcad6af24b8b4ff71495",
+        "harness.triage": "b9835baa50f427b125fa2024f1130b32ac560af8def8d6d53970b6d84c096d8d",
+        "harness.triage_md": "247e2ed8590c8c076728bd4312a6f1dd2da25ae45b6e9b52303c8ddc1efc20b0",
+        "native.trace": "88bd998df586913cf8ec2d0c73442d76ac686be3297a7356925245f67416cc14",
+        "native.stderr": "7234913abf31c523b4e95ab1207063068e777d10b4570b054e0199b7167376c3",
+        "native.receipt": "729f877f206ea2f5c7661f7a5bedbbdf3bb239d1d5dda7694badfdea6a4fb164"
+      }
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "92bfcf9c-5c6d-4620-bd1f-1799f66ad631",
+      "case": "lov-03",
+      "repo": "go-gitea/gitea",
+      "variant": "patched",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "supported_local": 3
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "55ec4a062441744f4f517065127b79ba27589230b2c4504d1d58761f06f9b5bc",
+        "review.manifest": "b73d4fdfc95fa7d072753693debc342b2df718bda0fe5e378074d19ef181bd70",
+        "repair.scan_input": "e45fbce035deba24fb2b1d721c82d1439de4e746e36c9a18661732af78690d8c",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "0497c19a2deed5cf617efa2d33c98b0b6270852ee01d49c60fe965387f3b3c5b",
+        "native.output": "54d5c1c61e51f147669daf29382c616a8b66011ab1ebac69ca73181c843068a4",
+        "harness.scan": "e45fbce035deba24fb2b1d721c82d1439de4e746e36c9a18661732af78690d8c",
+        "harness.triage": "e882b76e0999df76e5339cc563a8438823910af1f061ee75875666de3837e528",
+        "harness.triage_md": "1af5fc2a558a61acbd6705a54f0f174c4c4456541e22c45b51573d8aa3d27665",
+        "native.trace": "1c25fdb379b766a5f2d385ce879c862b91cf4542e2f2213af8f81831f7667953",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "8a5e00ff7ae50d2c48665f7d26269e4075d84301f1a35d84780a1733da3d023d"
+      }
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "0ab28a13-585a-4608-a46e-d3e397412279",
+      "case": "lov-08",
+      "repo": "encode/django-rest-framework",
+      "variant": "vulnerable",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "unresolved": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "bb561b3802822fdabb20016d5e2d567ad9d7b967f7e07686cf9730bfd60d8122",
+        "review.manifest": "fd1d7497f990d16c7f9d27c78a352d8fe86be728d502473d8c1027d92a1c0cce",
+        "repair.scan_input": "10e59b14f06ee361630c15e7765405f6c81569a422d82dd40374fce9e61cc4c6",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "f4d118a2fd8e153bc5e1f31ff08a3ed3cba640518fa7e7460675f1058b292e5c",
+        "native.output": "d531dd812d11e5aef6cf51528a9876b428d524eab5f6c989795f8b297b519073",
+        "harness.scan": "10e59b14f06ee361630c15e7765405f6c81569a422d82dd40374fce9e61cc4c6",
+        "harness.triage": "f216fcfbdcd3a1c4a8b115184278aa1fdb01d7f2c970861c9c90c7e25473ba7d",
+        "harness.triage_md": "0f003c25169418b610af993841b4efea06936543b1b7c52befae8e9d9ecce95b",
+        "native.trace": "e6747d409e5786ad484f180ee2606dc0698ca37c65144e3bf03b54d573b87037",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "3d42b810f4e598299aa71d88c4ca693a05bc60acb0aedf330d6b07db902e9851"
+      }
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "9f19fb66-49d3-49b5-a2eb-c44b95f96c58",
+      "case": "lov-08",
+      "repo": "encode/django-rest-framework",
+      "variant": "patched",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {},
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "abecb35b0816e5cdb16f25b5851b1e9a9491eb7b36c294f02d45f3af2fab9645",
+        "review.manifest": "e4c436655de44e49b4937cad12b6beecb2e35148915c6ac11389092ef11bfca0",
+        "repair.scan_input": "25c2e06ad673c6f526863349ce5169f39a690d8b60f25ffd18619c9cb623b09c",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "753210b3c7610485483e2a1cc4e0fac6a2e954e32435e3ee3f28961afcfeb571",
+        "native.output": "0016f76a9403cda608405efe2f58de9caa619092605049c6dcea0aa0b786387b",
+        "harness.scan": "25c2e06ad673c6f526863349ce5169f39a690d8b60f25ffd18619c9cb623b09c",
+        "harness.triage": "5e47a24aec03a89a88e217919977ed0063300519e99fdeec3bfc4aed04deb276",
+        "harness.triage_md": "71060b92587a3710d3dfbf6261124910766ba61a5a96f1a28eb65aa36e7e6e3a",
+        "native.trace": "7c89c660e6d74dd0ca439847ca03416d89a82448f081fc8e8d2a55ba8adfe22f",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "0a9757dc0d0e203f50a8a14a496e2fa91c1bfc2107c968ccda9253b12ec288cf"
+      }
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "c7bfd310-f0ad-4bee-957e-9083d8e2d745",
+      "case": "lov-05",
+      "repo": "postcss/postcss",
+      "variant": "vulnerable",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "supported_local": 2
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "0a71cee54f03b1998d6b5e1dd8e40b8517bde1f713dc329770a8f579c4d17b00",
+        "review.manifest": "511eed3587dd7fb4af971f61a827b8412988aa210004e3c97e7ddba5a9d920a9",
+        "repair.scan_input": "98e9f972a18bf7e80f1a8a59bcd7afe87fed9b2bdd3d921995347e7e079e0bf2",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "b5abb9be8a86972a8252545780baa9f21677cbcd3efb45514144a98a3f510ad5",
+        "native.output": "491494ab2e203a552ce1cffe261ef5a39483d60141f0b0650145cdbf5491a8e3",
+        "harness.scan": "98e9f972a18bf7e80f1a8a59bcd7afe87fed9b2bdd3d921995347e7e079e0bf2",
+        "harness.triage": "598ad5fa936d2f050ba575758be2d11ad2237ffa98a1fc922baf8c7a3559e0ac",
+        "harness.triage_md": "0fc6e111f3559f925da55092ee5831346c59137c1db5e40fe420a7f917e8ab30",
+        "native.trace": "6f4cad5a36556da5f065b554860b92ffe6b348ebc3a16b6a645002b62f1d90a9",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "50579eb3302004e6ed8c1e6e43a86b0f1c38e883175628752ca8f9878bcada4e"
+      }
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "07fce091-1d09-44cb-8486-2f39a61bfab3",
+      "case": "lov-03",
+      "repo": "go-gitea/gitea",
+      "variant": "vulnerable",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "supported_local": 3,
+        "unresolved": 2
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "c58dc67ee39f1d7fa4936a4030b9ac9eeeaa6fe38b961587f9bb2f64d2c943be",
+        "review.manifest": "4fb886f8a7e2d0668867c062409fa59617d5464f463d99c7f58a82947c7fe0af",
+        "repair.scan_input": "6678e2e1c1b0633103c8e6b846b32118ccb9d8cc7dec88167b18782445b64715",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "4c5823f4b8f517e14a528cc45b2a505aa8be1fd6f2bb02a080f1aa951d349091",
+        "native.output": "66b02c67a442ee821a9fdb3b60ad7b32d2e33aa9bba9ca7b75c8db9387d7ee79",
+        "harness.scan": "6678e2e1c1b0633103c8e6b846b32118ccb9d8cc7dec88167b18782445b64715",
+        "harness.triage": "f713e3e37ff9f344fc8607956a841b2265f7b246b11b77f9b3ec01feba66bcdc",
+        "harness.triage_md": "f1d93587c1ecf600ce7f14750785905585e1491b32cedc6df067647296fb09b1",
+        "native.trace": "3b0fc248e44d09eee17bf64f3e77874e77516b258dc220fb4b5d0b4f91d2cb75",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "4900217f202edd92277ef5db6d5dbd6838b8707fcf73a4ee7353a23118dd38ba"
+      }
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "c28c4c65-65bd-4f75-9660-4fccb5c5dd4d",
+      "case": "lov-11",
+      "repo": "typeorm/typeorm",
+      "variant": "patched",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {},
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "f7a6ff9a2c7e7f5c5aacb6cfaf275962434128ec3eb6802e50c7608c50c014b5",
+        "review.manifest": "11a1b2061543476911e8c16f5285fecf3c50ff8c98e7757177d3fd4d097b5bbd",
+        "repair.scan_input": "0559fc26f0ae84d27a4435bd719fd062faa88c6829f399f92abecbde758bf0f8",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "8c67ee1430b28c1bfd6668dd1329996ffd3dbd3cb1d361a9937aa87a95272cb9",
+        "native.output": "f744730569864f08f0e1684fbe29926b57e85e18aadf7b36a282333998a7f05c",
+        "harness.scan": "0559fc26f0ae84d27a4435bd719fd062faa88c6829f399f92abecbde758bf0f8",
+        "harness.triage": "2bc83f69cf8157e6c9b3c36e9a587d2e247a5d8998a45ece6422c984b2bf66bf",
+        "harness.triage_md": "8e942b2549eecec9805fb171765ab9f3486bea811af52be9874aca52fa6b92c5",
+        "native.trace": "f2e58ef9933f49d4f7c23d8e008e6123e4b2b3ae4e88469ba959e35cd065572c",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "a139e6553dd7a5211c107ec34f21d6d7432397f27fb4c264628848d1d7f49fc7"
+      }
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "ada6141a-1c20-45da-8d42-3fc849606716",
+      "case": "lov-10",
+      "repo": "vercel/next.js",
+      "variant": "patched",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {},
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "a00051e409a1c3d5224902f3887d3e92edbc1f2b6510b5879adbbc9c8e7fc8d3",
+        "review.manifest": "4d2a434add41fdbd82badc2cae8738a7dd599e4de4d124e37c3e7e0f1d905cb7",
+        "repair.scan_input": "cb9794ea81d907adf119956235adc9c3a08bcddd0da893f53b78bb6eb60ff0bd",
+        "repair.policy": "17c3560856fcfc38f80eff79f49a1b81033870825b40f00440321166fde1fb1c",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "06be3f2c0c37007ae269b6158a0d2d771580e2ddb9d24311b27fe30300b6aea5",
+        "native.output": "fbc3636e863e3c5ea67789c4d679477b36c1ab3d58e56eba607254ef78c94790",
+        "harness.scan": "cb9794ea81d907adf119956235adc9c3a08bcddd0da893f53b78bb6eb60ff0bd",
+        "harness.triage": "24121ca68f6427295f2e2163e6c3391f308289798d78223fcf5b0dbb67a19f4d",
+        "harness.triage_md": "41f4b7d43a794460644fefe246b53210fd487db817b8f4044052769e1adfd38d",
+        "native.trace": "930c33aaeeef49d20e91a1cd522e420788147bbad304a0fcfe4aeefd05a0f9ff",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "ab64896f899cf55b020602b10a75274c197191a3f592402c5abde785820ca360"
+      }
+    },
+    {
+      "label": "triage-v3-contract-r1",
+      "run_id": "b9194862-6df1-4c2c-8632-f1da4a7582df",
+      "case": "lov-08",
+      "repo": "encode/django-rest-framework",
+      "variant": "vulnerable",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "supported_local": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "bb561b3802822fdabb20016d5e2d567ad9d7b967f7e07686cf9730bfd60d8122",
+        "review.manifest": "fd1d7497f990d16c7f9d27c78a352d8fe86be728d502473d8c1027d92a1c0cce",
+        "repair.scan_input": "10e59b14f06ee361630c15e7765405f6c81569a422d82dd40374fce9e61cc4c6",
+        "repair.policy": "b5f75e9a18f2705ee492dcfcc4fb42af7270a3df74d42fc362bfe3058eec147a",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "f4d118a2fd8e153bc5e1f31ff08a3ed3cba640518fa7e7460675f1058b292e5c",
+        "native.output": "26898bf13da9c41248a35f049f1203e9d86f64f1f518e3057c15a50cc6830880",
+        "harness.scan": "10e59b14f06ee361630c15e7765405f6c81569a422d82dd40374fce9e61cc4c6",
+        "harness.triage": "a63f7d130abae0c00970efbbdf67d04fdb49a097aeae22a345a731b254fd4782",
+        "harness.triage_md": "4bf61ef7db4ea609ae892b20d3427a6499c04547f39f89a21255dd4b8e078fdd",
+        "native.trace": "c27765a62604bbbac18977e4a41ab6071d25a1a5158f77e6df8c76625742f746",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "7e97a6b004fa1b8ca745cdce3ba0328ba7a90f6526074ab3ff7c86b37c261b1e"
+      }
+    },
+    {
+      "label": "triage-v3-contract-r1",
+      "run_id": "d903597f-38d0-4766-a080-9dafc55798a6",
+      "case": "lov-08",
+      "repo": "encode/django-rest-framework",
+      "variant": "patched",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "false_positive": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "abecb35b0816e5cdb16f25b5851b1e9a9491eb7b36c294f02d45f3af2fab9645",
+        "review.manifest": "e4c436655de44e49b4937cad12b6beecb2e35148915c6ac11389092ef11bfca0",
+        "repair.scan_input": "bebd038f8f9bd918c2d7afe522a7f89232703b932417a79f55ea6444b7733a88",
+        "repair.policy": "b5f75e9a18f2705ee492dcfcc4fb42af7270a3df74d42fc362bfe3058eec147a",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "753210b3c7610485483e2a1cc4e0fac6a2e954e32435e3ee3f28961afcfeb571",
+        "native.output": "b5af548453edea2958a98916cfdbd6ab1554530e164a99ee1cebb4a7bd318948",
+        "harness.scan": "bebd038f8f9bd918c2d7afe522a7f89232703b932417a79f55ea6444b7733a88",
+        "harness.triage": "9d687c25c0c01ca81286784e5a6fdf367bc68cc72d3de799a740e47bfb3232f5",
+        "harness.triage_md": "5c749154d3650ecdd2d070f1b5448276f9eb0e6df273aec9aa9c371673930023",
+        "native.trace": "1029fe2706b62e3e0324149e4197dbf275e4e18abdc64301cf05f4110e4fdb7c",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "8e5c0d838b1e98201c54e39fe174168d82190b233e258aab451438d180df83a6"
+      }
+    },
+    {
+      "label": "triage-v3-regression-r1",
+      "run_id": "69ee8c05-5a45-432b-80a1-8431c3c600fc",
+      "case": "lov-10",
+      "repo": "vercel/next.js",
+      "variant": "patched",
+      "status": "infrastructure_error",
+      "task_output_valid": null,
+      "source_and_scan_unchanged": null,
+      "summary": null,
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": "StorageError",
+      "artifact_sha256": {}
+    },
+    {
+      "label": "triage-v3-regression-r1",
+      "run_id": "fe1c858e-205a-4cfc-a7d4-d022aebbf56a",
+      "case": "lov-05",
+      "repo": "postcss/postcss",
+      "variant": "vulnerable",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "supported_local": 2
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "0a71cee54f03b1998d6b5e1dd8e40b8517bde1f713dc329770a8f579c4d17b00",
+        "review.manifest": "511eed3587dd7fb4af971f61a827b8412988aa210004e3c97e7ddba5a9d920a9",
+        "repair.scan_input": "98e9f972a18bf7e80f1a8a59bcd7afe87fed9b2bdd3d921995347e7e079e0bf2",
+        "repair.policy": "b5f75e9a18f2705ee492dcfcc4fb42af7270a3df74d42fc362bfe3058eec147a",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "b5abb9be8a86972a8252545780baa9f21677cbcd3efb45514144a98a3f510ad5",
+        "native.output": "9dfa93c2ce96f44aa5eefed0614e6109ae1d89400bc5bcbea28ce622cac50cea",
+        "harness.scan": "98e9f972a18bf7e80f1a8a59bcd7afe87fed9b2bdd3d921995347e7e079e0bf2",
+        "harness.triage": "b4c6fc97ba262e7bd4804a40342939c3ada1c74eb69bfce8f50073d169377c96",
+        "harness.triage_md": "fbbe0b2c03b61ef37c32b90392a88ec594c61402254d3660004b5593f52d4360",
+        "native.trace": "55d6247e13c6698700b3b1eb16a9c88ebf6dd2855ddb25529de1fe2a39253490",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "26b33a0881bc1a110dfab4b765904848298b170d3734454cb843a87f492b54d6"
+      }
+    },
+    {
+      "label": "triage-v3-regression-r1",
+      "run_id": "576afc3d-4938-4102-aa0e-2ebc1e599268",
+      "case": "lov-03",
+      "repo": "go-gitea/gitea",
+      "variant": "patched",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "false_positive": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "55ec4a062441744f4f517065127b79ba27589230b2c4504d1d58761f06f9b5bc",
+        "review.manifest": "b73d4fdfc95fa7d072753693debc342b2df718bda0fe5e378074d19ef181bd70",
+        "repair.scan_input": "c196a5e8e1cb69be3e9fe7cafa9b45a6049ae2540fb7df69607e0ccf31974f76",
+        "repair.policy": "b5f75e9a18f2705ee492dcfcc4fb42af7270a3df74d42fc362bfe3058eec147a",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "0497c19a2deed5cf617efa2d33c98b0b6270852ee01d49c60fe965387f3b3c5b",
+        "native.output": "c1f7b23c964759e5cb3e8bf7c18a471da707196b7a717838c5e8499fd7195521",
+        "harness.scan": "c196a5e8e1cb69be3e9fe7cafa9b45a6049ae2540fb7df69607e0ccf31974f76",
+        "harness.triage": "6515fba9573191a6421798efcfec45fa1675525698fe5760973d5608300b3ea8",
+        "harness.triage_md": "566805954e94546464cd706af946b3559bd0d8a2af4e9362396e4de85e3940b0",
+        "native.trace": "584b4fa086f8691035546a1c1e6284fbaf9128e78ccd2f7d53cabcdaf25b73e8",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "3b26753e52efcb81b2fe40a91997edbf90d8ce58820bd2270bab53a8d678b396"
+      }
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "e21864fe-d499-4711-a5ee-921674f99fbb",
+      "case": "lov-10",
+      "repo": "vercel/next.js",
+      "variant": "patched",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "false_positive": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "a00051e409a1c3d5224902f3887d3e92edbc1f2b6510b5879adbbc9c8e7fc8d3",
+        "review.manifest": "4d2a434add41fdbd82badc2cae8738a7dd599e4de4d124e37c3e7e0f1d905cb7",
+        "repair.scan_input": "5bc62b24778c8d9f0a00c099f8b8dddc841e85a4b5bd7ee1c7f994a5702a4781",
+        "repair.policy": "b5f75e9a18f2705ee492dcfcc4fb42af7270a3df74d42fc362bfe3058eec147a",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "06be3f2c0c37007ae269b6158a0d2d771580e2ddb9d24311b27fe30300b6aea5",
+        "native.output": "3603ac4d6033305481229f5108a62c01cb7c31226efdf3b1940c7c086451337a",
+        "harness.scan": "5bc62b24778c8d9f0a00c099f8b8dddc841e85a4b5bd7ee1c7f994a5702a4781",
+        "harness.triage": "a1ded5a7487cef858fa2804a8080abe65853cb5e39f4bdb4a0ff73fa8081dd44",
+        "harness.triage_md": "8a4fedfe54e1f4d28c616eda90336b859f61f6a35f1cfacf56b0a4d4e0e3ff28",
+        "native.trace": "48b5ff0dae64937dacc09899ee67e4ea83c565f5000ed6ee92f622d1c3e1ae0e",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "e2571a9fdc6a2dad6c35167d50bc9bd0dc5507d1cfd271b49adae11a27f866a8"
+      }
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "75c441ed-701e-4b5d-ab95-64648afdf300",
+      "case": "lov-10",
+      "repo": "vercel/next.js",
+      "variant": "vulnerable",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "supported_local": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "26713ec868c71eda83cc5d81f3da0e4cedc0ef8a99f31318f97533a1d40f5513",
+        "review.manifest": "e14bb804d2676224eb14d383a1870337cda248ea6242f4843a7c6d2f20e4034f",
+        "repair.scan_input": "c5d1af0fdcd8472b04d9eebaa7faf66bee4d1153558edcad6af24b8b4ff71495",
+        "repair.policy": "b5f75e9a18f2705ee492dcfcc4fb42af7270a3df74d42fc362bfe3058eec147a",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "72f4b076f50cc0c4e4bdc83624e45798392b11abf55b32deac8366ca7369661d",
+        "native.output": "6b55b13fa8480add23a1f0fa0250633bb4fabf4cf290264319169331efdd2040",
+        "harness.scan": "c5d1af0fdcd8472b04d9eebaa7faf66bee4d1153558edcad6af24b8b4ff71495",
+        "harness.triage": "67ca5058dcbc9bbaaf4066f7a5b5eff377699a68956cf18da1dbaf463e4bb304",
+        "harness.triage_md": "8826af32dc56d1a59cf75c6c8f27dd092022f491433a58c0971d85164bc3d1c1",
+        "native.trace": "54cebf3c22b6e17d374ec09dd140504321399fbce370441bbf4b0399147b7ee3",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "e8f7c04c31f393441dfa7689e5ac63e03b2d969650863faad7fd61d02b56e1fa"
+      }
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "3dfa551c-c28b-4463-adfd-3cff941c7762",
+      "case": "lov-03",
+      "repo": "go-gitea/gitea",
+      "variant": "vulnerable",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "supported_local": 3,
+        "unresolved": 2
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "c58dc67ee39f1d7fa4936a4030b9ac9eeeaa6fe38b961587f9bb2f64d2c943be",
+        "review.manifest": "4fb886f8a7e2d0668867c062409fa59617d5464f463d99c7f58a82947c7fe0af",
+        "repair.scan_input": "6678e2e1c1b0633103c8e6b846b32118ccb9d8cc7dec88167b18782445b64715",
+        "repair.policy": "b5f75e9a18f2705ee492dcfcc4fb42af7270a3df74d42fc362bfe3058eec147a",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "4c5823f4b8f517e14a528cc45b2a505aa8be1fd6f2bb02a080f1aa951d349091",
+        "native.output": "4343f65d9b7daf5fd29187949d953c8814eff622de83c7cdaf059818c520ad98",
+        "harness.scan": "6678e2e1c1b0633103c8e6b846b32118ccb9d8cc7dec88167b18782445b64715",
+        "harness.triage": "f19e7782aed22875e34bf2a3d2bb7e0d5292fd51ec1b03a51b420a4373fdfd74",
+        "harness.triage_md": "2f6b1ff5788975119a65e8d575518ffc218b0f8ec2895b231bdf7a1eb2c58b45",
+        "native.trace": "73c3d08d01b81041ef96a0ab2d18946917d22234d0d088305edfab7ef3ada475",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "70ef77d5a0aacd477c54b96d494686e770ad817b2dd3b70f1a8e3f82f3f768da"
+      }
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "f5c4e282-ee16-451a-8d74-58505b0d1a71",
+      "case": "lov-11",
+      "repo": "typeorm/typeorm",
+      "variant": "patched",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "false_positive": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "f7a6ff9a2c7e7f5c5aacb6cfaf275962434128ec3eb6802e50c7608c50c014b5",
+        "review.manifest": "11a1b2061543476911e8c16f5285fecf3c50ff8c98e7757177d3fd4d097b5bbd",
+        "repair.scan_input": "aa86ffc675fc7df56f40d843ea2b3752672a4143f059253121fb0ba1ad33ecc8",
+        "repair.policy": "b5f75e9a18f2705ee492dcfcc4fb42af7270a3df74d42fc362bfe3058eec147a",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "8c67ee1430b28c1bfd6668dd1329996ffd3dbd3cb1d361a9937aa87a95272cb9",
+        "native.output": "11717baeb072b15f3bc199b13117d78642180a2ca5a24cf60675e85c3e9b6436",
+        "harness.scan": "aa86ffc675fc7df56f40d843ea2b3752672a4143f059253121fb0ba1ad33ecc8",
+        "harness.triage": "0d24510989c814b322b4be8b96916590d94e88f70415d7bdf767cb83a487a5ba",
+        "harness.triage_md": "4826560ae070a92b1ea5f692c0f66b317db2c53154c06421d8788b693a11fe81",
+        "native.trace": "f4e2904e1469cc1dbc969373a189f8cf481b833ac4722fbf816a5fe1db6dd3e3",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "ffb4c07b6b2671214ffc7f2935269410a308b6b1d0e1fcd07a14f546c62adc1a"
+      }
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "7a5098be-635b-4be6-b6f1-47fd6753fdce",
+      "case": "lov-11",
+      "repo": "typeorm/typeorm",
+      "variant": "vulnerable",
+      "status": "completed",
+      "task_output_valid": true,
+      "source_and_scan_unchanged": true,
+      "summary": {
+        "supported_local": 1
+      },
+      "execution_inventory_complete": {
+        "value": null,
+        "status": "unknown"
+      },
+      "failure_code": null,
+      "artifact_sha256": {
+        "agent.input": "a469de28e39bf939e2ea1104e055b349dfb4824eb6ccab1dd7b34ba33de6bc7d",
+        "review.manifest": "2a37c73b34f8d6acbdee2f924add95e98575b07c803e2a9be258ae6c8deca827",
+        "repair.scan_input": "055a7e156d677bb55a71e1a85642085be29311a3ca76eaee15eab87c7e03878b",
+        "repair.policy": "b5f75e9a18f2705ee492dcfcc4fb42af7270a3df74d42fc362bfe3058eec147a",
+        "repair.checkpoint_source": "1c2e7c6476e289463a6fb262d90f126cc3b85bf0b718ab7b83533054a13e26e4",
+        "native.prompt": "1827e781aac32c4237b2899ac00e83ec6622f4c4a199f236306193cfff7f9fef",
+        "native.output": "d79c14ed670514bf58328dc30eed930376cd0a79d61838a7bf5f3f387a0c5256",
+        "harness.scan": "055a7e156d677bb55a71e1a85642085be29311a3ca76eaee15eab87c7e03878b",
+        "harness.triage": "22cc5cdcbd915d5855920ca08d4b5d1fe179cf707b457f283aab5cb3dfe42f5c",
+        "harness.triage_md": "3425ffb0a6e2a98a50ba1f722f2b230fb3dc02b4d56d8129a346b2f3744292d4",
+        "native.trace": "c9a8b4c06eedaa558c93b004bcc672cfaa1fff9c4b147ecb4d0f6f9c663c8056",
+        "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.receipt": "7fe1b9d4a5a3a93051041378bb259a73eb91845ad698aa3898bfc34bff0ca0b5"
+      }
+    }
+  ],
+  "diagnosis_assessments": [
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "5f5df774-f245-4198-aab9-df79504e8ef7",
+      "scanner_id": "F-001",
+      "finding_sha256": "abd900e70a51f3d637d11f39c7635c109bf419c454c71c76a661d733be6d8b40",
+      "truth_sha256": "0116aedcdc8efdd1d98bfcac5b75688591afe41b72067c6c31366be9b534d742",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "supported_by_available_source",
+      "rationale": "The original allegation and all three returned witnesses match the reference defect: MigrationGenerateCommand.ts:117-137 inserts query text into generated template literals while escaping backticks only. The interpolation example survives that operation and executes when the generated method runs. Missing schema-builder provenance and the migration caller affect exposure, not this local encoding defect. The supported/conditional disposition is justified by the staged source; no exploit execution is established.",
+      "source_evidence": [
+        "src/commands/MigrationGenerateCommand.ts:117-137"
+      ]
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "d97c2584-f996-4add-9441-2ce67e41acef",
+      "scanner_id": "F-001",
+      "finding_sha256": "2e41807c573b875b3ec48a6e68538d49c201fa7b4d18f552d7a88c7bfd82ea08",
+      "truth_sha256": "073e9fee0e6cbbdd60aa3f4efc7405cf3486af793bbb5039ab0799a4ed8b93cd",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "supported_by_available_source",
+      "rationale": "The claim and returned witnesses identify the exact singleton-locale mechanism, not merely nearby authorization code. middleware.rs:159-162 uses locales.len()>1; lines182-187 therefore omit the locale segment for a one-locale explicit locale=true matcher. The remaining string transformations do not restore it. Emission into the Edge manifest supports the local defect. Runtime matching and application authorization are absent, so conditional exposure is appropriate.",
+      "source_evidence": [
+        "crates/next-api/src/middleware.rs:159-162",
+        "crates/next-api/src/middleware.rs:182-214"
+      ]
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "0ab28a13-585a-4608-a46e-d3e397412279",
+      "scanner_id": "F-001",
+      "finding_sha256": "a88023366d2a45fd237eb3b3c55b0463e091cecbb718fc5f9fbcbc5bd3c1af93",
+      "truth_sha256": "d9e0216844a404e09e00960cf1fceeb9fdbf05019554e7dfa0e4d7dfba5a0956",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "retained_but_mechanism_unresolved",
+      "rationale": "The allegation matches the reference DRF defect. All three votes correctly identify direct GET invocation and propagation of its data, but classify the mechanism unresolved because override_method is absent. This passes uncertainty retention and does not recover a supported local diagnosis. The strict v2 unseen-helper rule drives the abstention. Available renderer call sites at 498-511 explicitly check permissions inside that same wrapper, via show_form_for_method at 446-458. This contract evidence motivates a separate frozen v3 regression; it is an inference about the helper role, not inspection of its missing body."
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "92bfcf9c-5c6d-4620-bd1f-1799f66ad631",
+      "scanner_id": "F-001",
+      "finding_sha256": "0230d7a16616bb670310b6dfc785b154e1a19c2dbdbfbf2667ca0e228a9e7e8a",
+      "truth_sha256": "16e85be2e90b4b15d95c4dfa79e2cd8c92f9336cb2d452980f922f28c89bbf6a",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "additional_local_claim_not_independently_validated",
+      "rationale": "This allegation concerns request flags omitted by the new recalculation helper and an older approval restored despite a newer request. The reference defect instead concerns retaining an approval from a reviewer ineligible on the new branch. The proposed states are different. Do not credit this as the reference defect or infer from its supported/conditional votes that the patched reference defect survived. This additional security claim has not been independently validated end to end."
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "92bfcf9c-5c6d-4620-bd1f-1799f66ad631",
+      "scanner_id": "F-002",
+      "finding_sha256": "e06c5acb36b8bb53eb3c7f6071f6deeac768a0cda4c1794abdadf3c4951186e0",
+      "truth_sha256": "16e85be2e90b4b15d95c4dfa79e2cd8c92f9336cb2d452980f922f28c89bbf6a",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "additional_local_claim_not_independently_validated",
+      "rationale": "The allegation concerns AddTeamReviewRequest clearing the official flag on its own newly inserted request. The reference defect concerns approval eligibility after retargeting. These are distinct mechanisms. Conditional local support is retained as an additional claim, not a confirmed exploit or detection of the reference defect."
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "92bfcf9c-5c6d-4620-bd1f-1799f66ad631",
+      "scanner_id": "F-003",
+      "finding_sha256": "9f35e8ad0ef11aada4286e626e94c3d8fbbd38cfacf3a1a37837fe97ba1d4967",
+      "truth_sha256": "16e85be2e90b4b15d95c4dfa79e2cd8c92f9336cb2d452980f922f28c89bbf6a",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "additional_local_claim_not_independently_validated",
+      "rationale": "The allegation concerns using a foreign review ID to copy private comment patch data into another issue. This is distinct from the reference approval-retargeting defect. External control and visibility are unestablished. Its local-support votes do not count as a reference-case hit or a confirmed new vulnerability."
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "c7bfd310-f0ad-4bee-957e-9083d8e2d745",
+      "scanner_id": "F-001",
+      "finding_sha256": "879e3ef42b9b0aa28cf5c34275eec06dcbb8ad1ec191941587ca0d9580106b30",
+      "truth_sha256": "69cbc1ce6d484d970460831ef29dfea7020545c170310f51b33595e7f9d94b76",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "additional_local_claim_not_independently_validated",
+      "rationale": "F-001 concerns quadratic annotation-removal work in map-generator.js. This differs from the reference map-file path traversal and is not credited as a reference-case detection. Its availability impact has not been independently validated."
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "c7bfd310-f0ad-4bee-957e-9083d8e2d745",
+      "scanner_id": "F-002",
+      "finding_sha256": "a31f48e11d505c320c48eb2a1c8ce6b661d9d2e5a70dcd4e6fd422fd0a15512f",
+      "truth_sha256": "69cbc1ce6d484d970460831ef29dfea7020545c170310f51b33595e7f9d94b76",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "supported_by_available_source",
+      "rationale": "The F-002 claim matches the reference defect: previous-map.js:73-84 extracts the annotation; lines131-134 resolve it relative to the CSS path; lines87-97 enforce only a .map suffix before reading. No directory containment is enforced. The concrete parent-directory witness satisfies the suffix guard. This retains the historical success control. Attacker input and disclosure through an application remain conditional."
+    },
+    {
+      "label": "triage-v2-patched-claims-r1",
+      "run_id": "0e304b8b-ae60-4eee-8282-b569106e93b7",
+      "scanner_id": "F-001",
+      "finding_sha256": "3bc9548f0be4f456847e66e94c6c4121680ad924aadea585cf38faf43d4c4ad5",
+      "truth_sha256": "f09cc54b97079e793461ed83c71103461dc042694549812c4316e46f32aaac7b",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "appropriately_refuted_on_patched_source",
+      "rationale": "Correct source-backed refutation. middleware.rs:159 uses i18n.is_some(), so a present single-locale configuration reaches prefix insertion at179-183 when locale=true. Later transformations retain it. The stale claim depends on the removed length-greater-than-one condition."
+    },
+    {
+      "label": "triage-v2-patched-claims-r1",
+      "run_id": "3cd9327b-8fc5-4106-a03c-faa66494f447",
+      "scanner_id": "F-002",
+      "finding_sha256": "802189052887e18fa82ac7efbc0c7e10277e2b1b77790e435c011916c9805329",
+      "truth_sha256": "16e85be2e90b4b15d95c4dfa79e2cd8c92f9336cb2d452980f922f28c89bbf6a",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "appropriately_refuted_on_patched_source",
+      "rationale": "Correct source-backed refutation of the original stale-approval allegation. ChangeTargetBranch now calls RecalculateReviewsOfficial at pull.go:332-335; the helper clears old approval/rejection official flags and recomputes reviewer eligibility against the new base branch at review.go:342-373. This directly contradicts the claim of absent recalculation. It says nothing about the separate request-state allegations in the archived patched scan."
+    },
+    {
+      "label": "triage-v2-patched-claims-r1",
+      "run_id": "4b6dc5a4-1769-4253-b29e-71d3eca3d8a1",
+      "scanner_id": "F-001",
+      "finding_sha256": "fa853bb4333ef396583eaea055c4b9d5507a91ec5e4c1ad42eaa8aca27583502",
+      "truth_sha256": "ab380a22ae40d08a5117746ae4664b30e709d2327d2eb16e4bfdb4f0ae3798ff",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "appropriately_refuted_on_patched_source",
+      "rationale": "Correct source-backed refutation. The patched renderer calls view.check_permissions inside the GET override at renderers.py:797 and invokes view.get only in the successful-check else branch at805. A permission denial therefore does not execute the recovery GET. The refutation relies on the explicit guard, not on missing callers or the renderer being opt-in."
+    },
+    {
+      "label": "triage-v3-contract-r1",
+      "run_id": "b9194862-6df1-4c2c-8632-f1da4a7582df",
+      "scanner_id": "F-001",
+      "finding_sha256": "b79c8577e7d008d8acca3d5b476afa7f1045b6b41ac7cdf8ff7bf548b34d8fc9",
+      "truth_sha256": "d9e0216844a404e09e00960cf1fceeb9fdbf05019554e7dfa0e4d7dfba5a0956",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "supported_by_available_source_with_explicit_contract_inference",
+      "rationale": "The v3 result recovers the exact reference mechanism: AdminRenderer invokes GET on 400 recovery without the normal GET permission check and carries the data into rendering. All three votes explicitly cite other uses of override_method with caller-side checks at renderers.py:498-510 and573-575, and the permission implementation at446-458. They label the resulting helper contract as an inference, retain its missing body in missing_context, and keep deployment exposure conditional. No new source or target execution was added. This corrects the specific v2 abstention without asserting that the absent helper was inspected."
+    },
+    {
+      "label": "triage-v3-contract-r1",
+      "run_id": "d903597f-38d0-4766-a080-9dafc55798a6",
+      "scanner_id": "F-001",
+      "finding_sha256": "b2a54a1e0a2a270ae15d1fd565dc844621bbe252b9fd80d6a6494e069c50e3f0",
+      "truth_sha256": "ab380a22ae40d08a5117746ae4664b30e709d2327d2eb16e4bfdb4f0ae3798ff",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "appropriately_refuted_on_patched_source",
+      "rationale": "The v3 policy continues to refute the original DRF allegation using the actual permission check at renderers.py:797 and the success-only GET call at805. The new contract-evidence rule does not override this explicit source protection."
+    },
+    {
+      "label": "triage-v2-patched-claims-r1",
+      "run_id": "cadbe885-36cb-4f92-82d0-4a155088324f",
+      "scanner_id": "F-001",
+      "finding_sha256": "b8b7aba46f2807ac687c794ebf0b6ae385cfddd06cea99fff1602fd6f3e04135",
+      "truth_sha256": "f817700ff311f9976831800429cfaaa26a1f9a269ba47ff4b1f8a09731eae142",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "appropriately_refuted_on_patched_source",
+      "rationale": "The stale TypeORM allegation is refuted by the new escapeTemplateLiteral helper, called for both up and down SQL generation. The returned votes identify escaping of backslashes, backticks, and interpolation syntax before insertion into generated source. This counters the original under-escaping mechanism directly; lack of a schema-builder caller is not the reason for refutation."
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "07fce091-1d09-44cb-8486-2f39a61bfab3",
+      "scanner_id": "F-001",
+      "finding_sha256": "f3fdeab6d4b1edef081526eafdff0c3a02422309099bc97486b79d741a05d0aa",
+      "truth_sha256": "c3ea60bbea82be1e0bb9c47e24aedaacf0cdd7c3b297d3d8d0b23725f14ef814",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "additional_local_claim_not_independently_validated",
+      "rationale": "The team-request flag-clearing allegation is distinct from the reference retargeted-approval defect. It is retained as a conditional local claim and not credited as a reference-case hit or confirmed new exploit."
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "07fce091-1d09-44cb-8486-2f39a61bfab3",
+      "scanner_id": "F-002",
+      "finding_sha256": "e6951a0b9dedaea6c12c1d3735f55cc555c99171ccb918e29311629f98184ea6",
+      "truth_sha256": "c3ea60bbea82be1e0bb9c47e24aedaacf0cdd7c3b297d3d8d0b23725f14ef814",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "supported_by_available_source_with_recorded_dissent",
+      "rationale": "The claim matches the exact reference defect: review eligibility is computed for the prior base branch; retarget persistence does not update reviews; approval counting trusts the stored official flag without rechecking the destination policy. Two votes support this local mismatch and one remains unresolved about missing retarget helpers. The majority local-support result is justified at the component boundary; successful retarget-and-merge exposure remains conditional, and the dissent is preserved."
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "07fce091-1d09-44cb-8486-2f39a61bfab3",
+      "scanner_id": "F-003",
+      "finding_sha256": "63ed54de6ff037a0568a3ac314a57428ed75909cbfc7b94c1e7e6b2fc621e64c",
+      "truth_sha256": "c3ea60bbea82be1e0bb9c47e24aedaacf0cdd7c3b297d3d8d0b23725f14ef814",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "additional_local_claim_not_independently_validated",
+      "rationale": "The cross-issue patch-copy allegation differs from the reference retargeting defect. It is not credited as a reference hit. Raw triage also preserves a superseded verifier result after its search matched the scanner JSON and a fresh replacement; this is a recorded scope deviation, not demonstrated answer-key exposure."
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "07fce091-1d09-44cb-8486-2f39a61bfab3",
+      "scanner_id": "F-004",
+      "finding_sha256": "16f3f4c325c3cae7423ae33254dc7ef9a824f5e0685caf8787527e73b403f633",
+      "truth_sha256": "c3ea60bbea82be1e0bb9c47e24aedaacf0cdd7c3b297d3d8d0b23725f14ef814",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "appropriately_unresolved_under_available_context",
+      "rationale": "The attachment reassignment allegation differs from the reference bug. The missing lookup and update implementations leave essential retrieval/persistence behavior unverified. The report preserves this uncertainty rather than rejecting or confirming the allegation."
+    },
+    {
+      "label": "triage-v2-pilot-r1",
+      "run_id": "07fce091-1d09-44cb-8486-2f39a61bfab3",
+      "scanner_id": "F-005",
+      "finding_sha256": "cd3153b45331be615a240396c736a3ac371b392d66bc3a91f61a11eafa7dd2ff",
+      "truth_sha256": "c3ea60bbea82be1e0bb9c47e24aedaacf0cdd7c3b297d3d8d0b23725f14ef814",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "appropriately_unresolved_under_available_context",
+      "rationale": "The issue-query unit-access allegation differs from the reference bug. Its decisive access-condition helper and team permission semantics are absent. The unresolved disposition retains that limitation and does not count as a confirmed bug or false positive."
+    },
+    {
+      "label": "triage-v3-regression-r1",
+      "run_id": "576afc3d-4938-4102-aa0e-2ebc1e599268",
+      "scanner_id": "F-002",
+      "finding_sha256": "f62b8406fbefe0b44a18e772ecb7c83725ff5fb7f4389cbb58c5a5dc0324bbca",
+      "truth_sha256": "16e85be2e90b4b15d95c4dfa79e2cd8c92f9336cb2d452980f922f28c89bbf6a",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "appropriately_refuted_on_patched_source",
+      "rationale": "All three final-policy votes refute the stale approval claim using the explicit recalculation at services/pull/pull.go:332-335 and the clear/recompute operations in models/issues/review.go:342-373. This is the correct protection for the reference mechanism; the helper-contract rule does not override visible counterevidence."
+    },
+    {
+      "label": "triage-v3-regression-r1",
+      "run_id": "fe1c858e-205a-4cfc-a7d4-d022aebbf56a",
+      "scanner_id": "F-001",
+      "finding_sha256": "e139f150dd930c2e7e0755d2126c2f92467b43597023dae4b0e3baca0536a2fb",
+      "truth_sha256": "69cbc1ce6d484d970460831ef29dfea7020545c170310f51b33595e7f9d94b76",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "additional_local_claim_not_independently_validated",
+      "rationale": "The repeated-suffix annotation-cleanup claim remains separate from the reference source-map traversal. Its conditional local-support result is not counted as a reference detection or a confirmed new vulnerability."
+    },
+    {
+      "label": "triage-v3-regression-r1",
+      "run_id": "fe1c858e-205a-4cfc-a7d4-d022aebbf56a",
+      "scanner_id": "F-002",
+      "finding_sha256": "6a194944456096f68ec6410967dbd8af16b82781d9c6c19319a432546aefd9ad",
+      "truth_sha256": "69cbc1ce6d484d970460831ef29dfea7020545c170310f51b33595e7f9d94b76",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "supported_by_available_source",
+      "rationale": "All three final-policy votes preserve the PostCSS success control. The annotation reaches path joining and readFileSync with only a .map suffix check; usable map contents are retained. Source lines87-97 and131-138 support the directory-traversal mechanism. Application ingress, filesystem trust boundaries, and attacker-visible output remain explicit conditions."
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "75c441ed-701e-4b5d-ab95-64648afdf300",
+      "scanner_id": "F-001",
+      "finding_sha256": "0c48ea80e2d18c0e447efe9eac7200203d1464fe3dd2580f31a3b7cda1fd9383",
+      "truth_sha256": "073e9fee0e6cbbdd60aa3f4efc7405cf3486af793bbb5039ab0799a4ed8b93cd",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "supported_by_available_source",
+      "rationale": "All three votes identify the exact singleton-locale defect: the locales.len()>1 condition prevents the locale=true prefix insertion, and later prefix/suffix transformations do not restore it before the Edge manifest is emitted. The runtime request/authorization path remains conditional. The cache repair changed publication only, not this source, scan, or policy."
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "e21864fe-d499-4711-a5ee-921674f99fbb",
+      "scanner_id": "F-001",
+      "finding_sha256": "43a3ee25d59b67169337a49e3ae6d6352d1cbd2edcc1da12b36739a41284e15c",
+      "truth_sha256": "f09cc54b97079e793461ed83c71103461dc042694549812c4316e46f32aaac7b",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "appropriately_refuted_on_patched_source",
+      "rationale": "All three votes identify i18n.is_some() at middleware.rs:159 and the consequent locale-prefix insertion as direct counterevidence to the unchanged allegation. This setup was explicitly recovered after the earlier pre-inference cache failure; the original failure remains saved."
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "7a5098be-635b-4be6-b6f1-47fd6753fdce",
+      "scanner_id": "F-001",
+      "finding_sha256": "77cd80b4a3a180cc24ab5ac01e0222f9d92438db53fba6f1d05149bd24d4e79e",
+      "truth_sha256": "0116aedcdc8efdd1d98bfcac5b75688591afe41b72067c6c31366be9b534d742",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "supported_by_available_source",
+      "rationale": "The original allegation and all three returned witnesses identify the reference encoding defect. MigrationGenerateCommand.ts:117-137 escapes backticks only before inserting query text into executable template literals; interpolation remains active in both migration directions and both output languages. Missing schema-builder provenance and migration execution callers leave attacker exposure conditional. No exploit execution is established."
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "f5c4e282-ee16-451a-8d74-58505b0d1a71",
+      "scanner_id": "F-001",
+      "finding_sha256": "330d3e70398ff40b664315f43e2469a3622890d0843a729f6fee90d38884285c",
+      "truth_sha256": "f817700ff311f9976831800429cfaaa26a1f9a269ba47ff4b1f8a09731eae142",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "refuted_by_source_counterevidence",
+      "rationale": "The unchanged allegation is the reference defect, but all three votes refute it on the repaired source. MigrationGenerateCommand.ts:326-330 doubles backslashes, escapes backticks and then escapes interpolation openers; both query paths call this helper before template assembly. This is concrete counterevidence to the original witness. Missing external callers are not used as a reason to refute it."
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "3dfa551c-c28b-4463-adfd-3cff941c7762",
+      "scanner_id": "F-001",
+      "finding_sha256": "037bce2011f4259a882e04a1a1386d730559321cd87192eef3a13f5585b2e2e2",
+      "truth_sha256": "c3ea60bbea82be1e0bb9c47e24aedaacf0cdd7c3b297d3d8d0b23725f14ef814",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "additional_local_claim_not_independently_validated",
+      "rationale": "This claim concerns AddTeamReviewRequest clearing the official flag on its newly inserted request. That differs from the reference stale approval authority after branch retargeting. The recorded local-support votes remain conditional on missing service and merge behavior; this additional allegation is not a reference-case hit or a confirmed new exploitable vulnerability."
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "3dfa551c-c28b-4463-adfd-3cff941c7762",
+      "scanner_id": "F-002",
+      "finding_sha256": "f7867e2cdbc619195b9ca134eb2c3ab8941b65889610c85b62b510b661d9c183",
+      "truth_sha256": "c3ea60bbea82be1e0bb9c47e24aedaacf0cdd7c3b297d3d8d0b23725f14ef814",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "same_mechanism",
+      "disposition_assessment": "supported_by_available_source",
+      "rationale": "All three witnesses match the reference mechanism: branch-dependent approval eligibility is stored in Official, ChangeTargetBranch persists a different BaseBranch without visible review reauthorization, and GetGrantedApprovalsCount trusts the old flag without checking destination eligibility. The returned reasoning cites actual same-revision helper call sites (services/pull/pull.go:95,141,147) and separate explicit review invalidation (450-467), labeling inferred helper contracts and retaining absent implementations. This supports a local authorization-state defect under the stated assumptions; omitted endpoint authorization and final merge enforcement keep exposure conditional."
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "3dfa551c-c28b-4463-adfd-3cff941c7762",
+      "scanner_id": "F-003",
+      "finding_sha256": "885d736d22315d98e173105f0ee4f7aabdf93ecb8173dfda10a3620313103f8e",
+      "truth_sha256": "c3ea60bbea82be1e0bb9c47e24aedaacf0cdd7c3b297d3d8d0b23725f14ef814",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "additional_local_claim_not_independently_validated",
+      "rationale": "This allegation concerns an unscoped reply review ID copying another issue's Patch and CommitSHA. It differs from the reference approval-retargeting defect. The three local-support votes preserve missing input validation and rendering as exposure conditions. It is recorded separately, not credited as a reference hit or validated as a new exploit."
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "3dfa551c-c28b-4463-adfd-3cff941c7762",
+      "scanner_id": "F-004",
+      "finding_sha256": "5b649d079057869704a6b10f72931cfe32075b585d403400b83874e64cf16f15",
+      "truth_sha256": "c3ea60bbea82be1e0bb9c47e24aedaacf0cdd7c3b297d3d8d0b23725f14ef814",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "appropriately_unresolved_on_available_evidence",
+      "rationale": "The attachment reassignment allegation differs from the reference approval-retargeting defect. All three votes preserve it as unresolved because missing GetAttachmentsByUUIDs and UpdateAttachment semantics determine whether an existing foreign attachment is returned and can be reassigned. The visible assignment alone does not complete that witness. The narrower helper-contract rule therefore does not promote this security-relevant unknown."
+    },
+    {
+      "label": "triage-v3-regression-recovery-r1",
+      "run_id": "3dfa551c-c28b-4463-adfd-3cff941c7762",
+      "scanner_id": "F-005",
+      "finding_sha256": "a91fa450eb5f49d8801ce03724438ec945031fa6b1aa7d146ff5daa9d8f20424",
+      "truth_sha256": "c3ea60bbea82be1e0bb9c47e24aedaacf0cdd7c3b297d3d8d0b23725f14ef814",
+      "reviewer": "Codex post-run analyst in the same task; not an independent human panel",
+      "judgment": "different_mechanism",
+      "disposition_assessment": "appropriately_unresolved_on_available_evidence",
+      "rationale": "The ownerless issue-search allegation differs from the reference approval-retargeting defect. One verifier supports an authorization inconsistency using the unit-independent comment; two remain unresolved because it does not establish that wiki-only team access satisfies UserAccessRepoCond. The majority preserves that essential unknown and the dissent. This is evidence against treating any helper comment as sufficient proof."
+    }
+  ],
+  "local_evidence_sha256": {
+    "audit.json": "224a2ba08d0d66d7d4821038cd5b9249a0d0b208c4ce18e6e874a9b955dd29d0",
+    "results.json": "86ca637c8bbfecd3c9f05560ffa96bdc891d02770694080ea6335cbe84fa54aa",
+    "assessments.json": "1bf6a964d3490547de3f4c73ed333821c0ae329e4395817d34901f1cf1a34d26",
+    "offline-tests.json": "a8f70e372baf20ec157933e3a8ff075236aea649d75d970ba2da6d0b710298fa",
+    "legacy-replay.json": "dbf34220ee6190455e690a470836ac6b7d3f2ffa5d97c4d8172f573e78ce26d2"
+  },
+  "evidence_availability": "This summary contains no machine-specific paths or credentials. Complete raw runs, frozen source snapshots and parent traces remain in the local evidence archive; their inclusion is not implied by this summary. Artifact hashes identify those retained objects, but hashes alone do not make unavailable evidence independently auditable.",
+  "limitations": [
+    "Known development cases; no fresh holdout or generalization estimate.",
+    "Fixed scan candidates; no end-to-end discovery recall claim.",
+    "Conditional exposure, not confirmed deployment exploits; no target code executed.",
+    "Single post-run Codex analyst review, not an independent human panel.",
+    "Recorded votes and parent traces do not establish complete child/retry inventory or independence.",
+    "Historical roots included preceding scan context; new roots start from archived scan files.",
+    "Overlapping batches; no runtime, throughput or cost comparison."
+  ]
+}
