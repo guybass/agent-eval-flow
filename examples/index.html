@@ -51,12 +51,12 @@
       <div class="intro-copy">
         <p class="eyebrow">Example reports</p>
         <h1 id="intro-title">Read the evidence behind a change.</h1>
-        <p>Two native agent workflows on controlled tasks. Follow the observed behavior, a change selected after reviewing the results, and what the rerun showed.</p>
+        <p>Native agent workflows with retained evidence. Follow controlled task comparisons and a real research pilot from the observed failure to a tested source-handoff fix.</p>
       </div>
     </section>
 
     <section id="reports" aria-labelledby="reports-title">
-      <div class="section-head"><h2 id="reports-title">Two case studies. Four reports.</h2><p>Native runs · synthetic tasks · small development samples</p></div>
+      <div class="section-head"><h2 id="reports-title">Three case studies.</h2><p>Native runs · small development samples · explicit limits</p></div>
       <div class="reports">
         <article class="report-card sre">
           <p class="eyebrow">01 / OpenSRE</p>
@@ -95,6 +95,20 @@
           <div class="actions">
             <a class="button primary" href="reports/02-openkritt.html">Open report <span aria-hidden="true">&nbsp;↗</span></a>
             <a class="button secondary" href="reports/02-openkritt-walkthrough.html">Task walkthrough</a>
+          </div>
+        </article>
+        <article class="report-card sre">
+          <p class="eyebrow">03 / GPT Researcher</p>
+          <h3>Found the right lead. Lost it before writing.</h3>
+          <p class="summary">The planner saw sources for the expected award winner. Follow-up searches failed, and the writer received evidence about a different award.</p>
+          <dl class="measurements">
+            <div><dt>Correct target answers · recorded pilot</dt><dd>2 / 3</dd></div>
+            <div><dt>Offline tests after source-preservation fix</dt><dd>37 passed</dd></div>
+          </dl>
+          <p class="report-note">Three selected SimpleQA cases, one run each. The tests verify source handoff; they do not establish improved live answer accuracy. Rebuild the report offline from the curated capture.</p>
+          <div class="actions">
+            <a class="button primary" href="reports/03-gpt-researcher.html">Open recorded report</a>
+            <a class="button secondary" href="https://github.com/guybass/agent-eval-flow/blob/main/examples/data/gpt-researcher/README.md">Failure trace and fix</a>
           </div>
         </article>
       </div>

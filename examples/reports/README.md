@@ -1,12 +1,13 @@
 # Example reports
 
 [Open the gallery](https://guybass.github.io/agent-eval-flow/) to read these
-OpenSRE and OpenKritt examples in your browser.
+OpenSRE, OpenKritt and GPT Researcher examples in your browser.
 
 | Example | Comparison | Task and fix walkthrough |
 | --- | --- | --- |
 | OpenSRE | [Report](https://guybass.github.io/agent-eval-flow/reports/01-opensre.html) · [PNG](01-opensre.png) | [Walkthrough](https://guybass.github.io/agent-eval-flow/reports/01-opensre-walkthrough.html) · [PNG](01-opensre-walkthrough.png) |
 | OpenKritt | [Report](https://guybass.github.io/agent-eval-flow/reports/02-openkritt.html) · [PNG](02-openkritt.png) | [Walkthrough](https://guybass.github.io/agent-eval-flow/reports/02-openkritt-walkthrough.html) · [PNG](02-openkritt-walkthrough.png) |
+| GPT Researcher | [Recorded pilot](03-gpt-researcher.html) | [Failure trace, fix and offline reproduction](../data/gpt-researcher/README.md) |
 
 ## OpenSRE
 
@@ -30,6 +31,12 @@ declared policy, and the original-case runtime increased **296 → 532 seconds**
 The patched twin addresses one seeded flaw; other findings remain unadjudicated.
 
 ## Scope and reproduction
+
+GPT Researcher completed three selected SimpleQA cases, with two correct target
+answers. The failed trace found the correct lead during query planning, then lost
+it before writing after follow-up retrieval errors. An upstream source-preservation
+patch passes 37 targeted offline tests. This is not a measured improvement in
+live answer accuracy. [Regenerate its report offline](../gpt_researcher_review.py).
 
 These are selected development cases, with one trial per case and candidate.
 The reports summarize retained native runs; they do not establish a general
