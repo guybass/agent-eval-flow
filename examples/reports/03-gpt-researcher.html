@@ -1,0 +1,1526 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Agent Eval Flow · GPT Researcher · recorded pilot</title>
+  <style>:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#1f2937;background:#f4f6fa;font-size:15px;line-height:1.55}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:1200px;margin:auto}header{padding:44px 28px 24px}header h1{font-size:2.2rem;line-height:1.15;overflow-wrap:anywhere;letter-spacing:-.035em}.eyebrow{font-size:.72rem;font-weight:750;letter-spacing:.15em;color:#3558a5}.muted,footer{color:#657187}section{background:white;padding:26px;margin:0 20px 22px;border:1px solid #dce2ed;border-radius:12px}h2{font-size:1.3rem;margin-top:0;color:#1b315c}h3{font-size:1.05rem}h4{font-size:.85rem;color:#4c5b74;margin-bottom:10px}.stats{display:grid;grid-template-columns:repeat(6,minmax(100px,1fr));gap:14px}.stats div{padding:15px;border-radius:8px;background:#f1f5fc}.stats strong{display:block;font-size:1.8rem;color:#204275}.stats span{font-size:.8rem}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.87rem}th{text-align:left;font-size:.72rem;letter-spacing:.035em;color:#53647d;background:#f4f7fc}th,td{padding:13px 12px;border-bottom:1px solid #e1e6ee;vertical-align:top}td{overflow-wrap:anywhere}table code{white-space:pre-wrap}pre{background:#f4f7fb;padding:14px;border-radius:6px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.8rem;line-height:1.5}code{font-size:.8rem}.observation{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}.badge{font-size:.65rem;border:1px solid #ccd7e8;border-radius:12px;padding:1px 7px;font-weight:500}.unknown{color:#80642f}.estimated{color:#5c51a0}.reason{display:block;color:#657187;font-size:.78rem;margin-top:4px}.resources{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:16px}.resources dt{font-size:.74rem;color:#62718b}.resources dd{margin:6px 0}details{margin:14px 0}summary{cursor:pointer;color:#365888;font-size:.85rem}article{padding-top:26px;margin-top:28px;border-top:2px solid #dce4f2;scroll-margin-top:12px}a{color:#225fac;text-underline-offset:3px}.evidence{padding-left:22px}.evidence li{margin:12px 0;overflow-wrap:anywhere}.evidence code,.evidence small{display:block;color:#657187}footer{padding:10px 28px 35px;font-size:.75rem}@media(max-width:800px){.stats{grid-template-columns:repeat(3,1fr)}.resources{grid-template-columns:repeat(2,1fr)}section{padding:18px;margin:0 12px 16px}header{padding:28px 22px 18px}}@media print{:root{background:white;font-size:11px}section{border:0;padding:12px 0;break-inside:avoid}header{padding:15px 0}.table-wrap{overflow:visible}a{color:inherit}footer{padding:12px 0}}
+</style>
+</head>
+<body>
+<header>
+  <p class="eyebrow">AGENT EVAL FLOW · SAVED EVALUATION</p>
+  <h1>GPT Researcher · recorded pilot</h1>
+  <p>Project gpt-researcher · Dataset gptr-selected-simpleqa · Suite recorded-simpleqa-pilot / 1</p>
+  <p class="muted">Created 2026-09-23 18:06:54.540027+00:00 · Result evaluation/cce8b41291724ed2ba4cc744746b669c</p>
+</header>
+<main>
+<section aria-labelledby="coverage-title">
+  <h2 id="coverage-title">Study coverage</h2>
+  <div class="stats">
+    <div><strong>3</strong><span>Planned runs</span></div>
+    <div><strong>3</strong><span>Completed</span></div>
+    <div><strong>0</strong><span>Failed</span></div>
+    <div><strong>0</strong><span>Pending</span></div>
+    <div><strong>0</strong><span>Unavailable</span></div>
+    <div><strong>3</strong><span>Unknown resources</span></div>
+  </div>
+  <p class="muted">3 task units · 1 repetition(s) per candidate. Diagnostic detail rows are evidence within a run.</p>
+</section>
+<section aria-labelledby="summaries-title">
+  <h2 id="summaries-title">Recorded candidate summaries</h2>
+  <div class="table-wrap"><table><thead><tr><th>Candidate</th><th>Summary</th><th>Value and basis</th><th>Source coverage</th><th>Explanation</th></tr></thead><tbody>
+    <tr><td>gptr-codex-luna-recorded</td><td>target_correct_mean</td><td><span class="observation estimated"><strong>0.6666666666666666</strong><span class="badge">estimated</span></span>
+<span class="reason">Complete planned population</span></td><td>3 / 3 observed<br>0 missing · 0 errors · 0 not applicable</td><td>Complete planned population<p class="muted">Available subset: 0.6666666666666666 (descriptive)</p></td></tr>
+    <tr><td>gptr-codex-luna-recorded</td><td>model_calls_mean</td><td><span class="observation observed"><strong>3.0</strong><span class="badge">observed</span></span>
+<span class="reason">Complete planned population</span></td><td>3 / 3 observed<br>0 missing · 0 errors · 0 not applicable</td><td>Complete planned population<p class="muted">Available subset: 3.0 (descriptive)</p></td></tr>
+    <tr><td>gptr-codex-luna-recorded</td><td>search_calls_mean</td><td><span class="observation observed"><strong>5.0</strong><span class="badge">observed</span></span>
+<span class="reason">Complete planned population</span></td><td>3 / 3 observed<br>0 missing · 0 errors · 0 not applicable</td><td>Complete planned population<p class="muted">Available subset: 5.0 (descriptive)</p></td></tr>
+    <tr><td>gptr-codex-luna-recorded</td><td>captured_pages_mean</td><td><span class="observation observed"><strong>10.0</strong><span class="badge">observed</span></span>
+<span class="reason">Complete planned population</span></td><td>3 / 3 observed<br>0 missing · 0 errors · 0 not applicable</td><td>Complete planned population<p class="muted">Available subset: 10.0 (descriptive)</p></td></tr>
+    <tr><td>gptr-codex-luna-recorded</td><td>elapsed_seconds_mean</td><td><span class="observation observed"><strong>134.2096201578776</strong><span class="badge">observed</span></span>
+<span class="reason">Complete planned population</span></td><td>3 / 3 observed<br>0 missing · 0 errors · 0 not applicable</td><td>Complete planned population<p class="muted">Available subset: 134.2096201578776 (descriptive)</p></td></tr>
+  </tbody></table></div>
+</section>
+<section aria-labelledby="grading-title"><h2 id="grading-title">Grading resources</h2>
+  <p class="muted">Shared grading activities are counted once. These charges are separate from agent execution costs below.</p>
+  <h3>All retained and new grading</h3><dl class="resources"><div><dt>Cost USD · scope: model</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div><div><dt>Input tokens</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div><div><dt>Output tokens</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div><div><dt>Human minutes</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div></dl>
+  <p>Captured native grading inventory: <span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">Public artifact summarizes original grading receipts</span></p>
+  <h3>Grading performed in this evaluation</h3><dl class="resources"><div><dt>Cost USD · scope: model</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">At least one cost_usd observation is unknown</span></dd></div><div><dt>Input tokens</dt><dd><span class="observation observed"><strong>29390</strong><span class="badge">observed</span></span>
+<span class="reason">Sum of exclusive recorded quantities</span></dd></div><div><dt>Output tokens</dt><dd><span class="observation observed"><strong>15</strong><span class="badge">observed</span></span>
+<span class="reason">Sum of exclusive recorded quantities</span></dd></div><div><dt>Human minutes</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">At least one human_minutes observation is unknown</span></dd></div></dl>
+  <p>Performed grading inventory: <span class="observation observed"><strong>True</strong><span class="badge">observed</span></span>
+<span class="reason">All contributing inventories are complete</span></p>
+  <details><summary>15 recorded grading activities</summary><pre>[
+  {
+    &#34;id&#34;: &#34;grading/c40904f0e1f2456cbe55c342c31c26a8&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;b03c2eea605acc848623799235fcf1e81fdccd24383570a31eacd3ae3c454261&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-3810&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: null,
+        &#34;status&#34;: &#34;unknown&#34;,
+        &#34;reason&#34;: &#34;No dollar charge reported by Codex CLI&#34;,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 9599,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 5,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: null,
+        &#34;status&#34;: &#34;unknown&#34;,
+        &#34;reason&#34;: &#34;Not timed&#34;,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.523497+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.526276+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/9210b9f68d6549bd998c39d9e5d539a8&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;b03c2eea605acc848623799235fcf1e81fdccd24383570a31eacd3ae3c454261&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-3787&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: null,
+        &#34;status&#34;: &#34;unknown&#34;,
+        &#34;reason&#34;: &#34;No dollar charge reported by Codex CLI&#34;,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 9843,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 5,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: null,
+        &#34;status&#34;: &#34;unknown&#34;,
+        &#34;reason&#34;: &#34;Not timed&#34;,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.526628+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.526628+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/9d6c8c5f1fa24b0f897eb8202d8664ab&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;b03c2eea605acc848623799235fcf1e81fdccd24383570a31eacd3ae3c454261&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-1111&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: null,
+        &#34;status&#34;: &#34;unknown&#34;,
+        &#34;reason&#34;: &#34;No dollar charge reported by Codex CLI&#34;,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 9948,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 5,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: null,
+        &#34;status&#34;: &#34;unknown&#34;,
+        &#34;reason&#34;: &#34;Not timed&#34;,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.526628+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.527629+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/ff466308c12545a1a4e0c0220779d314&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;97cc2aa2d8df6cbea5faed9b3e6ce9e03e6b8729bb246b6272e05423fe6cfd16&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-3810&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: &#34;0&#34;,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: 0.0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.527629+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.528631+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/40ff57e6a2e047dc9df9edec648c9076&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;97cc2aa2d8df6cbea5faed9b3e6ce9e03e6b8729bb246b6272e05423fe6cfd16&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-3787&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: &#34;0&#34;,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: 0.0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.528631+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.528631+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/a9952fe836e94765a44b97b840ffeff5&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;97cc2aa2d8df6cbea5faed9b3e6ce9e03e6b8729bb246b6272e05423fe6cfd16&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-1111&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: &#34;0&#34;,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: 0.0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.528631+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.529630+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/c823b51e22754db095736e48062380bd&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;cbe115c9965c6423ef4bee2702fa0a055c23825ea606b33d09930682ebc48919&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-3810&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: &#34;0&#34;,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: 0.0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.530629+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.531796+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/015d7e064de14ea9a0d95c84e3916951&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;cbe115c9965c6423ef4bee2702fa0a055c23825ea606b33d09930682ebc48919&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-3787&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: &#34;0&#34;,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: 0.0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.531796+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.532466+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/93920bc5a78749cfb332afd0fe9f5746&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;cbe115c9965c6423ef4bee2702fa0a055c23825ea606b33d09930682ebc48919&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-1111&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: &#34;0&#34;,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: 0.0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.532670+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.532670+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/4f30fead876d4812a7671ee1aa720d74&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;43187ba6e818c8a3e6056b77160fa2f2625f8b46824ff1a94a60a1bf5f60e224&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-3810&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: &#34;0&#34;,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: 0.0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.532670+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.534262+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/284de19681fd4a25a34f9678fc82a057&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;43187ba6e818c8a3e6056b77160fa2f2625f8b46824ff1a94a60a1bf5f60e224&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-3787&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: &#34;0&#34;,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: 0.0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.534762+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.535008+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/1051ed71103b43bc84cf379a291a6ca3&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;43187ba6e818c8a3e6056b77160fa2f2625f8b46824ff1a94a60a1bf5f60e224&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-1111&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: &#34;0&#34;,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: 0.0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.535508+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.536007+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/611f72077b1b481f8c183cba88fdc549&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;fc9c16723bae0743de4bebb0b2523b2e2146cbe84e5d34a1653f7198700448a4&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-3810&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: &#34;0&#34;,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: 0.0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.537007+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.537007+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/100f3c2b6158446d8829f91d807dfca3&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;fc9c16723bae0743de4bebb0b2523b2e2146cbe84e5d34a1653f7198700448a4&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-3787&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: &#34;0&#34;,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: 0.0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.537007+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.538024+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  },
+  {
+    &#34;id&#34;: &#34;grading/9d77a32a887a4da8ba09c5e6a63fa6fd&#34;,
+    &#34;evaluator&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-recorded-metrics&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;config_fingerprint&#34;: &#34;fc9c16723bae0743de4bebb0b2523b2e2146cbe84e5d34a1653f7198700448a4&#34;,
+    &#34;run_ids&#34;: [
+      &#34;recorded/simpleqa-1111&#34;
+    ],
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;phase&#34;: &#34;post_run&#34;,
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: &#34;0&#34;,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: 0.0,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;started_at&#34;: &#34;2026-09-23 18:06:54.538024+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 18:06:54.538024+00:00&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;artifacts&#34;: {},
+    &#34;error&#34;: null
+  }
+]</pre><p>Performed activity IDs</p><pre>[
+  &#34;grading/c40904f0e1f2456cbe55c342c31c26a8&#34;,
+  &#34;grading/9210b9f68d6549bd998c39d9e5d539a8&#34;,
+  &#34;grading/9d6c8c5f1fa24b0f897eb8202d8664ab&#34;,
+  &#34;grading/ff466308c12545a1a4e0c0220779d314&#34;,
+  &#34;grading/40ff57e6a2e047dc9df9edec648c9076&#34;,
+  &#34;grading/a9952fe836e94765a44b97b840ffeff5&#34;,
+  &#34;grading/c823b51e22754db095736e48062380bd&#34;,
+  &#34;grading/015d7e064de14ea9a0d95c84e3916951&#34;,
+  &#34;grading/93920bc5a78749cfb332afd0fe9f5746&#34;,
+  &#34;grading/4f30fead876d4812a7671ee1aa720d74&#34;,
+  &#34;grading/284de19681fd4a25a34f9678fc82a057&#34;,
+  &#34;grading/1051ed71103b43bc84cf379a291a6ca3&#34;,
+  &#34;grading/611f72077b1b481f8c183cba88fdc549&#34;,
+  &#34;grading/100f3c2b6158446d8829f91d807dfca3&#34;,
+  &#34;grading/9d77a32a887a4da8ba09c5e6a63fa6fd&#34;
+]</pre></details>
+</section>
+<section aria-labelledby="tasks-title"><h2 id="tasks-title">Runs and evidence</h2>
+  <div class="table-wrap"><table><thead><tr><th>Candidate / task</th><th>Repetition</th><th>Run status</th><th>Score</th><th>Acceptance</th><th>Details</th></tr></thead><tbody>
+<tr><td>gptr-codex-luna-recorded<br><code>{
+  &#34;case_id&#34;: &#34;simpleqa-3810&#34;
+}</code></td><td>0</td><td>completed</td><td><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">No rubric configured</span></td><td>pass</td><td><a href="#run-0">Inspect run</a></td></tr><tr><td>gptr-codex-luna-recorded<br><code>{
+  &#34;case_id&#34;: &#34;simpleqa-3787&#34;
+}</code></td><td>0</td><td>completed</td><td><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">No rubric configured</span></td><td>fail</td><td><a href="#run-1">Inspect run</a></td></tr><tr><td>gptr-codex-luna-recorded<br><code>{
+  &#34;case_id&#34;: &#34;simpleqa-1111&#34;
+}</code></td><td>0</td><td>completed</td><td><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">No rubric configured</span></td><td>pass</td><td><a href="#run-2">Inspect run</a></td></tr>  </tbody></table></div>
+  <article id="run-0"><h3>gptr-codex-luna-recorded · {
+  &#34;case_id&#34;: &#34;simpleqa-3810&#34;
+} · repetition 0</h3>
+    <p><code>recorded/simpleqa-3810</code> · completed · output available</p>
+    <p>Elapsed seconds: <span class="observation observed"><strong>212.127206</strong><span class="badge">observed</span></span>
+</p>
+    <h4>Agent execution resources</h4><dl class="resources"><div><dt>Cost USD · scope: model</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div><div><dt>Input tokens</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div><div><dt>Output tokens</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div><div><dt>Human minutes</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div></dl>
+    <details><summary>Delivered output</summary><pre>{
+  &#34;answer_summary&#34;: &#34;Roberto Vázquez García&#34;,
+  &#34;grade&#34;: {
+    &#34;case_id&#34;: &#34;simpleqa-3810&#34;,
+    &#34;grade&#34;: &#34;CORRECT&#34;,
+    &#34;target_correct&#34;: 1,
+    &#34;expected_answer&#34;: &#34;Roberto Vázquez García&#34;,
+    &#34;report_sha256&#34;: &#34;aea4017e0c3e32e46dd1f0e3a945adc3c68a3ba8f36e44f57a27210c308747ca&#34;,
+    &#34;grader_model_requested&#34;: &#34;gpt-5.6-luna&#34;,
+    &#34;rubric&#34;: &#34;upstream SimpleQA GRADER_TEMPLATE&#34;,
+    &#34;limitation&#34;: &#34;Same-model judge, not independent ground truth or complete report factuality.&#34;
+  },
+  &#34;metrics&#34;: {
+    &#34;target_correct&#34;: 1,
+    &#34;model_calls&#34;: 3,
+    &#34;search_calls&#34;: 5,
+    &#34;captured_pages&#34;: 13,
+    &#34;elapsed_seconds&#34;: 212.127206325531
+  },
+  &#34;judge_usage&#34;: {
+    &#34;input_tokens&#34;: 9599,
+    &#34;output_tokens&#34;: 5,
+    &#34;cached_input_tokens&#34;: 4864
+  }
+}</pre></details>
+    <h4>Measurements</h4><div class="table-wrap"><table><thead><tr><th>Metric / detail key</th><th>Value</th><th>Status / basis</th><th>Why</th><th>Activity IDs</th></tr></thead><tbody>
+<tr><td>target_correct</td><td>1</td><td>ok / estimated</td><td>Recorded same-model SimpleQA judgment of target only; not whole-report factuality</td><td>grading/c40904f0e1f2456cbe55c342c31c26a8</td></tr><tr><td>model_calls</td><td>3</td><td>ok / observed</td><td>Recorded native count or timing</td><td>grading/ff466308c12545a1a4e0c0220779d314</td></tr><tr><td>search_calls</td><td>5</td><td>ok / observed</td><td>Recorded native count or timing</td><td>grading/c823b51e22754db095736e48062380bd</td></tr><tr><td>captured_pages</td><td>13</td><td>ok / observed</td><td>Recorded native count or timing</td><td>grading/4f30fead876d4812a7671ee1aa720d74</td></tr><tr><td>elapsed_seconds</td><td>212.127206325531</td><td>ok / observed</td><td>Recorded native count or timing</td><td>grading/611f72077b1b481f8c183cba88fdc549</td></tr>    </tbody></table></div>
+    <details><summary>Score contributions and acceptance gates</summary><pre>{
+  &#34;run_id&#34;: &#34;recorded/simpleqa-3810&#34;,
+  &#34;score&#34;: {
+    &#34;value&#34;: null,
+    &#34;status&#34;: &#34;unknown&#34;,
+    &#34;reason&#34;: &#34;No rubric configured&#34;,
+    &#34;evidence&#34;: []
+  },
+  &#34;contributions&#34;: [],
+  &#34;acceptance&#34;: &#34;pass&#34;,
+  &#34;acceptance_basis&#34;: &#34;estimated&#34;,
+  &#34;gates&#34;: [
+    {
+      &#34;threshold&#34;: {
+        &#34;metric&#34;: &#34;target_correct&#34;,
+        &#34;op&#34;: &#34;==&#34;,
+        &#34;value&#34;: 1
+      },
+      &#34;decision&#34;: &#34;pass&#34;,
+      &#34;basis&#34;: &#34;estimated&#34;,
+      &#34;reason&#34;: &#34;target_correct: 1 == 1 is pass&#34;
+    }
+  ],
+  &#34;reason&#34;: &#34;Applied configured rubric and acceptance rule&#34;
+}</pre></details>
+    <details><summary>1 executions · 3 events</summary><pre>[
+  {
+    &#34;id&#34;: &#34;recorded/simpleqa-3810/aggregate&#34;,
+    &#34;slot&#34;: &#34;recorded&#34;,
+    &#34;retry_index&#34;: 0,
+    &#34;parent_id&#34;: null,
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;started_at&#34;: &#34;2026-09-23 15:48:17.944108+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 15:51:50.071314+00:00&#34;,
+    &#34;effective_config&#34;: {
+      &#34;value&#34;: {
+        &#34;model_requested&#34;: &#34;gpt-5.6-luna&#34;,
+        &#34;resolved_model&#34;: &#34;Not emitted by Codex CLI JSONL&#34;,
+        &#34;provider&#34;: &#34;Experimental local Codex CLI transport&#34;,
+        &#34;reasoning&#34;: &#34;low&#34;,
+        &#34;retriever&#34;: &#34;DuckDuckGo&#34;,
+        &#34;embedding&#34;: &#34;local BAAI/bge-small-en-v1.5&#34;,
+        &#34;max_iterations&#34;: 3,
+        &#34;results_per_query&#34;: 5,
+        &#34;report_min_words&#34;: 600,
+        &#34;limitations&#34;: &#34;Native temperature and max_tokens settings cannot be enforced by this CLI transport; cost in dollars is unknown.&#34;
+      },
+      &#34;status&#34;: &#34;observed&#34;,
+      &#34;reason&#34;: null,
+      &#34;evidence&#34;: []
+    },
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: null,
+        &#34;status&#34;: &#34;unknown&#34;,
+        &#34;reason&#34;: &#34;No dollar charge reported by Codex CLI&#34;,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 29910,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 1791,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: null,
+        &#34;status&#34;: &#34;unknown&#34;,
+        &#34;reason&#34;: &#34;Not timed&#34;,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;role&#34;: &#34;main&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;error&#34;: null
+  }
+]</pre><pre>[
+  {
+    &#34;id&#34;: &#34;recorded/simpleqa-3810/aggregate/call/1&#34;,
+    &#34;execution_id&#34;: &#34;recorded/simpleqa-3810/aggregate&#34;,
+    &#34;kind&#34;: &#34;llm.call&#34;,
+    &#34;at&#34;: null,
+    &#34;fields&#34;: {
+      &#34;kind&#34;: &#34;llm.call&#34;,
+      &#34;call_number&#34;: 1,
+      &#34;stage&#34;: &#34;agent selection&#34;,
+      &#34;request_sha256&#34;: &#34;0efe710fd67a268ad624df65c0ac65ac88180ff17d716d1756482f0f4807a16c&#34;,
+      &#34;response_sha256&#34;: &#34;e30b8fb52b972b322f8a693ec6b315cc31dc40d5f0662d7cc9853824bc445eca&#34;
+    },
+    &#34;inputs&#34;: [],
+    &#34;outputs&#34;: [],
+    &#34;source&#34;: {
+      &#34;artifact&#34;: {
+        &#34;uri&#34;: &#34;https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json&#34;,
+        &#34;media_type&#34;: &#34;application/json&#34;,
+        &#34;sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+      },
+      &#34;locator&#34;: &#34;json:/runs/0/trace/0&#34;,
+      &#34;description&#34;: &#34;Curated summary of retained native evidence; full captures omitted&#34;
+    }
+  },
+  {
+    &#34;id&#34;: &#34;recorded/simpleqa-3810/aggregate/call/2&#34;,
+    &#34;execution_id&#34;: &#34;recorded/simpleqa-3810/aggregate&#34;,
+    &#34;kind&#34;: &#34;llm.call&#34;,
+    &#34;at&#34;: null,
+    &#34;fields&#34;: {
+      &#34;kind&#34;: &#34;llm.call&#34;,
+      &#34;call_number&#34;: 2,
+      &#34;stage&#34;: &#34;query planning&#34;,
+      &#34;request_sha256&#34;: &#34;4716f855f1afa48ca275b1d23316e1301b733556136869ef303feaf32ba51cd0&#34;,
+      &#34;response_sha256&#34;: &#34;7b7f80d778af3ed662fdc0eb361823e6ec8db550212c45001865b61066e8109a&#34;
+    },
+    &#34;inputs&#34;: [],
+    &#34;outputs&#34;: [],
+    &#34;source&#34;: {
+      &#34;artifact&#34;: {
+        &#34;uri&#34;: &#34;https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json&#34;,
+        &#34;media_type&#34;: &#34;application/json&#34;,
+        &#34;sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+      },
+      &#34;locator&#34;: &#34;json:/runs/0/trace/1&#34;,
+      &#34;description&#34;: &#34;Curated summary of retained native evidence; full captures omitted&#34;
+    }
+  },
+  {
+    &#34;id&#34;: &#34;recorded/simpleqa-3810/aggregate/call/3&#34;,
+    &#34;execution_id&#34;: &#34;recorded/simpleqa-3810/aggregate&#34;,
+    &#34;kind&#34;: &#34;llm.call&#34;,
+    &#34;at&#34;: null,
+    &#34;fields&#34;: {
+      &#34;kind&#34;: &#34;llm.call&#34;,
+      &#34;call_number&#34;: 3,
+      &#34;stage&#34;: &#34;report writing&#34;,
+      &#34;request_sha256&#34;: &#34;5fb0faa1d372a0a7e957eb28c48b46c88e38681935eb3179a7ed7dd125e8852a&#34;,
+      &#34;response_sha256&#34;: &#34;aea4017e0c3e32e46dd1f0e3a945adc3c68a3ba8f36e44f57a27210c308747ca&#34;
+    },
+    &#34;inputs&#34;: [],
+    &#34;outputs&#34;: [],
+    &#34;source&#34;: {
+      &#34;artifact&#34;: {
+        &#34;uri&#34;: &#34;https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json&#34;,
+        &#34;media_type&#34;: &#34;application/json&#34;,
+        &#34;sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+      },
+      &#34;locator&#34;: &#34;json:/runs/0/trace/2&#34;,
+      &#34;description&#34;: &#34;Curated summary of retained native evidence; full captures omitted&#34;
+    }
+  }
+]</pre></details>
+    <details><summary>Environment and native references</summary><pre>{
+  &#34;value&#34;: {
+    &#34;os&#34;: &#34;Windows&#34;,
+    &#34;repo&#34;: &#34;https://github.com/assafelovic/gpt-researcher&#34;,
+    &#34;commit&#34;: &#34;6f998577d547b1e54ec662dac63583aa11e3b84b&#34;
+  },
+  &#34;status&#34;: &#34;observed&#34;,
+  &#34;reason&#34;: null,
+  &#34;evidence&#34;: []
+}</pre><pre>{
+  &#34;case_id&#34;: &#34;simpleqa-3810&#34;,
+  &#34;row_index&#34;: &#34;0&#34;,
+  &#34;public_capture_sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+}</pre></details>
+    <h4>Evidence references</h4><ul class="evidence"><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">curated.capture</a><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">Curated summary of retained native evidence; full captures omitted</a><code>json:/runs/0/trace/0</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">Curated summary of retained native evidence; full captures omitted</a><code>json:/runs/0/trace/1</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">Curated summary of retained native evidence; full captures omitted</a><code>json:/runs/0/trace/2</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/0/grade</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/0/metrics/model_calls</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/0/metrics/search_calls</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/0/metrics/captured_pages</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/0/metrics/elapsed_seconds</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li></ul>
+  </article>
+  <article id="run-1"><h3>gptr-codex-luna-recorded · {
+  &#34;case_id&#34;: &#34;simpleqa-3787&#34;
+} · repetition 0</h3>
+    <p><code>recorded/simpleqa-3787</code> · completed · output available</p>
+    <p>Elapsed seconds: <span class="observation observed"><strong>91.899897</strong><span class="badge">observed</span></span>
+</p>
+    <h4>Agent execution resources</h4><dl class="resources"><div><dt>Cost USD · scope: model</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div><div><dt>Input tokens</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div><div><dt>Output tokens</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div><div><dt>Human minutes</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div></dl>
+    <details><summary>Delivered output</summary><pre>{
+  &#34;answer_summary&#34;: &#34;Chirik&#34;,
+  &#34;grade&#34;: {
+    &#34;case_id&#34;: &#34;simpleqa-3787&#34;,
+    &#34;grade&#34;: &#34;INCORRECT&#34;,
+    &#34;target_correct&#34;: 0,
+    &#34;expected_answer&#34;: &#34;Anastas&#34;,
+    &#34;report_sha256&#34;: &#34;a5bdaaf44937066dd04b195d7e0e87c049d12a32a35d340b187fcf36e5c2e684&#34;,
+    &#34;grader_model_requested&#34;: &#34;gpt-5.6-luna&#34;,
+    &#34;rubric&#34;: &#34;upstream SimpleQA GRADER_TEMPLATE&#34;,
+    &#34;limitation&#34;: &#34;Same-model judge, not independent ground truth or complete report factuality.&#34;
+  },
+  &#34;metrics&#34;: {
+    &#34;target_correct&#34;: 0,
+    &#34;model_calls&#34;: 3,
+    &#34;search_calls&#34;: 5,
+    &#34;captured_pages&#34;: 7,
+    &#34;elapsed_seconds&#34;: 91.90039706230164
+  },
+  &#34;judge_usage&#34;: {
+    &#34;input_tokens&#34;: 9843,
+    &#34;output_tokens&#34;: 5,
+    &#34;cached_input_tokens&#34;: 0
+  }
+}</pre></details>
+    <h4>Measurements</h4><div class="table-wrap"><table><thead><tr><th>Metric / detail key</th><th>Value</th><th>Status / basis</th><th>Why</th><th>Activity IDs</th></tr></thead><tbody>
+<tr><td>target_correct</td><td>0</td><td>ok / estimated</td><td>Recorded same-model SimpleQA judgment of target only; not whole-report factuality</td><td>grading/9210b9f68d6549bd998c39d9e5d539a8</td></tr><tr><td>model_calls</td><td>3</td><td>ok / observed</td><td>Recorded native count or timing</td><td>grading/40ff57e6a2e047dc9df9edec648c9076</td></tr><tr><td>search_calls</td><td>5</td><td>ok / observed</td><td>Recorded native count or timing</td><td>grading/015d7e064de14ea9a0d95c84e3916951</td></tr><tr><td>captured_pages</td><td>7</td><td>ok / observed</td><td>Recorded native count or timing</td><td>grading/284de19681fd4a25a34f9678fc82a057</td></tr><tr><td>elapsed_seconds</td><td>91.90039706230164</td><td>ok / observed</td><td>Recorded native count or timing</td><td>grading/100f3c2b6158446d8829f91d807dfca3</td></tr>    </tbody></table></div>
+    <details><summary>Score contributions and acceptance gates</summary><pre>{
+  &#34;run_id&#34;: &#34;recorded/simpleqa-3787&#34;,
+  &#34;score&#34;: {
+    &#34;value&#34;: null,
+    &#34;status&#34;: &#34;unknown&#34;,
+    &#34;reason&#34;: &#34;No rubric configured&#34;,
+    &#34;evidence&#34;: []
+  },
+  &#34;contributions&#34;: [],
+  &#34;acceptance&#34;: &#34;fail&#34;,
+  &#34;acceptance_basis&#34;: &#34;estimated&#34;,
+  &#34;gates&#34;: [
+    {
+      &#34;threshold&#34;: {
+        &#34;metric&#34;: &#34;target_correct&#34;,
+        &#34;op&#34;: &#34;==&#34;,
+        &#34;value&#34;: 1
+      },
+      &#34;decision&#34;: &#34;fail&#34;,
+      &#34;basis&#34;: &#34;estimated&#34;,
+      &#34;reason&#34;: &#34;target_correct: 0 == 1 is fail&#34;
+    }
+  ],
+  &#34;reason&#34;: &#34;Applied configured rubric and acceptance rule&#34;
+}</pre></details>
+    <details><summary>1 executions · 3 events</summary><pre>[
+  {
+    &#34;id&#34;: &#34;recorded/simpleqa-3787/aggregate&#34;,
+    &#34;slot&#34;: &#34;recorded&#34;,
+    &#34;retry_index&#34;: 0,
+    &#34;parent_id&#34;: null,
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;started_at&#34;: &#34;2026-09-23 15:53:56.189033+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 15:55:28.088930+00:00&#34;,
+    &#34;effective_config&#34;: {
+      &#34;value&#34;: {
+        &#34;model_requested&#34;: &#34;gpt-5.6-luna&#34;,
+        &#34;resolved_model&#34;: &#34;Not emitted by Codex CLI JSONL&#34;,
+        &#34;provider&#34;: &#34;Experimental local Codex CLI transport&#34;,
+        &#34;reasoning&#34;: &#34;low&#34;,
+        &#34;retriever&#34;: &#34;DuckDuckGo&#34;,
+        &#34;embedding&#34;: &#34;local BAAI/bge-small-en-v1.5&#34;,
+        &#34;max_iterations&#34;: 3,
+        &#34;results_per_query&#34;: 5,
+        &#34;report_min_words&#34;: 600,
+        &#34;limitations&#34;: &#34;Native temperature and max_tokens settings cannot be enforced by this CLI transport; cost in dollars is unknown.&#34;
+      },
+      &#34;status&#34;: &#34;observed&#34;,
+      &#34;reason&#34;: null,
+      &#34;evidence&#34;: []
+    },
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: null,
+        &#34;status&#34;: &#34;unknown&#34;,
+        &#34;reason&#34;: &#34;No dollar charge reported by Codex CLI&#34;,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 24869,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 1990,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: null,
+        &#34;status&#34;: &#34;unknown&#34;,
+        &#34;reason&#34;: &#34;Not timed&#34;,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;role&#34;: &#34;main&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;error&#34;: null
+  }
+]</pre><pre>[
+  {
+    &#34;id&#34;: &#34;recorded/simpleqa-3787/aggregate/call/1&#34;,
+    &#34;execution_id&#34;: &#34;recorded/simpleqa-3787/aggregate&#34;,
+    &#34;kind&#34;: &#34;llm.call&#34;,
+    &#34;at&#34;: null,
+    &#34;fields&#34;: {
+      &#34;kind&#34;: &#34;llm.call&#34;,
+      &#34;call_number&#34;: 1,
+      &#34;stage&#34;: &#34;agent selection&#34;,
+      &#34;request_sha256&#34;: &#34;abf5c7db245f64989bbc739fbc30612f58e492d80792831e22f6a1473c74f06d&#34;,
+      &#34;response_sha256&#34;: &#34;b9d009e159e6569484f0474060a7621364b909c1a0d1d35e34d3403c82e2cb00&#34;,
+      &#34;observation&#34;: &#34;Selected a scientific research role; did not choose an award winner.&#34;,
+      &#34;prompt_term_counts&#34;: {
+        &#34;Anastas&#34;: 0,
+        &#34;Yale&#34;: 0,
+        &#34;Royal Society of Chemistry&#34;: 0,
+        &#34;Chirik&#34;: 0,
+        &#34;DNSError&#34;: 0
+      }
+    },
+    &#34;inputs&#34;: [],
+    &#34;outputs&#34;: [],
+    &#34;source&#34;: {
+      &#34;artifact&#34;: {
+        &#34;uri&#34;: &#34;https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json&#34;,
+        &#34;media_type&#34;: &#34;application/json&#34;,
+        &#34;sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+      },
+      &#34;locator&#34;: &#34;json:/runs/2/trace/0&#34;,
+      &#34;description&#34;: &#34;Curated summary of retained native evidence; full captures omitted&#34;
+    }
+  },
+  {
+    &#34;id&#34;: &#34;recorded/simpleqa-3787/aggregate/call/2&#34;,
+    &#34;execution_id&#34;: &#34;recorded/simpleqa-3787/aggregate&#34;,
+    &#34;kind&#34;: &#34;llm.call&#34;,
+    &#34;at&#34;: null,
+    &#34;fields&#34;: {
+      &#34;kind&#34;: &#34;llm.call&#34;,
+      &#34;call_number&#34;: 2,
+      &#34;stage&#34;: &#34;query planning&#34;,
+      &#34;request_sha256&#34;: &#34;cdca9d014253d98e4c66a48b47470a43a1d21e6b740466e6e20cc4029118bf99&#34;,
+      &#34;response_sha256&#34;: &#34;82676acf90ae2e6a5284e4c5ddc72739b33878361087c4f91a6deaa47ff6d0d6&#34;,
+      &#34;observation&#34;: &#34;Saw Yale and RSC leads for Paul Anastas and generated a targeted verification query.&#34;,
+      &#34;prompt_term_counts&#34;: {
+        &#34;Anastas&#34;: 3,
+        &#34;Yale&#34;: 2,
+        &#34;Royal Society of Chemistry&#34;: 2,
+        &#34;Chirik&#34;: 1,
+        &#34;DNSError&#34;: 0
+      },
+      &#34;generated_queries&#34;: [
+        &#34;2016 Green Chemistry Award winner surname&#34;,
+        &#34;Paul Anastas 2016 Royal Society of Chemistry Green Chemistry Award&#34;,
+        &#34;who won the Green Chemistry Award in 2016&#34;
+      ]
+    },
+    &#34;inputs&#34;: [],
+    &#34;outputs&#34;: [],
+    &#34;source&#34;: {
+      &#34;artifact&#34;: {
+        &#34;uri&#34;: &#34;https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json&#34;,
+        &#34;media_type&#34;: &#34;application/json&#34;,
+        &#34;sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+      },
+      &#34;locator&#34;: &#34;json:/runs/2/trace/1&#34;,
+      &#34;description&#34;: &#34;Curated summary of retained native evidence; full captures omitted&#34;
+    }
+  },
+  {
+    &#34;id&#34;: &#34;recorded/simpleqa-3787/aggregate/call/3&#34;,
+    &#34;execution_id&#34;: &#34;recorded/simpleqa-3787/aggregate&#34;,
+    &#34;kind&#34;: &#34;llm.call&#34;,
+    &#34;at&#34;: null,
+    &#34;fields&#34;: {
+      &#34;kind&#34;: &#34;llm.call&#34;,
+      &#34;call_number&#34;: 3,
+      &#34;stage&#34;: &#34;report writing&#34;,
+      &#34;request_sha256&#34;: &#34;19286c29e4f542185fd30a8c7d8b9df9b385f067e7643507abc34d85f4dbda8f&#34;,
+      &#34;response_sha256&#34;: &#34;a5bdaaf44937066dd04b195d7e0e87c049d12a32a35d340b187fcf36e5c2e684&#34;,
+      &#34;observation&#34;: &#34;Answered Chirik. The supplied prompt had no Anastas, Yale, Royal Society of Chemistry, or retrieval error notice.&#34;,
+      &#34;prompt_term_counts&#34;: {
+        &#34;Anastas&#34;: 0,
+        &#34;Yale&#34;: 0,
+        &#34;Royal Society of Chemistry&#34;: 0,
+        &#34;Chirik&#34;: 5,
+        &#34;DNSError&#34;: 0
+      }
+    },
+    &#34;inputs&#34;: [],
+    &#34;outputs&#34;: [],
+    &#34;source&#34;: {
+      &#34;artifact&#34;: {
+        &#34;uri&#34;: &#34;https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json&#34;,
+        &#34;media_type&#34;: &#34;application/json&#34;,
+        &#34;sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+      },
+      &#34;locator&#34;: &#34;json:/runs/2/trace/2&#34;,
+      &#34;description&#34;: &#34;Curated summary of retained native evidence; full captures omitted&#34;
+    }
+  }
+]</pre></details>
+    <details><summary>Environment and native references</summary><pre>{
+  &#34;value&#34;: {
+    &#34;os&#34;: &#34;Windows&#34;,
+    &#34;repo&#34;: &#34;https://github.com/assafelovic/gpt-researcher&#34;,
+    &#34;commit&#34;: &#34;6f998577d547b1e54ec662dac63583aa11e3b84b&#34;
+  },
+  &#34;status&#34;: &#34;observed&#34;,
+  &#34;reason&#34;: null,
+  &#34;evidence&#34;: []
+}</pre><pre>{
+  &#34;case_id&#34;: &#34;simpleqa-3787&#34;,
+  &#34;row_index&#34;: &#34;2&#34;,
+  &#34;public_capture_sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+}</pre></details>
+    <h4>Evidence references</h4><ul class="evidence"><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">curated.capture</a><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">Curated summary of retained native evidence; full captures omitted</a><code>json:/runs/2/trace/0</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">Curated summary of retained native evidence; full captures omitted</a><code>json:/runs/2/trace/1</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">Curated summary of retained native evidence; full captures omitted</a><code>json:/runs/2/trace/2</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/2/grade</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/2/metrics/model_calls</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/2/metrics/search_calls</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/2/metrics/captured_pages</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/2/metrics/elapsed_seconds</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li></ul>
+  </article>
+  <article id="run-2"><h3>gptr-codex-luna-recorded · {
+  &#34;case_id&#34;: &#34;simpleqa-1111&#34;
+} · repetition 0</h3>
+    <p><code>recorded/simpleqa-1111</code> · completed · output available</p>
+    <p>Elapsed seconds: <span class="observation observed"><strong>98.601257</strong><span class="badge">observed</span></span>
+</p>
+    <h4>Agent execution resources</h4><dl class="resources"><div><dt>Cost USD · scope: model</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div><div><dt>Input tokens</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div><div><dt>Output tokens</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div><div><dt>Human minutes</dt><dd><span class="observation unknown"><strong>unknown</strong><span class="badge">unknown</span></span>
+<span class="reason">The complete execution/grading inventory is not established</span></dd></div></dl>
+    <details><summary>Delivered output</summary><pre>{
+  &#34;answer_summary&#34;: &#34;Olga Polverino&#34;,
+  &#34;grade&#34;: {
+    &#34;case_id&#34;: &#34;simpleqa-1111&#34;,
+    &#34;grade&#34;: &#34;CORRECT&#34;,
+    &#34;target_correct&#34;: 1,
+    &#34;expected_answer&#34;: &#34;Olga Polverino&#34;,
+    &#34;report_sha256&#34;: &#34;561247a4bba652acd6540c96dca9c5ae7d9e7806af689ace1eb51ad225350793&#34;,
+    &#34;grader_model_requested&#34;: &#34;gpt-5.6-luna&#34;,
+    &#34;rubric&#34;: &#34;upstream SimpleQA GRADER_TEMPLATE&#34;,
+    &#34;limitation&#34;: &#34;Same-model judge, not independent ground truth or complete report factuality.&#34;
+  },
+  &#34;metrics&#34;: {
+    &#34;target_correct&#34;: 1,
+    &#34;model_calls&#34;: 3,
+    &#34;search_calls&#34;: 5,
+    &#34;captured_pages&#34;: 10,
+    &#34;elapsed_seconds&#34;: 98.60125708580017
+  },
+  &#34;judge_usage&#34;: {
+    &#34;input_tokens&#34;: 9948,
+    &#34;output_tokens&#34;: 5,
+    &#34;cached_input_tokens&#34;: 5888
+  }
+}</pre></details>
+    <h4>Measurements</h4><div class="table-wrap"><table><thead><tr><th>Metric / detail key</th><th>Value</th><th>Status / basis</th><th>Why</th><th>Activity IDs</th></tr></thead><tbody>
+<tr><td>target_correct</td><td>1</td><td>ok / estimated</td><td>Recorded same-model SimpleQA judgment of target only; not whole-report factuality</td><td>grading/9d6c8c5f1fa24b0f897eb8202d8664ab</td></tr><tr><td>model_calls</td><td>3</td><td>ok / observed</td><td>Recorded native count or timing</td><td>grading/a9952fe836e94765a44b97b840ffeff5</td></tr><tr><td>search_calls</td><td>5</td><td>ok / observed</td><td>Recorded native count or timing</td><td>grading/93920bc5a78749cfb332afd0fe9f5746</td></tr><tr><td>captured_pages</td><td>10</td><td>ok / observed</td><td>Recorded native count or timing</td><td>grading/1051ed71103b43bc84cf379a291a6ca3</td></tr><tr><td>elapsed_seconds</td><td>98.60125708580017</td><td>ok / observed</td><td>Recorded native count or timing</td><td>grading/9d77a32a887a4da8ba09c5e6a63fa6fd</td></tr>    </tbody></table></div>
+    <details><summary>Score contributions and acceptance gates</summary><pre>{
+  &#34;run_id&#34;: &#34;recorded/simpleqa-1111&#34;,
+  &#34;score&#34;: {
+    &#34;value&#34;: null,
+    &#34;status&#34;: &#34;unknown&#34;,
+    &#34;reason&#34;: &#34;No rubric configured&#34;,
+    &#34;evidence&#34;: []
+  },
+  &#34;contributions&#34;: [],
+  &#34;acceptance&#34;: &#34;pass&#34;,
+  &#34;acceptance_basis&#34;: &#34;estimated&#34;,
+  &#34;gates&#34;: [
+    {
+      &#34;threshold&#34;: {
+        &#34;metric&#34;: &#34;target_correct&#34;,
+        &#34;op&#34;: &#34;==&#34;,
+        &#34;value&#34;: 1
+      },
+      &#34;decision&#34;: &#34;pass&#34;,
+      &#34;basis&#34;: &#34;estimated&#34;,
+      &#34;reason&#34;: &#34;target_correct: 1 == 1 is pass&#34;
+    }
+  ],
+  &#34;reason&#34;: &#34;Applied configured rubric and acceptance rule&#34;
+}</pre></details>
+    <details><summary>1 executions · 3 events</summary><pre>[
+  {
+    &#34;id&#34;: &#34;recorded/simpleqa-1111/aggregate&#34;,
+    &#34;slot&#34;: &#34;recorded&#34;,
+    &#34;retry_index&#34;: 0,
+    &#34;parent_id&#34;: null,
+    &#34;status&#34;: &#34;completed&#34;,
+    &#34;started_at&#34;: &#34;2026-09-23 15:52:17.585940+00:00&#34;,
+    &#34;ended_at&#34;: &#34;2026-09-23 15:53:56.187197+00:00&#34;,
+    &#34;effective_config&#34;: {
+      &#34;value&#34;: {
+        &#34;model_requested&#34;: &#34;gpt-5.6-luna&#34;,
+        &#34;resolved_model&#34;: &#34;Not emitted by Codex CLI JSONL&#34;,
+        &#34;provider&#34;: &#34;Experimental local Codex CLI transport&#34;,
+        &#34;reasoning&#34;: &#34;low&#34;,
+        &#34;retriever&#34;: &#34;DuckDuckGo&#34;,
+        &#34;embedding&#34;: &#34;local BAAI/bge-small-en-v1.5&#34;,
+        &#34;max_iterations&#34;: 3,
+        &#34;results_per_query&#34;: 5,
+        &#34;report_min_words&#34;: 600,
+        &#34;limitations&#34;: &#34;Native temperature and max_tokens settings cannot be enforced by this CLI transport; cost in dollars is unknown.&#34;
+      },
+      &#34;status&#34;: &#34;observed&#34;,
+      &#34;reason&#34;: null,
+      &#34;evidence&#34;: []
+    },
+    &#34;resources&#34;: {
+      &#34;cost_usd&#34;: {
+        &#34;value&#34;: null,
+        &#34;status&#34;: &#34;unknown&#34;,
+        &#34;reason&#34;: &#34;No dollar charge reported by Codex CLI&#34;,
+        &#34;evidence&#34;: []
+      },
+      &#34;cost_scope&#34;: [
+        &#34;model&#34;
+      ],
+      &#34;input_tokens&#34;: {
+        &#34;value&#34;: 41335,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;output_tokens&#34;: {
+        &#34;value&#34;: 2345,
+        &#34;status&#34;: &#34;observed&#34;,
+        &#34;reason&#34;: null,
+        &#34;evidence&#34;: []
+      },
+      &#34;human_minutes&#34;: {
+        &#34;value&#34;: null,
+        &#34;status&#34;: &#34;unknown&#34;,
+        &#34;reason&#34;: &#34;Not timed&#34;,
+        &#34;evidence&#34;: []
+      }
+    },
+    &#34;role&#34;: &#34;main&#34;,
+    &#34;native_refs&#34;: {},
+    &#34;error&#34;: null
+  }
+]</pre><pre>[
+  {
+    &#34;id&#34;: &#34;recorded/simpleqa-1111/aggregate/call/1&#34;,
+    &#34;execution_id&#34;: &#34;recorded/simpleqa-1111/aggregate&#34;,
+    &#34;kind&#34;: &#34;llm.call&#34;,
+    &#34;at&#34;: null,
+    &#34;fields&#34;: {
+      &#34;kind&#34;: &#34;llm.call&#34;,
+      &#34;call_number&#34;: 1,
+      &#34;stage&#34;: &#34;agent selection&#34;,
+      &#34;request_sha256&#34;: &#34;1d994772a770a03afd2061ded1e98c31e1b7f589f02296d3af5aa42555f6d199&#34;,
+      &#34;response_sha256&#34;: &#34;0a949c1f5dfa3ef9c59951ea827304ce7cd7923628af9d5ff631eb4d741b2751&#34;
+    },
+    &#34;inputs&#34;: [],
+    &#34;outputs&#34;: [],
+    &#34;source&#34;: {
+      &#34;artifact&#34;: {
+        &#34;uri&#34;: &#34;https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json&#34;,
+        &#34;media_type&#34;: &#34;application/json&#34;,
+        &#34;sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+      },
+      &#34;locator&#34;: &#34;json:/runs/1/trace/0&#34;,
+      &#34;description&#34;: &#34;Curated summary of retained native evidence; full captures omitted&#34;
+    }
+  },
+  {
+    &#34;id&#34;: &#34;recorded/simpleqa-1111/aggregate/call/2&#34;,
+    &#34;execution_id&#34;: &#34;recorded/simpleqa-1111/aggregate&#34;,
+    &#34;kind&#34;: &#34;llm.call&#34;,
+    &#34;at&#34;: null,
+    &#34;fields&#34;: {
+      &#34;kind&#34;: &#34;llm.call&#34;,
+      &#34;call_number&#34;: 2,
+      &#34;stage&#34;: &#34;query planning&#34;,
+      &#34;request_sha256&#34;: &#34;3d5f19de7562ade0062225dc85f84354823053e991079a80402b45c61d217c68&#34;,
+      &#34;response_sha256&#34;: &#34;63b6da82b92901f98862a1114f0117a1ee1c152ceb7b1a6554dc74f3dd6c1909&#34;
+    },
+    &#34;inputs&#34;: [],
+    &#34;outputs&#34;: [],
+    &#34;source&#34;: {
+      &#34;artifact&#34;: {
+        &#34;uri&#34;: &#34;https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json&#34;,
+        &#34;media_type&#34;: &#34;application/json&#34;,
+        &#34;sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+      },
+      &#34;locator&#34;: &#34;json:/runs/1/trace/1&#34;,
+      &#34;description&#34;: &#34;Curated summary of retained native evidence; full captures omitted&#34;
+    }
+  },
+  {
+    &#34;id&#34;: &#34;recorded/simpleqa-1111/aggregate/call/3&#34;,
+    &#34;execution_id&#34;: &#34;recorded/simpleqa-1111/aggregate&#34;,
+    &#34;kind&#34;: &#34;llm.call&#34;,
+    &#34;at&#34;: null,
+    &#34;fields&#34;: {
+      &#34;kind&#34;: &#34;llm.call&#34;,
+      &#34;call_number&#34;: 3,
+      &#34;stage&#34;: &#34;report writing&#34;,
+      &#34;request_sha256&#34;: &#34;b818440c0376c0f42db2f52db957b7db7fa79384d13d397ccc338cc9e741cc95&#34;,
+      &#34;response_sha256&#34;: &#34;561247a4bba652acd6540c96dca9c5ae7d9e7806af689ace1eb51ad225350793&#34;
+    },
+    &#34;inputs&#34;: [],
+    &#34;outputs&#34;: [],
+    &#34;source&#34;: {
+      &#34;artifact&#34;: {
+        &#34;uri&#34;: &#34;https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json&#34;,
+        &#34;media_type&#34;: &#34;application/json&#34;,
+        &#34;sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+      },
+      &#34;locator&#34;: &#34;json:/runs/1/trace/2&#34;,
+      &#34;description&#34;: &#34;Curated summary of retained native evidence; full captures omitted&#34;
+    }
+  }
+]</pre></details>
+    <details><summary>Environment and native references</summary><pre>{
+  &#34;value&#34;: {
+    &#34;os&#34;: &#34;Windows&#34;,
+    &#34;repo&#34;: &#34;https://github.com/assafelovic/gpt-researcher&#34;,
+    &#34;commit&#34;: &#34;6f998577d547b1e54ec662dac63583aa11e3b84b&#34;
+  },
+  &#34;status&#34;: &#34;observed&#34;,
+  &#34;reason&#34;: null,
+  &#34;evidence&#34;: []
+}</pre><pre>{
+  &#34;case_id&#34;: &#34;simpleqa-1111&#34;,
+  &#34;row_index&#34;: &#34;1&#34;,
+  &#34;public_capture_sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+}</pre></details>
+    <h4>Evidence references</h4><ul class="evidence"><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">curated.capture</a><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">Curated summary of retained native evidence; full captures omitted</a><code>json:/runs/1/trace/0</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">Curated summary of retained native evidence; full captures omitted</a><code>json:/runs/1/trace/1</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">Curated summary of retained native evidence; full captures omitted</a><code>json:/runs/1/trace/2</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/1/grade</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/1/metrics/model_calls</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/1/metrics/search_calls</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/1/metrics/captured_pages</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li><li><a href="https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json" rel="noopener noreferrer">https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json</a><code>json:/runs/1/metrics/elapsed_seconds</code><small>application/json · SHA-256 3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94</small></li></ul>
+  </article>
+</section>
+<section aria-labelledby="config-title"><h2 id="config-title">Declared configurations and provenance</h2>
+<details><summary>gptr-codex-luna-recorded · curated-capture-import / 1</summary><pre>{
+  &#34;id&#34;: &#34;gptr-codex-luna-recorded&#34;,
+  &#34;backend&#34;: {
+    &#34;name&#34;: &#34;curated-capture-import&#34;,
+    &#34;revision&#34;: &#34;1&#34;
+  },
+  &#34;components&#34;: {
+    &#34;model&#34;: {
+      &#34;kind&#34;: &#34;model&#34;,
+      &#34;ref&#34;: {
+        &#34;name&#34;: &#34;gpt-5.6-luna&#34;,
+        &#34;revision&#34;: null
+      },
+      &#34;params&#34;: {},
+      &#34;content&#34;: null
+    }
+  },
+  &#34;settings&#34;: {
+    &#34;model_requested&#34;: &#34;gpt-5.6-luna&#34;,
+    &#34;resolved_model&#34;: &#34;Not emitted by Codex CLI JSONL&#34;,
+    &#34;provider&#34;: &#34;Experimental local Codex CLI transport&#34;,
+    &#34;reasoning&#34;: &#34;low&#34;,
+    &#34;retriever&#34;: &#34;DuckDuckGo&#34;,
+    &#34;embedding&#34;: &#34;local BAAI/bge-small-en-v1.5&#34;,
+    &#34;max_iterations&#34;: 3,
+    &#34;results_per_query&#34;: 5,
+    &#34;report_min_words&#34;: 600,
+    &#34;limitations&#34;: &#34;Native temperature and max_tokens settings cannot be enforced by this CLI transport; cost in dollars is unknown.&#34;
+  },
+  &#34;description&#34;: &#34;Three historical failures selected before inference; one trial each; not representative or ranked hardest.&#34;,
+  &#34;native&#34;: null
+}</pre></details>  <details><summary>Native jobs and capture projections</summary><pre>[]</pre><pre>[
+  {
+    &#34;mapper&#34;: {
+      &#34;name&#34;: &#34;example.gpt-researcher-curated&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;source_format&#34;: {
+      &#34;name&#34;: &#34;curated-gpt-researcher-pilot&#34;,
+      &#34;revision&#34;: &#34;1&#34;
+    },
+    &#34;sources&#34;: [
+      {
+        &#34;uri&#34;: &#34;https://raw.githubusercontent.com/guybass/agent-eval-flow/ba0dd007c082b82f649f8b3c638d641612b42194/examples/data/gpt-researcher/capture.json&#34;,
+        &#34;media_type&#34;: &#34;application/json&#34;,
+        &#34;sha256&#34;: &#34;3d8b2a4839737ceab1122c1861959c9ae59e32bf3636fa39c1347c9e297a7c94&#34;
+      }
+    ],
+    &#34;omitted_fields&#34;: [
+      &#34;Full prompts and reports&#34;,
+      &#34;Scraped page bodies&#34;,
+      &#34;CLI stdout and session identifiers&#34;,
+      &#34;Local paths&#34;,
+      &#34;Detailed grading receipts&#34;
+    ],
+    &#34;issues&#34;: []
+  }
+]</pre></details>
+  <p class="muted">This report displays saved measurements and declared rules. A trace alone does not establish causal attribution. No confidence interval method is recorded in contract 0.4. Evidence links retain their original locations; external availability is not checked or downloaded by this report.</p>
+</section>
+</main><footer>Agent Eval Flow · schema 0.4 · Self-contained report; no external scripts or telemetry.</footer>
+</body></html>

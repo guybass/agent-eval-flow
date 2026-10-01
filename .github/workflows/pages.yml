@@ -8,6 +8,7 @@ on:
       - examples/assets/agent-eval-flow-banner.svg
       - examples/assets/agent-eval-flow-banner.png
       - examples/reports/**
+      - examples/data/gpt-researcher/**
       - scripts/build_report_site.py
       - tests/unit/test_report_site.py
       - .github/workflows/pages.yml

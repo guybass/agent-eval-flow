@@ -22,3 +22,12 @@ The wheel contains the library, templates and package metadata; downloaded test
 fixtures are kept in the source checkout/distribution. External runtimes and
 optional packages remain separate dependencies with their own terms. Integrating
 with an agent project does not imply endorsement by its maintainers.
+
+## GPT Researcher pilot
+
+`examples/data/gpt-researcher/capture.json` includes three SimpleQA questions
+and reference answers from the GPT Researcher mirror at commit
+`6f998577d547b1e54ec662dac63583aa11e3b84b`. SimpleQA originates in
+https://github.com/openai/simple-evals (MIT); GPT Researcher is Apache-2.0.
+Both license texts and detailed provenance accompany the capture. Linked source
+webpage bodies are not redistributed. See the example's README for scope.

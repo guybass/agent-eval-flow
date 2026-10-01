@@ -33,9 +33,10 @@ cd agent-eval-flow
 python -m pip install -e ".[cli]"
 python examples/archive_review.py --output demo-output/archive
 python examples/assessment_review.py --output demo-output/assessment
+python examples/gpt_researcher_review.py --output demo-output/gpt-researcher
 ```
 
-Open `report.html` inside either output directory. These examples make no model
+Open `report.html` inside an output directory. These examples make no model
 calls.
 
 - [Archived-run evaluation](https://github.com/guybass/agent-eval-flow/blob/main/examples/archive_review.py)
