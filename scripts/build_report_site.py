@@ -24,6 +24,8 @@ SOURCE_FILES = (
     "examples/assets/agent-eval-flow-banner.png",
     *(f"examples/reports/{name}" for name in REPORT_FILES),
     "examples/reports/03-gpt-researcher.html",
+    "examples/reports/native-harness/index.html",
+    "examples/reports/native-harness/study-data.json",
     "examples/data/gpt-researcher/capture.json",
     "examples/data/gpt-researcher/SIMPLE-EVALS-LICENSE",
     "examples/data/gpt-researcher/GPT-RESEARCHER-LICENSE",

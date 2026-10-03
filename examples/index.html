@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agent Eval Flow — example reports</title>
-  <meta name="description" content="Read OpenSRE and OpenKritt evaluation reports: native agents, controlled tasks, observed changes, and the limits that remain.">
+  <meta name="description" content="Read evidence from OpenSRE, OpenKritt, GPT Researcher and Pi/OpenCode coding-agent research: outcomes, workflow analysis and explicit limits.">
   <link rel="canonical" href="https://guybass.github.io/agent-eval-flow/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://guybass.github.io/agent-eval-flow/">
@@ -56,7 +56,7 @@
     </section>
 
     <section id="reports" aria-labelledby="reports-title">
-      <div class="section-head"><h2 id="reports-title">Three case studies.</h2><p>Native runs · small development samples · explicit limits</p></div>
+      <div class="section-head"><h2 id="reports-title">Four case studies.</h2><p>Native runs · retained evidence · explicit limits</p></div>
       <div class="reports">
         <article class="report-card sre">
           <p class="eyebrow">01 / OpenSRE</p>
@@ -111,13 +111,27 @@
             <a class="button secondary" href="https://github.com/guybass/agent-eval-flow/blob/main/examples/data/gpt-researcher/README.md">Failure trace and fix</a>
           </div>
         </article>
+        <article class="report-card kritt">
+          <p class="eyebrow">04 / Pi &amp; OpenCode</p>
+          <h3>Inside the coding-agent harness.</h3>
+          <p class="summary">Follow a dropped requirement, inspect what passing tests missed, and distinguish repair quality from the harness's own validation decisions.</p>
+          <dl class="measurements">
+            <div><dt>Original held-out workflows · 8 issues × 3 repeats × 2 agents</dt><dd>48</dd></div>
+            <div><dt>New model calls to regrade retained captures</dt><dd>0</dd></div>
+          </dl>
+          <p class="report-note">Original outcomes, a separate 24-attempt follow-up and later synthetic controls remain distinct. Small selected populations; no general reliability or ranking claim.</p>
+          <div class="actions">
+            <a class="button primary" href="reports/native-harness/">Read the research report</a>
+            <a class="button secondary" href="reports/native-harness/study-data.json">Study data</a>
+          </div>
+        </article>
       </div>
     </section>
 
     <section class="context" aria-labelledby="context-title">
       <div>
         <h2 id="context-title">Scope, evidence and trying it yourself</h2>
-        <p>These are curated report summaries, with one trial per case and candidate. They do not establish general reliability or security accuracy. Raw local captures and the experimental harnesses are not distributed. The public offline examples below demonstrate separate, reproducible tasks without model calls.</p>
+        <p>These are curated reports with study-specific splits and repeat counts. The first three use one trial per case and candidate; the coding-agent study includes repeated held-out workflows and separately labeled development. They do not establish general reliability or security accuracy. Raw local captures and experimental harnesses are not distributed. The offline examples below demonstrate separate, reproducible tasks without model calls.</p>
       </div>
       <div class="context-links">
         <a href="https://github.com/guybass/agent-eval-flow/blob/main/examples/reports/README.md">Read task details, attribution and run metadata</a>

@@ -5,3 +5,5 @@ requirements-test.txt -text
 # Workflow derivation receipts pin exact bytes; never normalize their line endings.
 examples/workflows/*.json -text whitespace=cr-at-eol
 examples/data/gpt-researcher/capture.json -text whitespace=cr-at-eol
+# The public report displays this file's SHA-256; keep its bytes portable.
+examples/reports/native-harness/study-data.json text eol=lf

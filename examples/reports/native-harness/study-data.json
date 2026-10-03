@@ -1,0 +1,2299 @@
+{
+  "schema_version": 1,
+  "title": "Inside the coding-agent harness",
+  "publication_date": "2026-10-03",
+  "scope": "Curated public research report. Original frozen outcomes, subsequent development, fresh validation, and synthetic controls remain separate.",
+  "baseline": {
+    "date": "2026-09-30",
+    "population": "Purposively selected Python issues in Django, SymPy and scikit-learn",
+    "issue_families": 8,
+    "repetitions": 3,
+    "attempts": 48,
+    "development_issue_families": 4,
+    "environment": {
+      "image_id": "sha256:965dbc8b7fcb10384b4b252eb71a387021c1ab3e977db7c97777dd54f4c836ac",
+      "python": "3.12.7",
+      "pi_version": "0.99.1",
+      "opencode_version": "1.18.33",
+      "model": "gpt-5.6-sol",
+      "reasoning": "low"
+    },
+    "frozen_at": "2026-09-30T14:11:50.541602+00:00",
+    "dataset_freeze_sha256": "a7632854b7f067bf8847955916c0858e1cce0609ab0cf32440b60f7e0490053f",
+    "phase_budgets_seconds": {
+      "investigation": 600,
+      "repair": 900,
+      "handoff": 240
+    },
+    "cases": [
+      {
+        "id": "pytest-monkeypatch",
+        "repo": "pytest-dev/pytest",
+        "pr": "https://github.com/pytest-dev/pytest/pull/14969",
+        "before": "ae777851d8b324de5eb3d0e860c28b219ce3fcd8",
+        "after": "472b4de93d83c118e0d089a34918fd1210d9ebc8",
+        "pr_created_at": "2026-09-04T10:10:28Z",
+        "merged_at": "2026-09-07T19:44:32Z",
+        "split": "development"
+      },
+      {
+        "id": "click-short-help",
+        "repo": "pallets/click",
+        "pr": "https://github.com/pallets/click/pull/3865",
+        "before": "d036881798e34289a49b18a5c550c7cf687e5a7a",
+        "after": "70689853e39c30e36eb0d83d586cc914a74db9d3",
+        "pr_created_at": "2026-09-11T06:25:50Z",
+        "merged_at": "2026-09-12T02:35:08Z",
+        "split": "development"
+      },
+      {
+        "id": "pytest-walrus",
+        "repo": "pytest-dev/pytest",
+        "pr": "https://github.com/pytest-dev/pytest/pull/14447",
+        "before": "e984a9b94740697411f5a05fcdfc3299dd20f13a",
+        "after": "51e9a9f148cd2509a31e3fa0d2b1b3204c2b0dd7",
+        "pr_created_at": "2026-05-08T08:38:46Z",
+        "merged_at": "2026-09-01T11:50:23Z",
+        "split": "development"
+      },
+      {
+        "id": "pytest-help",
+        "repo": "pytest-dev/pytest",
+        "pr": "https://github.com/pytest-dev/pytest/pull/15032",
+        "before": "fe9eef7ebc62042f26edfca2b922e08c33180ed5",
+        "after": "a453d653f92bfbdbfe47d2af9bfd8801860ff9e3",
+        "pr_created_at": "2026-09-15T16:56:56Z",
+        "merged_at": "2026-09-15T18:41:33Z",
+        "split": "development"
+      },
+      {
+        "id": "django-async-close",
+        "repo": "django/django",
+        "pr": "https://github.com/django/django/pull/22025",
+        "before": "4fab678a0739d54401ccee7eb587553657c9f76e",
+        "after": "9e06baf2e4dd17834b5deaf3a3e6ae3bff2fcf26",
+        "pr_created_at": "2026-09-24T11:26:10Z",
+        "merged_at": "2026-09-27T14:39:15Z",
+        "split": "held_out"
+      },
+      {
+        "id": "django-ipaddress",
+        "repo": "django/django",
+        "pr": "https://github.com/django/django/pull/21956",
+        "before": "6ade6258480fba84a7e895b4b1e1716dfc954778",
+        "after": "581deb9402edc70f85b63c170c199a393f0f2183",
+        "pr_created_at": "2026-09-11T15:56:05Z",
+        "merged_at": "2026-09-18T15:53:05Z",
+        "split": "held_out"
+      },
+      {
+        "id": "sympy-singularities",
+        "repo": "sympy/sympy",
+        "pr": "https://github.com/sympy/sympy/pull/30530",
+        "before": "06fcaef06d1e72684a46659b055eeee6169567ad",
+        "after": "c59b9b67b0d52e085b917efdcbae78f54ecffd78",
+        "pr_created_at": "2026-09-17T19:26:52Z",
+        "merged_at": "2026-09-25T19:00:38Z",
+        "split": "held_out"
+      },
+      {
+        "id": "sympy-order",
+        "repo": "sympy/sympy",
+        "pr": "https://github.com/sympy/sympy/pull/30575",
+        "before": "c59b9b67b0d52e085b917efdcbae78f54ecffd78",
+        "after": "3f58eb0ce808f8c4917ab0b8ae67d133fc794c3f",
+        "pr_created_at": "2026-09-24T11:04:51Z",
+        "merged_at": "2026-09-25T19:17:14Z",
+        "split": "held_out"
+      },
+      {
+        "id": "sympy-quaternion",
+        "repo": "sympy/sympy",
+        "pr": "https://github.com/sympy/sympy/pull/30563",
+        "before": "c169dc6c618c091c38283abc7d20fcc3033ad70c",
+        "after": "a7c459d910e8bc6de9eb2b6635ba70c123ce39ce",
+        "pr_created_at": "2026-09-22T14:14:52Z",
+        "merged_at": "2026-09-25T06:03:15Z",
+        "split": "held_out"
+      },
+      {
+        "id": "sympy-function-range",
+        "repo": "sympy/sympy",
+        "pr": "https://github.com/sympy/sympy/pull/30515",
+        "before": "379f910bbb8e7b54b7461d686032403859bc2a5f",
+        "after": "f14b5cd2d13c0145521eccec991c315794952117",
+        "pr_created_at": "2026-09-15T07:47:33Z",
+        "merged_at": "2026-09-23T10:46:56Z",
+        "split": "held_out"
+      },
+      {
+        "id": "sklearn-calibration",
+        "repo": "scikit-learn/scikit-learn",
+        "pr": "https://github.com/scikit-learn/scikit-learn/pull/34313",
+        "before": "ed8f34a8cb1afbd69e48c4634df92f7ae10174a3",
+        "after": "857849927da6e988d7d026b17aef214d43e5f26e",
+        "pr_created_at": "2026-06-16T14:12:58Z",
+        "merged_at": "2026-09-24T17:11:33Z",
+        "split": "held_out"
+      },
+      {
+        "id": "sklearn-spline",
+        "repo": "scikit-learn/scikit-learn",
+        "pr": "https://github.com/scikit-learn/scikit-learn/pull/33953",
+        "before": "d059607efd6de710a059563e33cea5df9b915d10",
+        "after": "a5046923f202f84cc1617f4ea555431194c52836",
+        "pr_created_at": "2026-05-08T14:15:23Z",
+        "merged_at": "2026-09-21T14:56:13Z",
+        "split": "held_out"
+      }
+    ],
+    "case_controls": {
+      "pytest-monkeypatch": {
+        "before_passed": 3,
+        "before_failed": 3,
+        "after_passed": 6
+      },
+      "click-short-help": {
+        "before_passed": 30,
+        "before_failed": 6,
+        "after_passed": 36
+      },
+      "pytest-walrus": {
+        "before_passed": 4,
+        "before_failed": 6,
+        "after_passed": 10
+      },
+      "pytest-help": {
+        "before_passed": 3,
+        "before_failed": 6,
+        "after_passed": 9
+      },
+      "django-async-close": {
+        "before_passed": 4,
+        "before_failed": 8,
+        "after_passed": 12
+      },
+      "django-ipaddress": {
+        "before_passed": 6,
+        "before_failed": 3,
+        "after_passed": 9
+      },
+      "sympy-singularities": {
+        "before_passed": 11,
+        "before_failed": 6,
+        "after_passed": 17
+      },
+      "sympy-order": {
+        "before_passed": 2,
+        "before_failed": 6,
+        "after_passed": 8
+      },
+      "sympy-quaternion": {
+        "before_passed": 3,
+        "before_failed": 2,
+        "after_passed": 5
+      },
+      "sympy-function-range": {
+        "before_passed": 4,
+        "before_failed": 2,
+        "after_passed": 6
+      },
+      "sklearn-calibration": {
+        "before_passed": 6,
+        "before_failed": 8,
+        "after_passed": 14
+      },
+      "sklearn-spline": {
+        "before_passed": 13,
+        "before_failed": 4,
+        "after_passed": 17
+      }
+    },
+    "summaries": [
+      {
+        "agent": "pi",
+        "attempts": 24,
+        "selected_checks_passed": 13,
+        "complete_workflows": 14
+      },
+      {
+        "agent": "opencode",
+        "attempts": 24,
+        "selected_checks_passed": 14,
+        "complete_workflows": 17
+      }
+    ],
+    "runs": [
+      {
+        "label": "heldout-soft-v2",
+        "case": "django-async-close",
+        "agent": "opencode",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 12,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "django-async-close",
+        "agent": "opencode",
+        "repeat": 2,
+        "status": "Selected checks passed",
+        "oracle_passed": 12,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "django-async-close",
+        "agent": "opencode",
+        "repeat": 3,
+        "status": "Selected checks failed",
+        "oracle_passed": 10,
+        "oracle_failed": 2,
+        "issue_resolved": false,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "django-ipaddress",
+        "agent": "opencode",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 9,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 2,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "django-ipaddress",
+        "agent": "opencode",
+        "repeat": 2,
+        "status": "Selected checks passed",
+        "oracle_passed": 9,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "django-ipaddress",
+        "agent": "opencode",
+        "repeat": 3,
+        "status": "Selected checks passed",
+        "oracle_passed": 9,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sklearn-calibration",
+        "agent": "opencode",
+        "repeat": 1,
+        "status": "Selected checks failed",
+        "oracle_passed": 10,
+        "oracle_failed": 4,
+        "issue_resolved": false,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sklearn-calibration",
+        "agent": "opencode",
+        "repeat": 2,
+        "status": "Selected checks failed",
+        "oracle_passed": 10,
+        "oracle_failed": 4,
+        "issue_resolved": false,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sklearn-calibration",
+        "agent": "opencode",
+        "repeat": 3,
+        "status": "Selected checks failed",
+        "oracle_passed": 10,
+        "oracle_failed": 4,
+        "issue_resolved": false,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sklearn-spline",
+        "agent": "opencode",
+        "repeat": 1,
+        "status": "Selected checks failed",
+        "oracle_passed": 16,
+        "oracle_failed": 1,
+        "issue_resolved": false,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sklearn-spline",
+        "agent": "opencode",
+        "repeat": 2,
+        "status": "Selected checks failed",
+        "oracle_passed": 16,
+        "oracle_failed": 1,
+        "issue_resolved": false,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sklearn-spline",
+        "agent": "opencode",
+        "repeat": 3,
+        "status": "Selected checks failed",
+        "oracle_passed": 16,
+        "oracle_failed": 1,
+        "issue_resolved": false,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "timed_out",
+          "2": "not_started",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 2,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-function-range",
+        "agent": "opencode",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 6,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-function-range",
+        "agent": "opencode",
+        "repeat": 2,
+        "status": "Selected checks passed",
+        "oracle_passed": 6,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-function-range",
+        "agent": "opencode",
+        "repeat": 3,
+        "status": "Selected checks passed",
+        "oracle_passed": 6,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-order",
+        "agent": "opencode",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 8,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-order",
+        "agent": "opencode",
+        "repeat": 2,
+        "status": "Selected checks passed",
+        "oracle_passed": 8,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-order",
+        "agent": "opencode",
+        "repeat": 3,
+        "status": "Selected checks passed",
+        "oracle_passed": 8,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-quaternion",
+        "agent": "opencode",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 5,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "timed_out"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-quaternion",
+        "agent": "opencode",
+        "repeat": 2,
+        "status": "Selected checks passed",
+        "oracle_passed": 5,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-quaternion",
+        "agent": "opencode",
+        "repeat": 3,
+        "status": "Selected checks passed",
+        "oracle_passed": 5,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-singularities",
+        "agent": "opencode",
+        "repeat": 1,
+        "status": "Selected checks failed",
+        "oracle_passed": 13,
+        "oracle_failed": 4,
+        "issue_resolved": false,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-singularities",
+        "agent": "opencode",
+        "repeat": 2,
+        "status": "Selected checks failed",
+        "oracle_passed": 15,
+        "oracle_failed": 2,
+        "issue_resolved": false,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-singularities",
+        "agent": "opencode",
+        "repeat": 3,
+        "status": "Selected checks failed",
+        "oracle_passed": 12,
+        "oracle_failed": 5,
+        "issue_resolved": false,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "django-async-close",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks failed",
+        "oracle_passed": 10,
+        "oracle_failed": 2,
+        "issue_resolved": false,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "django-async-close",
+        "agent": "pi",
+        "repeat": 2,
+        "status": "Selected checks failed",
+        "oracle_passed": 8,
+        "oracle_failed": 4,
+        "issue_resolved": false,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "django-async-close",
+        "agent": "pi",
+        "repeat": 3,
+        "status": "Selected checks passed",
+        "oracle_passed": 12,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "django-ipaddress",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 9,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "django-ipaddress",
+        "agent": "pi",
+        "repeat": 2,
+        "status": "Selected checks passed",
+        "oracle_passed": 9,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "timed_out"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "django-ipaddress",
+        "agent": "pi",
+        "repeat": 3,
+        "status": "Selected checks passed",
+        "oracle_passed": 9,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sklearn-calibration",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks failed",
+        "oracle_passed": 10,
+        "oracle_failed": 4,
+        "issue_resolved": false,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sklearn-calibration",
+        "agent": "pi",
+        "repeat": 2,
+        "status": "Selected checks failed",
+        "oracle_passed": 10,
+        "oracle_failed": 4,
+        "issue_resolved": false,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sklearn-calibration",
+        "agent": "pi",
+        "repeat": 3,
+        "status": "Selected checks failed",
+        "oracle_passed": 10,
+        "oracle_failed": 4,
+        "issue_resolved": false,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sklearn-spline",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks failed",
+        "oracle_passed": 14,
+        "oracle_failed": 3,
+        "issue_resolved": false,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sklearn-spline",
+        "agent": "pi",
+        "repeat": 2,
+        "status": "Selected checks failed",
+        "oracle_passed": 14,
+        "oracle_failed": 3,
+        "issue_resolved": false,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sklearn-spline",
+        "agent": "pi",
+        "repeat": 3,
+        "status": "Selected checks failed",
+        "oracle_passed": 16,
+        "oracle_failed": 1,
+        "issue_resolved": false,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-function-range",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 6,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-function-range",
+        "agent": "pi",
+        "repeat": 2,
+        "status": "Selected checks passed",
+        "oracle_passed": 6,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-function-range",
+        "agent": "pi",
+        "repeat": 3,
+        "status": "Selected checks passed",
+        "oracle_passed": 6,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "timed_out"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-order",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 8,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-order",
+        "agent": "pi",
+        "repeat": 2,
+        "status": "Selected checks passed",
+        "oracle_passed": 8,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-order",
+        "agent": "pi",
+        "repeat": 3,
+        "status": "Selected checks passed",
+        "oracle_passed": 8,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "timed_out"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-quaternion",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 5,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "timed_out"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-quaternion",
+        "agent": "pi",
+        "repeat": 2,
+        "status": "Selected checks passed",
+        "oracle_passed": 5,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-quaternion",
+        "agent": "pi",
+        "repeat": 3,
+        "status": "Selected checks passed",
+        "oracle_passed": 5,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-singularities",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks failed",
+        "oracle_passed": 13,
+        "oracle_failed": 4,
+        "issue_resolved": false,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-singularities",
+        "agent": "pi",
+        "repeat": 2,
+        "status": "Selected checks failed",
+        "oracle_passed": 12,
+        "oracle_failed": 5,
+        "issue_resolved": false,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "heldout-soft-v2",
+        "case": "sympy-singularities",
+        "agent": "pi",
+        "repeat": 3,
+        "status": "Selected checks failed",
+        "oracle_passed": 15,
+        "oracle_failed": 2,
+        "issue_resolved": false,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      }
+    ],
+    "earlier_development_runs": [
+      {
+        "label": "development-1",
+        "case": "pytest-monkeypatch",
+        "agent": "opencode",
+        "repeat": 1,
+        "status": "Unscorable in frozen checks; cause needs review",
+        "oracle_passed": null,
+        "oracle_failed": null,
+        "issue_resolved": null,
+        "native_session_complete": null,
+        "graded": false,
+        "phase_statuses": {
+          "1": "not_started",
+          "2": "not_started",
+          "3": "not_started"
+        },
+        "analysis_source_edits": null,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "development-1",
+        "case": "pytest-monkeypatch",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 6,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "development-2",
+        "case": "pytest-monkeypatch",
+        "agent": "opencode",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 6,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "development-2",
+        "case": "click-short-help",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 36,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "development-2",
+        "case": "pytest-help",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 9,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "development-2",
+        "case": "pytest-walrus",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 10,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": false,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "timed_out",
+          "3": "not_started"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": null
+      },
+      {
+        "label": "development-soft-v2",
+        "case": "pytest-monkeypatch",
+        "agent": "opencode",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 6,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "development-soft-v2",
+        "case": "click-short-help",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 36,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "development-soft-v2",
+        "case": "pytest-help",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks failed",
+        "oracle_passed": 6,
+        "oracle_failed": 3,
+        "issue_resolved": false,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "development-soft-v2",
+        "case": "pytest-monkeypatch",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 6,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      },
+      {
+        "label": "development-soft-v2",
+        "case": "pytest-walrus",
+        "agent": "pi",
+        "repeat": 1,
+        "status": "Selected checks passed",
+        "oracle_passed": 10,
+        "oracle_failed": 0,
+        "issue_resolved": true,
+        "native_session_complete": true,
+        "graded": true,
+        "phase_statuses": {
+          "1": "completed",
+          "2": "completed",
+          "3": "completed"
+        },
+        "analysis_source_edits": 0,
+        "handoff_source_edits": 0
+      }
+    ],
+    "regrade_audit": {
+      "native_runs": 48,
+      "same_capture_regraded": true,
+      "individual_measurements_preserved": true,
+      "new_model_calls": 0
+    },
+    "limits": [
+      "Purposive sample of Python projects; recent fix dates do not imply recent discovery.",
+      "Public source/model contamination is possible.",
+      "Selected behavioral checks, not full project suites.",
+      "Same model/settings do not isolate native system-prompt, context-management or tool differences.",
+      "Manual judgments remain missing until reviewed; outcomes and trace completion are separate."
+    ]
+  },
+  "followup": {
+    "population": "Four inspected development issues and two fresh SymPy issues; one attempt per agent, issue and variant. No model-weight training.",
+    "attempts": 24,
+    "development_attempts": 16,
+    "heldout_attempts": 8,
+    "fresh_freeze_sha256": "77ee4220f243ad1cb313b9cd87ad76890e8e135317ad19cf941b6d9f70422c66",
+    "summaries": [
+      {
+        "agent": "pi",
+        "variant": "instructions",
+        "development_full_passes": 1,
+        "development_attempts": 4,
+        "development_checks_passed": 43,
+        "development_checks": 52,
+        "heldout_full_passes": 1,
+        "heldout_attempts": 2,
+        "heldout_checks_passed": 16,
+        "heldout_checks": 18,
+        "heldout_complete_workflows": 2
+      },
+      {
+        "agent": "opencode",
+        "variant": "instructions",
+        "development_full_passes": 2,
+        "development_attempts": 4,
+        "development_checks_passed": 47,
+        "development_checks": 52,
+        "heldout_full_passes": 1,
+        "heldout_attempts": 2,
+        "heldout_checks_passed": 15,
+        "heldout_checks": 18,
+        "heldout_complete_workflows": 1
+      },
+      {
+        "agent": "pi",
+        "variant": "instructions + read-only tools",
+        "development_full_passes": 1,
+        "development_attempts": 4,
+        "development_checks_passed": 45,
+        "development_checks": 52,
+        "heldout_full_passes": 0,
+        "heldout_attempts": 2,
+        "heldout_checks_passed": 15,
+        "heldout_checks": 18,
+        "heldout_complete_workflows": 2
+      },
+      {
+        "agent": "opencode",
+        "variant": "instructions + read-only tools",
+        "development_full_passes": 2,
+        "development_attempts": 4,
+        "development_checks_passed": 45,
+        "development_checks": 52,
+        "heldout_full_passes": 2,
+        "heldout_attempts": 2,
+        "heldout_checks_passed": 18,
+        "heldout_checks": 18,
+        "heldout_complete_workflows": 2
+      }
+    ],
+    "evidence_audit": {
+      "attempts": 24,
+      "expected_readonly_phases": 48,
+      "recorded_readonly_phases": 47,
+      "source_change_phases": 0,
+      "native_noedit_edit_tool_calls": 0,
+      "guarded_noedit_shell_calls": 0,
+      "original_freeze_intact": true,
+      "fresh_freeze_intact": true,
+      "candidate_policy_lock_intact": true,
+      "all_aef_captures_saved_loaded_and_regraded": true,
+      "limits": [
+        "Source inventory detects net changes, not every transient write or process side effect.",
+        "Recorded native tool calls are not a complete provider HTTP/tool-schema capture.",
+        "A missing phase due to timeout is not counted as a completed read-only phase."
+      ],
+      "runs": [
+        {
+          "label": "instructions-v1-pilot",
+          "agent": "opencode",
+          "case": "django-async-close",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "todowrite": 2,
+                "grep": 9,
+                "glob": 1,
+                "read": 11,
+                "bash": 5
+              },
+              "recorded_tool_errors": 0,
+              "enforced": false
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": false
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "instructions-v1-pilot",
+          "agent": "opencode",
+          "case": "django-ipaddress",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "todowrite": 2,
+                "grep": 9,
+                "read": 16,
+                "bash": 6,
+                "glob": 2
+              },
+              "recorded_tool_errors": 0,
+              "enforced": false
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": false
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "instructions-v1-pilot",
+          "agent": "opencode",
+          "case": "sklearn-calibration",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "todowrite": 2,
+                "glob": 2,
+                "grep": 3,
+                "read": 9,
+                "bash": 4
+              },
+              "recorded_tool_errors": 0,
+              "enforced": false
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": false
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "instructions-v1-pilot",
+          "agent": "opencode",
+          "case": "sklearn-spline",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "glob": 1,
+                "grep": 4,
+                "bash": 4,
+                "read": 3
+              },
+              "recorded_tool_errors": 0,
+              "enforced": false
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": false
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "instructions-v1-pilot",
+          "agent": "pi",
+          "case": "django-async-close",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "bash": 10,
+                "read": 8
+              },
+              "recorded_tool_errors": 1,
+              "enforced": false
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": false
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "instructions-v1-pilot",
+          "agent": "pi",
+          "case": "django-ipaddress",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "bash": 5,
+                "read": 11
+              },
+              "recorded_tool_errors": 1,
+              "enforced": false
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": false
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "instructions-v1-pilot",
+          "agent": "pi",
+          "case": "sklearn-calibration",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "bash": 4,
+                "read": 7
+              },
+              "recorded_tool_errors": 1,
+              "enforced": false
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": false
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "instructions-v1-pilot",
+          "agent": "pi",
+          "case": "sklearn-spline",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "bash": 6,
+                "read": 2
+              },
+              "recorded_tool_errors": 0,
+              "enforced": false
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": false
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "enforced-v2-pilot",
+          "agent": "opencode",
+          "case": "django-async-close",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "todowrite": 2,
+                "grep": 11,
+                "glob": 1,
+                "read": 16
+              },
+              "recorded_tool_errors": 0,
+              "enforced": true
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": true
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "enforced-v2-pilot",
+          "agent": "opencode",
+          "case": "django-ipaddress",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "glob": 1,
+                "grep": 5,
+                "read": 12
+              },
+              "recorded_tool_errors": 0,
+              "enforced": true
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": true
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "enforced-v2-pilot",
+          "agent": "opencode",
+          "case": "sklearn-calibration",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "glob": 1,
+                "grep": 5,
+                "read": 7
+              },
+              "recorded_tool_errors": 0,
+              "enforced": true
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": true
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "enforced-v2-pilot",
+          "agent": "opencode",
+          "case": "sklearn-spline",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "glob": 2,
+                "grep": 2,
+                "read": 3
+              },
+              "recorded_tool_errors": 0,
+              "enforced": true
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": true
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "enforced-v2-pilot",
+          "agent": "pi",
+          "case": "django-async-close",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "ls": 1,
+                "grep": 14,
+                "read": 13
+              },
+              "recorded_tool_errors": 1,
+              "enforced": true
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": true
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "enforced-v2-pilot",
+          "agent": "pi",
+          "case": "django-ipaddress",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "ls": 1,
+                "grep": 11,
+                "read": 8
+              },
+              "recorded_tool_errors": 1,
+              "enforced": true
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": true
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "enforced-v2-pilot",
+          "agent": "pi",
+          "case": "sklearn-calibration",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "ls": 1,
+                "grep": 7,
+                "read": 6
+              },
+              "recorded_tool_errors": 0,
+              "enforced": true
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": true
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "enforced-v2-pilot",
+          "agent": "pi",
+          "case": "sklearn-spline",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "ls": 1,
+                "grep": 6,
+                "find": 1,
+                "read": 3
+              },
+              "recorded_tool_errors": 1,
+              "enforced": true
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": true
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "holdout-instructions-v1",
+          "agent": "opencode",
+          "case": "sympy-hypergeometric-evalf",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "timed_out",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "todowrite": 2,
+                "glob": 1,
+                "grep": 6,
+                "read": 8,
+                "bash": 10
+              },
+              "recorded_tool_errors": 0,
+              "enforced": false
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "holdout-instructions-v1",
+          "agent": "opencode",
+          "case": "sympy-independent-relational",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "grep": 8,
+                "glob": 1,
+                "read": 7,
+                "bash": 5
+              },
+              "recorded_tool_errors": 0,
+              "enforced": false
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": false
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "holdout-instructions-v1",
+          "agent": "pi",
+          "case": "sympy-hypergeometric-evalf",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "bash": 6,
+                "read": 4
+              },
+              "recorded_tool_errors": 1,
+              "enforced": false
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": false
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "holdout-instructions-v1",
+          "agent": "pi",
+          "case": "sympy-independent-relational",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "bash": 8,
+                "read": 4
+              },
+              "recorded_tool_errors": 0,
+              "enforced": false
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": false
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "holdout-enforced-v2",
+          "agent": "opencode",
+          "case": "sympy-hypergeometric-evalf",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "todowrite": 2,
+                "glob": 1,
+                "grep": 6,
+                "read": 9
+              },
+              "recorded_tool_errors": 0,
+              "enforced": true
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": true
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "holdout-enforced-v2",
+          "agent": "opencode",
+          "case": "sympy-independent-relational",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "todowrite": 2,
+                "grep": 13,
+                "glob": 1,
+                "read": 9
+              },
+              "recorded_tool_errors": 0,
+              "enforced": true
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": true
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "holdout-enforced-v2",
+          "agent": "pi",
+          "case": "sympy-hypergeometric-evalf",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "ls": 1,
+                "grep": 9,
+                "read": 8
+              },
+              "recorded_tool_errors": 0,
+              "enforced": true
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": true
+            }
+          ],
+          "aef_regraded": true
+        },
+        {
+          "label": "holdout-enforced-v2",
+          "agent": "pi",
+          "case": "sympy-independent-relational",
+          "configuration_hashes_match": true,
+          "task_prompt_matches_freeze": true,
+          "guidance_unchanged": true,
+          "readonly_phases": [
+            {
+              "phase": 1,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {
+                "ls": 1,
+                "read": 3,
+                "grep": 13
+              },
+              "recorded_tool_errors": 1,
+              "enforced": true
+            },
+            {
+              "phase": 3,
+              "status": "completed",
+              "source_changed_files": [],
+              "recorded_tool_calls": {},
+              "recorded_tool_errors": 0,
+              "enforced": true
+            }
+          ],
+          "aef_regraded": true
+        }
+      ]
+    }
+  },
+  "later_development": {
+    "status": "Stopped by user; no automatic resume; the later four-issue fresh Test was unused.",
+    "v3_screening": {
+      "arms": 3,
+      "attempts_per_arm": 4,
+      "full_repairs_per_arm": [
+        0,
+        0,
+        0
+      ]
+    },
+    "v4_hard_train": {
+      "attempts": 4,
+      "full_repairs": 0
+    },
+    "v5_2_hard_train": {
+      "attempts": 4,
+      "full_repairs": 0,
+      "pi_spline_authored_checks_passed": 50,
+      "pi_spline_original_checks_passed": 16,
+      "pi_spline_original_checks": 17,
+      "pi_spline_supplemental_checks_passed": 0,
+      "pi_spline_supplemental_checks": 10
+    },
+    "v5_4_synthetic_controls": {
+      "attempts": 2,
+      "independent_checks_passed_per_attempt": 5,
+      "independent_checks_per_attempt": 5,
+      "measurement_integrity_passed": true,
+      "failed_audit_checks": 0,
+      "regrade": {
+        "attempts": [
+          {
+            "case": "control-addition",
+            "agent": "pi",
+            "repeat": 1,
+            "passed": true,
+            "same_capture_regraded": true,
+            "same_measurements_regraded": true
+          },
+          {
+            "case": "control-addition",
+            "agent": "opencode",
+            "repeat": 1,
+            "passed": true,
+            "same_capture_regraded": true,
+            "same_measurements_regraded": true
+          }
+        ],
+        "new_model_calls": 0
+      }
+    },
+    "v5_4_hard_train": {
+      "planned": 4,
+      "completed": 1,
+      "interrupted": 2,
+      "not_started": 1,
+      "completed_case": "pi / calibration",
+      "checks_passed": 6,
+      "checks": 14,
+      "source_changed": false,
+      "solver_started": false,
+      "full_batch_audit_completed": false
+    }
+  },
+  "provenance": [
+    {
+      "id": "original-results",
+      "sha256": "b137d89a4c38d3315b88b3ee237f6c9a32b3771c12d6dbe5781d8dfdb2638c18"
+    },
+    {
+      "id": "original-freeze",
+      "sha256": "a7632854b7f067bf8847955916c0858e1cce0609ab0cf32440b60f7e0490053f"
+    },
+    {
+      "id": "original-regrade-audit",
+      "sha256": "4c61d443ea3a94024b680047b027e722ba5b1c7e56e15c5e4a7c18211a55b549"
+    },
+    {
+      "id": "findings-record",
+      "sha256": "26168efa567d01bc8be261165b886d59319652fd8e7db979011c5e0ac3dcfead"
+    },
+    {
+      "id": "followup-evidence-audit",
+      "sha256": "b90de65afffda4eccbd6a7b3e96cd428ae98637e24e8b903aa5e1f6c3e4bcbed"
+    },
+    {
+      "id": "development-v5.2-audit",
+      "sha256": "fa7f60fe3c2b5e4587b1ccc3faff3929958222d70e929009c22355478a39bf36"
+    },
+    {
+      "id": "control-v5.4-audit",
+      "sha256": "338e3fdd3d74198542c42f9048435bf33307dab87497b5ddf1f56a7f6c6a4c5c"
+    },
+    {
+      "id": "control-v5.4-regrade",
+      "sha256": "9a503fe0a3af7c4a94c4566b19b21a9f72ba89639409a98907d82f5f0fee71a9"
+    },
+    {
+      "id": "stopped-v5.4-batch",
+      "sha256": "cc5173466626bf06bf9f773e151f6aedee3f76049bffecd37764b15f249c9fce"
+    }
+  ],
+  "publication_limits": [
+    "This export includes aggregate outcomes, every original held-out attempt, source revisions, curated follow-up audit fields and source-document hashes.",
+    "Raw native streams, provider payloads, credentials, full local paths, experimental harness code, hidden tests and unused holdout answers are not published.",
+    "Source-document hashes identify retained records; they do not make unpublished captures independently replayable from this export.",
+    "The initial held-out issues became development data after inspection. Later development findings never change their original frozen scores.",
+    "Model reasoning or understanding is not inferred from source text appearing in a tool result."
+  ]
+}
