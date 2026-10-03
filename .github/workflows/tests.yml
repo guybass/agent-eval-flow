@@ -49,5 +49,8 @@ jobs:
           python-version: ${{ matrix.python }}
           cache: pip
       - run: python -m pip install -e ".[test,cli,toolscore]"
-      - run: python -m pytest tests/unit/test_toolscore_integration.py
+      - run: python -m pytest tests/unit/test_toolscore_integration.py tests/unit/test_claude_stream_records.py tests/unit/test_grading_clock_step.py tests/unit/test_deerflow_study.py tests/unit/test_mcp_memory_example.py
       - run: python examples/toolscore_review.py --output demo-output/toolscore
+      - run: python examples/deerflow_review.py --output demo-output/deerflow
+      - run: python examples/mcp_memory_review.py --output demo-output/mcp-memory
+      - run: python examples/mcp_memory_agent_review.py --model gpt-5.6-luna --output demo-output/mcp-memory-agent

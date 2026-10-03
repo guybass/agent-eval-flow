@@ -6,7 +6,7 @@ We ran 27 pre-registered research questions:
 - 15 SimpleQA questions
 - 12 FRAMES multi-hop questions
 
-**5 of the 27 runs needed 6 or more tool rounds.** At DeerFlow's default `recursion_limit` of 100, a lead-agent run completes only with **at most 5 tool rounds** (at most 6 model calls). The Toolscore view shows none of these runs was looping: 0 identical tool requests.
+**5 of the 27 runs needed 6 or more tool rounds.** At DeerFlow's default `recursion_limit` of 100, a lead-agent run completes only with **at most 5 tool rounds** (at most 6 model calls). The retained traces contain 0 identical repeated tool requests. This rules out exact-call repetition in those captures, not every form of unproductive repetition.
 
 Run from an installed Agent Eval Flow checkout, with the `toolscore` extra:
 
@@ -79,7 +79,9 @@ For future captures, record through LangChain callbacks rather than graph-node h
   - The loop evidence is a separate count of identical requests (same tool and arguments): **0 in all 30 runs**. For example, q633 made 31 distinct requests, ending in a per-match attendance lookup.
   - Toolscore now reports this directly as `identical_count` / `identical_rate`.
 
-Without the tool-path view, a `GraphRecursionError` reads like an agent stuck in a loop. With it, these were productive research runs that outgrew a budget counted in graph steps.
+The tool-path view distinguishes exact-call repetition from distinct research requests that outgrew a budget counted in graph steps. Distinct requests alone do not establish productive reasoning or task success.
+
+These inspected cases are development data. The budget follow-ups reuse selected failures and are not an untouched held-out evaluation. No new held-out inference is performed by this offline importer; model training contamination cannot be ruled out, and the study does not test sub-agent delegation or compaction behavior.
 
 ## Relation to upstream
 

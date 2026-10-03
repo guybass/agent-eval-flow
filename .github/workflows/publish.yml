@@ -3,7 +3,7 @@ name: Publish to PyPI
 on:
   release:
     types: [published]
-  # Retry a published release with: gh workflow run publish.yml --ref v0.5.1
+  # Retry a published release with: gh workflow run publish.yml --ref v0.6.0
   # Dispatching a branch never enables either job.
   workflow_dispatch:
 
@@ -31,7 +31,7 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
-      - name: Verify published release, source version, and all six CI jobs
+      - name: Verify published release, source version, and all twelve CI jobs
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -90,14 +90,15 @@ jobs:
                   and run['conclusion'] == 'success',
                   'Latest Tests and package run for this commit must finish successfully')
           jobs = api(f'actions/runs/{run["id"]}/jobs?filter=latest&per_page=100')
-          expected = {f'offline ({system}, {version})'
+          expected = {f'{job} ({system}, {version})'
+                      for job in ('offline', 'toolscore')
                       for system in ('ubuntu-latest', 'windows-latest')
                       for version in ('3.11', '3.12', '3.13')}
           require(jobs['total_count'] == len(expected) and len(jobs['jobs']) == len(expected)
                   and {job['name'] for job in jobs['jobs']} == expected
                   and all(job['status'] == 'completed' and job['conclusion'] == 'success'
                           for job in jobs['jobs']),
-                  'All six expected Python/OS matrix jobs must pass; skipped jobs do not qualify')
+                  'All twelve offline/Toolscore Python/OS matrix jobs must pass; skipped jobs do not qualify')
           print(f'Verified {tag} at {sha}; CI: {run["html_url"]}')
           PY
       - name: Build and validate distributions
