@@ -8,6 +8,7 @@ OpenSRE, OpenKritt and GPT Researcher examples in your browser.
 | OpenSRE | [Report](https://guybass.github.io/agent-eval-flow/reports/01-opensre.html) · [PNG](01-opensre.png) | [Walkthrough](https://guybass.github.io/agent-eval-flow/reports/01-opensre-walkthrough.html) · [PNG](01-opensre-walkthrough.png) |
 | OpenKritt | [Report](https://guybass.github.io/agent-eval-flow/reports/02-openkritt.html) · [PNG](02-openkritt.png) | [Walkthrough](https://guybass.github.io/agent-eval-flow/reports/02-openkritt-walkthrough.html) · [PNG](02-openkritt-walkthrough.png) |
 | GPT Researcher | [Recorded pilot](03-gpt-researcher.html) | [Failure trace, fix and offline reproduction](../data/gpt-researcher/README.md) |
+| Security triage | [Research results](security-triage-repair/README.md) | [Uncertainty loss, targeted repair and evidence limits](security-triage-repair/README.md#what-failed) · [Recorded outcomes](security-triage-repair/results-summary.json) |
 
 ## OpenSRE
 
