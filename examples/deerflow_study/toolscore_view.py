@@ -36,6 +36,16 @@ def evidence_tool(rows: list[dict], gold: str, question: str = "") -> str | None
     return None
 
 
+def tool_path_counts(rows: list[dict]) -> dict:
+    """Observed request counts do not require the optional scorer."""
+    calls = tool_calls(rows)
+    counts = Counter(c["tool"] for c in calls)
+    return {"tool_calls": len(calls), "searches": counts["web_search"], "fetches": counts["web_fetch"],
+            "subagent_tasks": counts["task"],
+            "identical_repeats": len(calls) - len({(c["tool"], json.dumps(c.get("args") or {}, sort_keys=True))
+                                                   for c in calls})}
+
+
 def toolscore_metrics(rows: list[dict]) -> dict:
     import toolscore
 
@@ -47,9 +57,4 @@ def toolscore_metrics(rows: list[dict]) -> dict:
     return {"selection_accuracy": float(result.selection_accuracy),
             "required_call_recall": sum((needed & counts).values()) / len(expected),
             "redundant_rate": float(result.metrics["efficiency_metrics"]["redundant_rate"]),
-            "tool_calls": len(actual), "searches": counts["web_search"], "fetches": counts["web_fetch"],
-            "subagent_tasks": counts["task"], "toolscore_score": float(result.score),
-            # Toolscore's redundant_rate counts calls beyond the contract's per-tool
-            # expectation (names only). Identical (tool, args) repeats are the loop signal.
-            "identical_repeats": len(actual) - len({(c["tool"], json.dumps(c["args"], sort_keys=True))
-                                                    for c in actual})}
+            "toolscore_score": float(result.score), **tool_path_counts(rows)}

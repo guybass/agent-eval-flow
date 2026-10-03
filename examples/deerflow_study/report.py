@@ -11,7 +11,7 @@ from pathlib import Path
 
 from .detector import trace_gold
 from .grade import grade
-from .toolscore_view import evidence_tool, toolscore_metrics
+from .toolscore_view import evidence_tool, tool_path_counts, toolscore_metrics
 
 
 def build_table(results: list[dict], gold: dict) -> list[dict]:
@@ -25,7 +25,8 @@ def build_table(results: list[dict], gold: dict) -> list[dict]:
         row = {"id": r["id"], "status": "ok", "gold": q["answer"], "answer": (r["answer"] or "")[:120],
                "grade": grade(r["answer"], q["answer"], q["question"]),
                **trace_gold(rows, q["answer"], q["question"], r["coverage"]),
-               "evidence_tool": evidence_tool(rows, q["answer"], q["question"])}
+               "evidence_tool": evidence_tool(rows, q["answer"], q["question"]),
+               **tool_path_counts(rows)}
         try:
             row.update(toolscore_metrics(rows))
         except ImportError:

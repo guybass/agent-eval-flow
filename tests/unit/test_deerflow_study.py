@@ -205,7 +205,18 @@ def test_toolscore_metrics_against_name_level_contract(tmp_path):
 from examples.deerflow_study.report import build_table
 
 
-def test_report_joins_grade_evidence_loss_and_tool_path(tmp_path):
+@pytest.mark.parametrize("missing_toolscore", [False, True])
+def test_report_joins_grade_evidence_loss_and_tool_path(tmp_path, monkeypatch, missing_toolscore):
+    if missing_toolscore:
+        import builtins
+        original_import = builtins.__import__
+
+        def without_toolscore(name, *args, **kwargs):
+            if name == "toolscore" or name.startswith("toolscore."):
+                raise ImportError("Toolscore intentionally unavailable")
+            return original_import(name, *args, **kwargs)
+
+        monkeypatch.setattr(builtins, "__import__", without_toolscore)
     trace = tmp_path / "t.jsonl"
     w = TraceWriter(trace)
     record_stream_event(w, Ev("messages-tuple", {"type": "ai", "content": "", "tool_calls": [
@@ -223,6 +234,9 @@ def test_report_joins_grade_evidence_loss_and_tool_path(tmp_path):
     row = table[0]
     assert row["grade"] == "incorrect" and row["loss"] is True and row["evidence_tool"] == "web_search"
     assert row["searches"] == 1 and row["fetches"] == 0
+    assert row["tool_calls"] == 1 and row["identical_repeats"] == 0
+    if missing_toolscore:
+        assert row["toolscore"] == "not installed" and "toolscore_score" not in row
     assert table[1] == {"id": 8, "status": "error"}
 
 
