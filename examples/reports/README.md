@@ -11,6 +11,7 @@ OpenSRE, OpenKritt and GPT Researcher examples in your browser.
 | DeerFlow | [Recorded research runs](../data/deerflow/README.md) | [Regenerate outcome and tool reports](../deerflow_review.py) |
 | MCP memory | [Server and agent case studies](../data/mcp-memory/README.md) | [Server report](../mcp_memory_review.py) · [Agent report](../mcp_memory_agent_review.py) |
 | Security triage | [Research results](security-triage-repair/README.md) | [Uncertainty loss, targeted repair and evidence limits](security-triage-repair/README.md#what-failed) · [Recorded outcomes](security-triage-repair/results-summary.json) |
+| Semgrep security triage | [Development study](semgrep-security-triage/README.md) | [Unresolved findings and early-stop results](semgrep-security-triage/README.md#how-unresolved-findings-became-false-positives) · [Recorded outcomes](semgrep-security-triage/results-summary.json) |
 
 ## OpenSRE
 
