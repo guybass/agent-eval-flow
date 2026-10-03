@@ -18,6 +18,15 @@ from .scoring import score_task, score_measurements
 from .aggregation import summarize_candidate
 
 
+
+def activity_end(started):
+    """Wall-clock end of an evaluation activity, never before its start.
+
+    Host clocks can step backwards (NTP or WSL resynchronisation) during grading.
+    A stepped clock must not discard completed grading work.
+    """
+    return max(datetime.now(timezone.utc), started)
+
 def fresh_id(prefix):
     return prefix + "/" + uuid.uuid4().hex
 
@@ -258,7 +267,7 @@ async def aevaluate(*, dataset, runs, suite, evaluators, reducers=None, batch_ev
                 artifacts = output.activity.artifacts if salvage else {}
                 activity = o.EvaluationActivity(id=request.id, evaluator=spec.source.ref, config_fingerprint=fingerprint,
                     run_ids=tuple(r.id for r in ordered_runs), status="error", phase="post_run", resources=resources,
-                    started_at=started, ended_at=datetime.now(timezone.utc), artifacts=artifacts,
+                    started_at=started, ended_at=activity_end(started), artifacts=artifacts,
                     error=o.ErrorRecord(code="evaluator_error", message=reason))
                 evidence = tuple(o.EvidenceRef(artifact=a, description="Grading receipt") for a in artifacts.values())
                 rows = tuple(error_row(r.id, spec, reason, (request.id,), evidence) for r in ordered_runs)
@@ -296,7 +305,7 @@ async def aevaluate(*, dataset, runs, suite, evaluators, reducers=None, batch_ev
                     error = o.ErrorRecord(code="evaluator_error", message=reason)
                 activity = o.EvaluationActivity(id=activity_id, evaluator=spec.source.ref, config_fingerprint=fingerprint,
                     run_ids=(run.id,), status="error" if error else "completed", phase="post_run", resources=resources,
-                    started_at=started, ended_at=datetime.now(timezone.utc), error=error, artifacts=artifacts)
+                    started_at=started, ended_at=activity_end(started), error=error, artifacts=artifacts)
                 activities[activity_id] = activity
                 retain(task, detail_rows)
     scores = []

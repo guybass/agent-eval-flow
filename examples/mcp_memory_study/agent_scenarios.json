@@ -1,0 +1,191 @@
+{
+ "seed": {
+  "entities": [
+   {
+    "name": "default_user",
+    "entityType": "person",
+    "observations": [
+     "Works as a product manager",
+     "Lives in Tel Aviv"
+    ]
+   },
+   {
+    "name": "Alice",
+    "entityType": "person",
+    "observations": [
+     "Colleague of default_user",
+     "Works at Acme Corp"
+    ]
+   },
+   {
+    "name": "Bob",
+    "entityType": "person",
+    "observations": [
+     "default_user's brother",
+     "Plays guitar"
+    ]
+   },
+   {
+    "name": "Project Atlas",
+    "entityType": "project",
+    "observations": [
+     "Led by default_user",
+     "Mobile app redesign"
+    ]
+   },
+   {
+    "name": "Acme Corp",
+    "entityType": "organization",
+    "observations": [
+     "default_user's employer"
+    ]
+   },
+   {
+    "name": "Dana",
+    "entityType": "person",
+    "observations": [
+     "default_user's manager"
+    ]
+   }
+  ],
+  "relations": [
+   {
+    "from": "default_user",
+    "to": "Alice",
+    "relationType": "works_with"
+   },
+   {
+    "from": "default_user",
+    "to": "Bob",
+    "relationType": "is_sibling_of"
+   },
+   {
+    "from": "default_user",
+    "to": "Project Atlas",
+    "relationType": "leads"
+   },
+   {
+    "from": "default_user",
+    "to": "Acme Corp",
+    "relationType": "works_at"
+   },
+   {
+    "from": "Dana",
+    "to": "default_user",
+    "relationType": "manages"
+   }
+  ]
+ },
+ "scenarios": [
+  {
+   "id": "u01",
+   "kind": "update",
+   "target": "Alice",
+   "keywords": [
+    "penicillin"
+   ],
+   "message": "Quick note: Alice is allergic to penicillin, keep that in mind for the team offsite."
+  },
+  {
+   "id": "u02",
+   "kind": "update",
+   "target": "Bob",
+   "keywords": [
+    "Berlin"
+   ],
+   "message": "My brother Bob just moved to Berlin for a new job."
+  },
+  {
+   "id": "u03",
+   "kind": "update",
+   "target": "Project Atlas",
+   "keywords": [
+    "November"
+   ],
+   "message": "Project Atlas launch got pushed to November."
+  },
+  {
+   "id": "u04",
+   "kind": "update",
+   "target": "Acme Corp",
+   "keywords": [
+    "Series C"
+   ],
+   "message": "Acme Corp closed its Series C round yesterday!"
+  },
+  {
+   "id": "u05",
+   "kind": "update",
+   "target": "Dana",
+   "keywords": [
+    "Italian"
+   ],
+   "message": "Dana is taking Italian lessons, she told me today."
+  },
+  {
+   "id": "u06",
+   "kind": "update",
+   "target": "Alice",
+   "keywords": [
+    "marathon"
+   ],
+   "message": "Alice ran her first marathon last weekend."
+  },
+  {
+   "id": "u07",
+   "kind": "update",
+   "target": "Bob",
+   "keywords": [
+    "vegetarian"
+   ],
+   "message": "Remember that Bob went vegetarian this year."
+  },
+  {
+   "id": "u08",
+   "kind": "update",
+   "target": "Project Atlas",
+   "keywords": [
+    "Figma"
+   ],
+   "message": "We're moving all Project Atlas designs to Figma."
+  },
+  {
+   "id": "u09",
+   "kind": "update",
+   "target": "Dana",
+   "keywords": [
+    "promoted",
+    "director"
+   ],
+   "message": "Dana got promoted to director of product."
+  },
+  {
+   "id": "u10",
+   "kind": "update",
+   "target": "Alice",
+   "keywords": [
+    "Lisbon",
+    "twins"
+   ],
+   "message": "Alice relocated to Lisbon and she's expecting twins."
+  },
+  {
+   "id": "n01",
+   "kind": "new",
+   "target": "Noa",
+   "keywords": [
+    "physiotherapist"
+   ],
+   "message": "I met Noa, a physiotherapist who treats my knee."
+  },
+  {
+   "id": "n02",
+   "kind": "new",
+   "target": "Omer",
+   "keywords": [
+    "Spotify"
+   ],
+   "message": "My friend Omer started working at Spotify."
+  }
+ ]
+}

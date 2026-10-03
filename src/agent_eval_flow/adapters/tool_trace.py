@@ -26,14 +26,17 @@ def claude_stream_tool_trace(data: bytes, *, artifact: o.ArtifactRef, execution_
         record = json.loads(line)
         if not isinstance(record, dict):
             raise ValueError(f"Claude stream line {number} is not an object")
+        if record.get("type") not in ("assistant", "user"):
+            # Requests and results live only in assistant/user messages. Other
+            # records (system init, permission_denied, result) may carry a text
+            # ``message`` and are retained in the stream, not interpreted here.
+            continue
         message = record.get("message", {})
         if not isinstance(message, dict):
             raise ValueError(f"Claude stream line {number} has an invalid message")
         content = message.get("content", [])
         if not isinstance(content, list):
-            if record.get("type") in ("assistant", "user"):
-                raise ValueError(f"Claude stream line {number} has unsupported message content")
-            continue
+            raise ValueError(f"Claude stream line {number} has unsupported message content")
         for index, block in enumerate(content):
             if not isinstance(block, dict):
                 raise ValueError(f"Claude stream line {number} contains an invalid block")
