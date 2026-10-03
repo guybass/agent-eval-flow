@@ -1,7 +1,7 @@
 # Tool calling evaluation with Toolscore
 
 Install `agent-eval-flow[toolscore]` (or `pip install -e ".[toolscore]"` in a
-checkout). This extra pins `tool-scorer==1.9.0`. Importing Agent Eval Flow and
+checkout). This extra pins `tool-scorer==1.10.0`. Importing Agent Eval Flow and
 rendering saved reports do not require Toolscore. A requested evaluation with a
 missing or unsupported dependency produces an explicit error measurement.
 
@@ -108,7 +108,7 @@ keys (`selection_accuracy`, `argument_f1`, `sequence_accuracy`, `redundant_rate`
 and are normalized. `ordering="unordered"` sorts calls deterministically by
 name and JSON arguments and gives sequence zero weight; its sequence metric is
 not applicable. This is canonical-list scoring, not dependency-graph evaluation.
-Toolscore 1.9.0 pairs expected and actual calls of each tool one-to-one to
+Since 1.9.0, Toolscore pairs expected and actual calls of each tool one-to-one to
 maximize argument matches, independently of order. Pairing is exact for up to
 12 actual calls per tool and greedy above that limit. A missing earlier call
 does not hide a correct later call, and an actual call cannot satisfy two
@@ -126,9 +126,20 @@ now contribute to candidate composite means.
 Unknown per-tool timing/cost remain unknown. Offline grading's model cost is
 zero, which is distinct from the cost of the captured agent run.
 
+### Upgrading from 1.9.0
+
+The adapter revision is now `2+tool-scorer.1.10.0`. Scores do not change: the
+adapter passes all four weights explicitly, and 1.10.0's new
+`required_call_recall` weight defaults to 0. The retained raw metrics gain
+`error_count`, `error_rate`, `retry_after_error_count`, `required_call_recall`
+(Toolscore's version counts only required calls that did not fail) and
+`security_metrics` (credentials found in tool arguments, as redacted previews).
+Saved 1.9.0 receipts still render without regrading.
+See the [Toolscore 1.10.0 release notes](https://github.com/yotambraun/Toolscore/releases/tag/v1.10.0).
+
 ### Upgrading from 1.8.1
 
-The adapter revision is now `2+tool-scorer.1.9.0`. One-to-one argument pairing
+The adapter revision became `2+tool-scorer.1.9.0`. One-to-one argument pairing
 can raise scores for existing traces, and correct no-tool runs now have an
 applicable perfect score. Re-evaluate retained runs for both candidates with
 the new evaluator before comparing scores or recalibrating gates. Saved 1.8.1
