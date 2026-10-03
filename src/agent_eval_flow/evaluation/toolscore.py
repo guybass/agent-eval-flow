@@ -13,7 +13,7 @@ from ..objects.tool_trace import trace_for_run, scoring_calls
 from ..objects.values import zero_resources
 
 
-SUPPORTED_VERSION = "1.9.0"
+SUPPORTED_VERSION = "1.10.0"
 RECEIPT_TYPE = "application/vnd.agent-eval-flow.toolscore+json"
 METRICS = ("score", "invocation_accuracy", "selection_accuracy", "argument_f1",
            "sequence_accuracy", "redundant_rate", "required_call_recall", "identical_rate")

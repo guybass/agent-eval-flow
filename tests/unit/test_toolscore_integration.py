@@ -141,7 +141,7 @@ def test_one_to_one_argument_pairing_is_preserved_in_receipts(scenario, expected
     row, receipt, _ = scenario[0](expected, actual, metric="argument_f1")
     assert row.status == "ok" and row.value == pytest.approx(value)
     assert receipt["actual"] == actual
-    assert receipt["evaluator"]["revision"] == "2+tool-scorer.1.9.0"
+    assert receipt["evaluator"]["revision"] == "2+tool-scorer.1.10.0"
     assert receipt["alternatives"][0]["values"]["argument_f1"] == pytest.approx(value)
 
 
@@ -284,7 +284,7 @@ def test_pipeline_persistence_portable_reports_and_assessment(tmp_path, monkeypa
     assert all(len(row["receipts"]) == 1 for row in data["runs"])
     assert 'href="tools.html"' in html and 'href="report.html#run-0"' in tools
     assert "Completion unknown" in tools and "No calls expected or observed" in tools
-    assert "Tool latency: unknown" in tools and "Toolscore 1.9.0" in tools
+    assert "Tool latency: unknown" in tools and "Toolscore 1.10.0" in tools
     assert "identical_rate" in tools
     assert all(row["observed"] == 2 and row["not_applicable"] == 0 for row in data["summaries"])
     assert sum(row.metric == "tools.identical_rate" for row in loaded.measurements) == 4
