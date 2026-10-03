@@ -122,8 +122,8 @@ added; use add_observations for existing entities.`
   have them is unknown; the agent experiment uses 12 scenarios, three OpenAI models and one prompt.
 - A report cannot force an agent to act on it (one run ignored the notice).
 - `main` may change before release; everything is pinned to `f46d957`.
-- Spend for the agent runs: about $0.46 at list prices (Addendum B's recorded cost used an older, higher output
-  price for gpt-5.6-luna).
+- Spend for the agent runs: about $0.48 at list prices (per 1M input / output tokens: gpt-5.6-luna $0.20 / $1.20,
+  gpt-4.1-mini $0.40 / $1.60, gpt-5.4-mini $0.75 / $4.50; read from the raw pricing page data on 2026-10-01).
 
 ## Files
 
