@@ -12,6 +12,12 @@ native agents. They are not 48 independent bugs. The separate first follow-up
 contains 16 development and eight fresh-validation attempts. Later development
 does not revise or replace the frozen original scores.
 
+The v5.4 identifier correction belongs to our experimental harness in the
+separate local tuning project (commit `3458382`). It changes our orchestration
+and validation code, including its generated instructions, without changing
+the native Pi or OpenCode packages. Publishing this report does not publish
+that correction as an Agent Eval Flow library release.
+
 ## Files and reproduction
 
 - `index.html`: self-contained report with filterable original outcome rows.
