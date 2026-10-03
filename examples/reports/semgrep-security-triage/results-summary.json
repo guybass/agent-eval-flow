@@ -269,7 +269,24 @@
       "Exploit exposure depends on a caller processing untrusted CSS, omitting from, having access to a valid private source map, and exposing map-bearing output.",
       "The symlink candidate is a separate related question and remains independently unadjudicated."
     ],
-    "grading_treatment": "Keep all frozen grading rules and outputs unchanged. Do not equate a reflag on this repaired snapshot with an independently established false positive."
+    "grading_treatment": "Keep all frozen grading rules and outputs unchanged. Do not equate a reflag on this repaired snapshot with an independently established false positive.",
+    "upstream_follow_up": {
+      "checked_on": "2026-10-03",
+      "evaluated_partial_repair_commit": "95663d3eb7ba26f4854dd19d3b4f4425760cf56c",
+      "evaluated_partial_repair_date": "2026-07-12",
+      "evaluated_previous_map_sha256": "8d41a57e20c31504342b278f488cacb846b78dba4f54ea342eadd19a2f3c14de",
+      "published_historical_source_hash_matches_snapshot": true,
+      "follow_up_fix_commit": "7beca139e70f9075c6b19700fcb00dd8033e5da8",
+      "follow_up_fix_committed_at": "2026-07-24T16:59:19Z",
+      "follow_up_fix_url": "https://github.com/postcss/postcss/commit/7beca139e70f9075c6b19700fcb00dd8033e5da8",
+      "follow_up_fix_behavior": "Reject untrusted external source-map loading when cssFile is absent; adds a regression test for omitted from.",
+      "main_revision_checked": "7ac902664902289ea0cb9d6b1096b81e8d33bbf5",
+      "main_previous_map_sha256": "87e1c0148d0be6cfdb835c531347c43b52bd64f193275f167093dae75adc1394",
+      "main_contains_absent_css_file_guard": true,
+      "interpretation": "The known path was closed before our October 1 experiment. The agent rediscovered a gap in the historical July 12 partial repair used as the repaired control. This is a control-curation issue and is not a newly discovered current vulnerability.",
+      "runtime_exploit_reproduced_in_this_follow_up": false,
+      "frozen_inputs_or_original_results_changed": false
+    }
   },
   "limits": [
     "Full 48-review performance, an unbiased detection rate, superiority over historical comparators, or generalization to a fresh holdout.",

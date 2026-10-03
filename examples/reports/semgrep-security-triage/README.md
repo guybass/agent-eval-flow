@@ -174,7 +174,7 @@ then reach the filesystem read without directory confinement.
 
 The [original advisory](https://github.com/postcss/postcss/security/advisories/GHSA-r28c-9q8g-f849)
 explicitly includes this no-from path. The snapshot was based on
-[the recorded fix commit](https://github.com/postcss/postcss/commit/95663d3eb7ba26f4854dd19d3b4f4425760cf56c1).
+[the recorded fix commit](https://github.com/postcss/postcss/commit/95663d3eb7ba26f4854dd19d3b4f4425760cf56c).
 The scan and final triage retained this claim. Calling it a false positive merely
 because its snapshot was labeled repaired would conceal a control-curation issue.
 
@@ -184,6 +184,18 @@ source map, and exposing map-bearing output. No disclosure was executed, and no
 claim is made about current deployed PostCSS. Other proposed residual mechanisms
 remain separately unadjudicated. The original labels and grading rules were
 preserved, with this limitation reported alongside them.
+
+**Upstream follow-up checked on October 3, 2026:** the selected repair commit is
+from July 12. PostCSS subsequently
+[closed the no-from path on July 24](https://github.com/postcss/postcss/commit/7beca139e70f9075c6b19700fcb00dd8033e5da8)
+by rejecting untrusted external map loads when `cssFile` is absent, with a
+regression test. That change predates our October 1 experiment. The guard is also
+present in the [main revision checked during this follow-up](https://github.com/postcss/postcss/blob/7ac902664902289ea0cb9d6b1096b81e8d33bbf5/lib/previous-map.js#L97-L107).
+The evaluated file's hash exactly matches the July 12 source. The finding is a
+rediscovery of a gap in that historical partial repair and exposes an inaccurate
+negative-control label in our dataset; it is not a newly discovered, currently
+unfixed PostCSS vulnerability. This follow-up leaves the frozen snapshots and
+original experiment outcomes unchanged.
 
 ## Outcome by issue family
 
