@@ -1,0 +1,16 @@
+{"type":"bash_execution_update","id":"plain-control","delta":"ERROR: file.py:1\n"}
+{"id":"plain-control","type":"response","command":"bash","success":true,"data":{"output":"ERROR: file.py:1\n","exitCode":0,"cancelled":false,"truncated":false}}
+{"type":"bash_execution_update","id":"ansi-unsplit-control","delta":"ERROR: file.py:1\n"}
+{"id":"ansi-unsplit-control","type":"response","command":"bash","success":true,"data":{"output":"ERROR: file.py:1\n","exitCode":0,"cancelled":false,"truncated":false}}
+{"type":"bash_execution_update","id":"ansi-split-after-escape","delta":""}
+{"type":"bash_execution_update","id":"ansi-split-after-escape","delta":"[31mERROR: file.py:1\n"}
+{"id":"ansi-split-after-escape","type":"response","command":"bash","success":true,"data":{"output":"[31mERROR: file.py:1\n","exitCode":0,"cancelled":false,"truncated":false}}
+{"type":"bash_execution_update","id":"ansi-split-after-bracket","delta":"["}
+{"type":"bash_execution_update","id":"ansi-split-after-bracket","delta":"31mERROR: file.py:1\n"}
+{"id":"ansi-split-after-bracket","type":"response","command":"bash","success":true,"data":{"output":"[31mERROR: file.py:1\n","exitCode":0,"cancelled":false,"truncated":false}}
+{"type":"bash_execution_update","id":"ansi-split-inside-parameter","delta":""}
+{"type":"bash_execution_update","id":"ansi-split-inside-parameter","delta":"1mERROR: file.py:1\n"}
+{"id":"ansi-split-inside-parameter","type":"response","command":"bash","success":true,"data":{"output":"1mERROR: file.py:1\n","exitCode":0,"cancelled":false,"truncated":false}}
+{"type":"bash_execution_update","id":"ansi-split-reset","delta":"ERROR: file.py:1"}
+{"type":"bash_execution_update","id":"ansi-split-reset","delta":"m\n"}
+{"id":"ansi-split-reset","type":"response","command":"bash","success":true,"data":{"output":"ERROR: file.py:1m\n","exitCode":0,"cancelled":false,"truncated":false}}

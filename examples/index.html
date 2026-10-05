@@ -56,8 +56,19 @@
     </section>
 
     <section id="reports" aria-labelledby="reports-title">
-      <div class="section-head"><h2 id="reports-title">Four case studies.</h2><p>Native runs · retained evidence · explicit limits</p></div>
+      <div class="section-head"><h2 id="reports-title">Five case studies.</h2><p>Native runs · retained evidence · explicit limits</p></div>
       <div class="reports">
+        <article class="report-card sre">
+          <p class="eyebrow">05 / Pi output fidelity</p>
+          <h3>Same bytes. Different agent context.</h3>
+          <p class="summary">Splitting a color-reset sequence changed file.py:1 into file.py:1m in Pi's retained command output. Follow the native reproduction to a proposed source fix.</p>
+          <dl class="measurements">
+            <div><dt>Selected ANSI boundary variants reproduced</dt><dd>4 / 4 in three processes</dd></div>
+            <div><dt>Model calls in the component probes</dt><dd>0</dd></div>
+          </dl>
+          <p class="report-note">Direct native RPC probes in a follow-up to the library's research. Verified user-command path; no downstream model accuracy claim.</p>
+          <div class="actions"><a class="button primary" href="reports/pi-output-fidelity/">Read the finding and evidence</a></div>
+        </article>
         <article class="report-card sre">
           <p class="eyebrow">01 / OpenSRE</p>
           <h3>Recovered, then kept acting.</h3>
@@ -131,7 +142,7 @@
     <section class="context" aria-labelledby="context-title">
       <div>
         <h2 id="context-title">Scope, evidence and trying it yourself</h2>
-        <p>These are curated reports with study-specific splits and repeat counts. The first three use one trial per case and candidate; the coding-agent study includes repeated held-out workflows and separately labeled development. They do not establish general reliability or security accuracy. Raw local captures and experimental harnesses are not distributed. The offline examples below demonstrate separate, reproducible tasks without model calls.</p>
+        <p>These are curated reports with study-specific splits and repeat counts. The first three use one trial per case and candidate; the coding-agent study includes repeated held-out workflows and separately labeled development. The Pi output study uses selected component probes. They do not establish general reliability or security accuracy. Private model traces and experimental harnesses are not distributed; the Pi component report includes benign no-model RPC captures. The offline examples below demonstrate separate, reproducible tasks without model calls.</p>
       </div>
       <div class="context-links">
         <a href="https://github.com/guybass/agent-eval-flow/blob/main/examples/reports/README.md">Read task details, attribution and run metadata</a>

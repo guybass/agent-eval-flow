@@ -7,3 +7,6 @@ examples/workflows/*.json -text whitespace=cr-at-eol
 examples/data/gpt-researcher/capture.json -text whitespace=cr-at-eol
 # The public report displays this file's SHA-256; keep its bytes portable.
 examples/reports/native-harness/study-data.json text eol=lf
+examples/reports/pi-output-fidelity/study-data.json text eol=lf
+# Preserve the exact original bytes covered by the evidence manifest.
+examples/reports/pi-output-fidelity/evidence/** -text

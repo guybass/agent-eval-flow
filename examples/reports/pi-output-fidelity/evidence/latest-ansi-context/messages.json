@@ -1,0 +1,64 @@
+{
+  "id": "retained-messages",
+  "type": "response",
+  "command": "get_messages",
+  "success": true,
+  "data": {
+    "messages": [
+      {
+        "role": "bashExecution",
+        "command": "python -c \"import base64; exec(base64.b64decode('aW1wb3J0IG9zLHRpbWUKb3Mud3JpdGUoMSwgYnl0ZXMuZnJvbWhleCgnNDU1MjUyNGY1MjNhMjA2NjY5NmM2NTJlNzA3OTNhMzEwYScpKTsgdGltZS5zbGVlcCgwLjE1KQo='))\"",
+        "output": "ERROR: file.py:1\n",
+        "exitCode": 0,
+        "cancelled": false,
+        "truncated": false,
+        "timestamp": 1791064394524
+      },
+      {
+        "role": "bashExecution",
+        "command": "python -c \"import base64; exec(base64.b64decode('aW1wb3J0IG9zLHRpbWUKb3Mud3JpdGUoMSwgYnl0ZXMuZnJvbWhleCgnMWI1YjMzMzE2ZDQ1NTI1MjRmNTIzYTIwNjY2OTZjNjUyZTcwNzkzYTMxMWI1YjMwNmQwYScpKTsgdGltZS5zbGVlcCgwLjE1KQo='))\"",
+        "output": "ERROR: file.py:1\n",
+        "exitCode": 0,
+        "cancelled": false,
+        "truncated": false,
+        "timestamp": 1791064394713
+      },
+      {
+        "role": "bashExecution",
+        "command": "python -c \"import base64; exec(base64.b64decode('aW1wb3J0IG9zLHRpbWUKb3Mud3JpdGUoMSwgYnl0ZXMuZnJvbWhleCgnMWInKSk7IHRpbWUuc2xlZXAoMC4xNSkKb3Mud3JpdGUoMSwgYnl0ZXMuZnJvbWhleCgnNWIzMzMxNmQ0NTUyNTI0ZjUyM2EyMDY2Njk2YzY1MmU3MDc5M2EzMTFiNWIzMDZkMGEnKSk7IHRpbWUuc2xlZXAoMC4xNSkK'))\"",
+        "output": "[31mERROR: file.py:1\n",
+        "exitCode": 0,
+        "cancelled": false,
+        "truncated": false,
+        "timestamp": 1791064395056
+      },
+      {
+        "role": "bashExecution",
+        "command": "python -c \"import base64; exec(base64.b64decode('aW1wb3J0IG9zLHRpbWUKb3Mud3JpdGUoMSwgYnl0ZXMuZnJvbWhleCgnMWI1YicpKTsgdGltZS5zbGVlcCgwLjE1KQpvcy53cml0ZSgxLCBieXRlcy5mcm9taGV4KCczMzMxNmQ0NTUyNTI0ZjUyM2EyMDY2Njk2YzY1MmU3MDc5M2EzMTFiNWIzMDZkMGEnKSk7IHRpbWUuc2xlZXAoMC4xNSkK'))\"",
+        "output": "[31mERROR: file.py:1\n",
+        "exitCode": 0,
+        "cancelled": false,
+        "truncated": false,
+        "timestamp": 1791064395391
+      },
+      {
+        "role": "bashExecution",
+        "command": "python -c \"import base64; exec(base64.b64decode('aW1wb3J0IG9zLHRpbWUKb3Mud3JpdGUoMSwgYnl0ZXMuZnJvbWhleCgnMWI1YjMzJykpOyB0aW1lLnNsZWVwKDAuMTUpCm9zLndyaXRlKDEsIGJ5dGVzLmZyb21oZXgoJzMxNmQ0NTUyNTI0ZjUyM2EyMDY2Njk2YzY1MmU3MDc5M2EzMTFiNWIzMDZkMGEnKSk7IHRpbWUuc2xlZXAoMC4xNSkK'))\"",
+        "output": "1mERROR: file.py:1\n",
+        "exitCode": 0,
+        "cancelled": false,
+        "truncated": false,
+        "timestamp": 1791064395724
+      },
+      {
+        "role": "bashExecution",
+        "command": "python -c \"import base64; exec(base64.b64decode('aW1wb3J0IG9zLHRpbWUKb3Mud3JpdGUoMSwgYnl0ZXMuZnJvbWhleCgnMWI1YjMzMzE2ZDQ1NTI1MjRmNTIzYTIwNjY2OTZjNjUyZTcwNzkzYTMxMWI1YjMwJykpOyB0aW1lLnNsZWVwKDAuMTUpCm9zLndyaXRlKDEsIGJ5dGVzLmZyb21oZXgoJzZkMGEnKSk7IHRpbWUuc2xlZXAoMC4xNSkK'))\"",
+        "output": "ERROR: file.py:1m\n",
+        "exitCode": 0,
+        "cancelled": false,
+        "truncated": false,
+        "timestamp": 1791064394369
+      }
+    ]
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "title": "Same bytes. Different agent context.",
+  "date": "2026-10-05",
+  "official_binary": {
+    "version": "1.0.1",
+    "platform": "Linux x64",
+    "archive_sha256": "1940ecabcbd54ddd1a78dd2d587c189c5ced83e775a817855a9f5d1dd799c5f2",
+    "release": "https://github.com/earendil-works/pi/releases/tag/v1.0.1"
+  },
+  "scope": "User-command ! / RPC bash output, including retained bashExecution messages; not the model-invoked bash tool.",
+  "selection": "Development component probes selected to isolate stream boundaries. Three fresh native RPC processes; no independent-workload or generalization claim.",
+  "new_model_calls": 0,
+  "cohorts": [
+    "latest-ansi",
+    "latest-ansi-repeat-2",
+    "latest-ansi-context"
+  ],
+  "evidence_sha256": {
+    "ansi_context_probe.py": "4c423d9a4b68f903da2a09f5845b8907ad0c1f4516f9848aabbff752f678941f",
+    "latest-ansi/pre-run-freeze.json": "fc527fa7280a654c6fac305ccd6b0c855b3bfe95072e82b67fede2f9c2cd2824",
+    "latest-ansi/results.json": "7266eff827d5c62f665005b7162229156f4e546358d17242b7cf0e8df694e75d",
+    "latest-ansi/rpc.jsonl": "6189ba145589ac0255b4eb077c5f7e45fecae5c9e47d60f6d3e9b9c8d340c6ad",
+    "latest-ansi/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "latest-ansi-repeat-2/pre-run-freeze.json": "fc527fa7280a654c6fac305ccd6b0c855b3bfe95072e82b67fede2f9c2cd2824",
+    "latest-ansi-repeat-2/results.json": "7266eff827d5c62f665005b7162229156f4e546358d17242b7cf0e8df694e75d",
+    "latest-ansi-repeat-2/rpc.jsonl": "6189ba145589ac0255b4eb077c5f7e45fecae5c9e47d60f6d3e9b9c8d340c6ad",
+    "latest-ansi-repeat-2/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "latest-ansi-context/pre-run-freeze.json": "1aae688611a7e0595553d800cc4070bf1ffba938244ae235a0e0952f0b65d017",
+    "latest-ansi-context/results.json": "53f612369ff704cde145c69c10101827cbf3d68bc5abac9da627d95b35069967",
+    "latest-ansi-context/rpc.jsonl": "d97878176dc1c6b6a871422bb228e54e236d9ba4706b0973ddb0b0d2ee412176",
+    "latest-ansi-context/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "latest-ansi-context/messages.json": "98d6f7e0a56121cf5919089dd00ca26589a9895c9e77acaa92a9dcaceafdeb1d",
+    "source-before/pre-run-freeze.json": "aafcb035405fe3ffe7fc14745fa6b64bab704f144947a2ee70ce659371b59a8d",
+    "source-before/results.json": "19d2f86439557cbc574c6932b9c9997859151536ed81dc84fba136e7bcaa783a",
+    "source-before/rpc.jsonl": "0e5d950d31cadc7c52aaec9632b89fc9433fa0f03acd4a0228a84306f161d597",
+    "source-before/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source-before/messages.json": "80932433974bc12ae0f21e78553b095d24ba53d5cdde90f920f95ed926a0aa87",
+    "source-after/pre-run-freeze.json": "aafcb035405fe3ffe7fc14745fa6b64bab704f144947a2ee70ce659371b59a8d",
+    "source-after/results.json": "e7578e0ad69c2efbbd4502b643e98439bd6507157ea4f49b82e0155e161007c2",
+    "source-after/rpc.jsonl": "0b9e5f8b0251eda65429ef9bf3b4b4cc32994c9a464ea859de68c571162fbc3a",
+    "source-after/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source-after/messages.json": "24282d40f717629abf99fd4724e8a28f788f1ced26e0f8de630458a0807953a4"
+  },
+  "patch": {
+    "base_revision": "8c911797c3b6b5d3b3921ce4d2438e98e1a948a6",
+    "package_version": "1.0.3",
+    "status": "PR #10503 was submitted as a draft and auto-closed by the contributor gate. Maintainer approval requested in #10504. Not merged; no technical review outcome is implied.",
+    "regression_before": {
+      "passed": 1,
+      "failed": 13
+    },
+    "regression_after": {
+      "passed": 14,
+      "failed": 0
+    },
+    "existing_ansi_tests": {
+      "passed": 5,
+      "failed": 0
+    },
+    "native_rpc_validation": {
+      "runtime": "Node 24.15.0 / Linux, current source (not a released patched binary)",
+      "processes_per_condition": 1,
+      "cases_per_process": 6,
+      "before_exact": 2,
+      "after_exact": 6,
+      "surfaces": [
+        "streamed output",
+        "returned output",
+        "retained conversation messages"
+      ],
+      "network": "container disconnected from bridge",
+      "model_calls": 0,
+      "inputs": "unchanged original ansi_context_probe.py; inspected development cases",
+      "baseline_executor_sha256": "12d831a8374c213d5c78cf5060be96645e8b609624c8bc539297f9cac8574a4c",
+      "patched_executor_sha256": "afa5961a847375a25938c1955d8bddf3d7e416efeb4de47f90886814c602fd09",
+      "stripper_sha256": "b5aeb511fc2807ff1f6debd6ebe43e3015795237c6452a144772ccd0ebf19e66"
+    },
+    "validation_note": "Linux: all 14 new regressions, 5 existing ANSI tests and 2 existing executeBash tests passed. Complete npm run check and npm run build:offline passed. The full ./test.sh attempt before building was not green: missing workspace exports/native daemon/fd, root-permission expectations, clipboard platform assertions, an output-file timing assertion and a process-shutdown assertion. After building, the focused 21 tests passed; the complete suite was not rerun. The earlier Windows attempt also failed on a Node path containing spaces. Initial type checks required the checksum-pinned model catalog to be hydrated.",
+    "commit": "19eb8d9fa4bef8ee591d5308af659239607efe27",
+    "url": "https://github.com/earendil-works/pi/pull/10503",
+    "approval_request": "https://github.com/earendil-works/pi/issues/10504",
+    "focused_tests": {
+      "passed": 21,
+      "failed": 0
+    },
+    "full_code_check": "passed on Linux",
+    "offline_build": "passed on Linux",
+    "full_test_suite": "attempted, not green; environment/setup failures disclosed"
+  },
+  "related_results": {
+    "native_investigation": {
+      "attempts": 12,
+      "completed": 12,
+      "net_edit_attempts": 0,
+      "edit_tool_attempts": 0,
+      "development_attempts": 4,
+      "heldout_attempts": 8,
+      "pi_version": "0.99.1",
+      "opencode_version": "1.18.33",
+      "model": "Sol 5.6 low",
+      "freeze_sha256": "69ea062c51ae510d6586e4458d7a6c080948f4609d491f8b2050cfdca5871cb5"
+    },
+    "utf8_controls": {
+      "version": "1.0.1",
+      "passed": 6,
+      "total": 6
+    },
+    "known_truncation_replication": {
+      "issue": "https://github.com/earendil-works/pi/issues/10164",
+      "versions": [
+        "0.99.1",
+        "1.0.1"
+      ],
+      "failing_cases_per_version": 4,
+      "cases_per_version": 6
+    }
+  },
+  "attribution": "The earlier coding-agent study used Agent Eval Flow for evidence retention and regrading. These follow-up native RPC probes did not use the library or an LLM. They isolate a Pi implementation defect; the fix belongs in Pi.",
+  "limits": [
+    "No model response or coding-accuracy improvement was measured.",
+    "No causal link to failures in the earlier coding benchmark was established.",
+    "Selected ANSI component probes are development cases, not a frozen holdout.",
+    "A bounded duplicate search is not proof of novelty.",
+    "Raw model traces from the separate investigation study are not published here."
+  ]
+}
