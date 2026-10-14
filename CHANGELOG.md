@@ -3,7 +3,7 @@
 Changes to Agent Eval Flow are recorded here before the next release. Published
 versions and their notes are available on [GitHub Releases](https://github.com/guybass/agent-eval-flow/releases).
 
-## Unreleased
+## 0.6.1 — 2026-10-14
 
 ### Getting started
 
