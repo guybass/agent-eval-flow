@@ -1,0 +1,5 @@
+# Changes to every path require the repository owner's approval.
+* @guybass
+
+# Ownership rules themselves also require owner approval.
+/.github/CODEOWNERS @guybass
