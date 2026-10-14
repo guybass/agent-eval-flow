@@ -26,6 +26,16 @@ SOURCE_FILES = (
     "examples/reports/03-gpt-researcher.html",
     "examples/reports/native-harness/index.html",
     "examples/reports/native-harness/study-data.json",
+    "examples/reports/pi-output-fidelity/index.html",
+    "examples/reports/pi-output-fidelity/study-data.json",
+    "examples/reports/pi-output-fidelity/evidence/ansi_context_probe.py",
+    "examples/reports/pi-output-fidelity/evidence/latest-ansi-context/messages.json",
+    *(f"examples/reports/pi-output-fidelity/evidence/{cohort}/{name}"
+      for cohort in ("latest-ansi", "latest-ansi-repeat-2", "latest-ansi-context")
+      for name in ("pre-run-freeze.json", "results.json", "rpc.jsonl", "stderr.log")),
+    *(f"examples/reports/pi-output-fidelity/evidence/{cohort}/{name}"
+      for cohort in ("source-before", "source-after")
+      for name in ("pre-run-freeze.json", "results.json", "rpc.jsonl", "stderr.log", "messages.json")),
     "examples/data/gpt-researcher/capture.json",
     "examples/data/gpt-researcher/SIMPLE-EVALS-LICENSE",
     "examples/data/gpt-researcher/GPT-RESEARCHER-LICENSE",

@@ -1,0 +1,136 @@
+{
+  "configuration": {
+    "version": "1.0.1",
+    "new_model_calls": 0,
+    "cases": [
+      {
+        "id": "plain-control",
+        "chunks_hex": [
+          "4552524f523a2066696c652e70793a310a"
+        ],
+        "fd": 1,
+        "expected": "ERROR: file.py:1\n"
+      },
+      {
+        "id": "ansi-unsplit-control",
+        "chunks_hex": [
+          "1b5b33316d4552524f523a2066696c652e70793a311b5b306d0a"
+        ],
+        "fd": 1,
+        "expected": "ERROR: file.py:1\n"
+      },
+      {
+        "id": "ansi-split-after-escape",
+        "chunks_hex": [
+          "1b",
+          "5b33316d4552524f523a2066696c652e70793a311b5b306d0a"
+        ],
+        "fd": 1,
+        "expected": "ERROR: file.py:1\n"
+      },
+      {
+        "id": "ansi-split-after-bracket",
+        "chunks_hex": [
+          "1b5b",
+          "33316d4552524f523a2066696c652e70793a311b5b306d0a"
+        ],
+        "fd": 1,
+        "expected": "ERROR: file.py:1\n"
+      },
+      {
+        "id": "ansi-split-inside-parameter",
+        "chunks_hex": [
+          "1b5b33",
+          "316d4552524f523a2066696c652e70793a311b5b306d0a"
+        ],
+        "fd": 1,
+        "expected": "ERROR: file.py:1\n"
+      },
+      {
+        "id": "ansi-split-reset",
+        "chunks_hex": [
+          "1b5b33316d4552524f523a2066696c652e70793a311b5b30",
+          "6d0a"
+        ],
+        "fd": 1,
+        "expected": "ERROR: file.py:1\n"
+      }
+    ],
+    "script_sha256": "4c423d9a4b68f903da2a09f5845b8907ad0c1f4516f9848aabbff752f678941f",
+    "split": "development component probes; no generalization claim"
+  },
+  "cases": [
+    {
+      "case": "plain-control",
+      "success": true,
+      "exit_code": 0,
+      "expected": "ERROR: file.py:1\n",
+      "actual": "ERROR: file.py:1\n",
+      "streamed": "ERROR: file.py:1\n",
+      "exact_returned_text": true,
+      "exact_streamed_text": true,
+      "truncated": false,
+      "retained_conversation_matches_returned_output": true
+    },
+    {
+      "case": "ansi-unsplit-control",
+      "success": true,
+      "exit_code": 0,
+      "expected": "ERROR: file.py:1\n",
+      "actual": "ERROR: file.py:1\n",
+      "streamed": "ERROR: file.py:1\n",
+      "exact_returned_text": true,
+      "exact_streamed_text": true,
+      "truncated": false,
+      "retained_conversation_matches_returned_output": true
+    },
+    {
+      "case": "ansi-split-after-escape",
+      "success": true,
+      "exit_code": 0,
+      "expected": "ERROR: file.py:1\n",
+      "actual": "[31mERROR: file.py:1\n",
+      "streamed": "[31mERROR: file.py:1\n",
+      "exact_returned_text": false,
+      "exact_streamed_text": false,
+      "truncated": false,
+      "retained_conversation_matches_returned_output": true
+    },
+    {
+      "case": "ansi-split-after-bracket",
+      "success": true,
+      "exit_code": 0,
+      "expected": "ERROR: file.py:1\n",
+      "actual": "[31mERROR: file.py:1\n",
+      "streamed": "[31mERROR: file.py:1\n",
+      "exact_returned_text": false,
+      "exact_streamed_text": false,
+      "truncated": false,
+      "retained_conversation_matches_returned_output": true
+    },
+    {
+      "case": "ansi-split-inside-parameter",
+      "success": true,
+      "exit_code": 0,
+      "expected": "ERROR: file.py:1\n",
+      "actual": "1mERROR: file.py:1\n",
+      "streamed": "1mERROR: file.py:1\n",
+      "exact_returned_text": false,
+      "exact_streamed_text": false,
+      "truncated": false,
+      "retained_conversation_matches_returned_output": true
+    },
+    {
+      "case": "ansi-split-reset",
+      "success": true,
+      "exit_code": 0,
+      "expected": "ERROR: file.py:1\n",
+      "actual": "ERROR: file.py:1m\n",
+      "streamed": "ERROR: file.py:1m\n",
+      "exact_returned_text": false,
+      "exact_streamed_text": false,
+      "truncated": false,
+      "retained_conversation_matches_returned_output": true
+    }
+  ]
+}

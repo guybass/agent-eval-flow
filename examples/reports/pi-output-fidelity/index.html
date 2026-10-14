@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Same bytes. Different agent context. — Agent Eval Flow</title>
+  <meta name="description" content="A native Pi output defect: split ANSI color sequences corrupt streamed, returned and retained command output. Reproduction, evidence and proposed fix.">
+  <style>
+    :root{color-scheme:light;--ink:#203e34;--muted:#59685f;--paper:#f7f8f3;--line:#d9e1d6;--accent:#214f42}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1060px;margin:auto;padding:30px 28px 65px}a{color:var(--accent);text-underline-offset:4px}a:focus-visible{outline:3px solid #9174b0;outline-offset:4px}nav{display:flex;justify-content:space-between;gap:16px;font-size:.9rem;padding-bottom:30px;border-bottom:1px solid var(--line)}header{padding:45px 0 30px}h1{font-size:clamp(2.3rem,6vw,4.4rem);line-height:1.06;letter-spacing:-.055em;max-width:780px;margin:10px 0 22px}h2{font-size:1.7rem;line-height:1.2;letter-spacing:-.025em;margin:0 0 15px}h3{font-size:1.05rem;margin:0 0 8px}.eyebrow{font-size:.76rem;text-transform:uppercase;letter-spacing:.14em;font-weight:700;color:var(--muted)}.lead{font-size:1.2rem;max-width:830px}.muted{color:var(--muted)}section{padding:30px 0;border-top:1px solid var(--line)}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0}.card{background:#fffefa;border:1px solid var(--line);border-radius:12px;padding:23px}.card.actual{border-top:4px solid #97764c}.card.expected{border-top:4px solid var(--accent)}code,pre{font-family:ui-monospace,Consolas,monospace}code{font-size:.92em;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:20px;background:#eaf0e8;border-radius:9px;font-size:.85rem}p{margin:0 0 16px}.small{font-size:.88rem}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.9rem}th,td{text-align:left;border-bottom:1px solid var(--line);padding:12px 10px}th{background:#eaf0e8}.callout{border-left:4px solid var(--accent);padding:15px 22px;background:#eaf0e8;margin:20px 0}.links{display:flex;flex-wrap:wrap;gap:12px 25px}.hash{word-break:break-all;font-size:.75rem}li{margin-bottom:9px}footer{border-top:1px solid var(--line);padding-top:24px;color:var(--muted);font-size:.85rem}@media(max-width:600px){main{padding:20px 18px 45px}.comparison{grid-template-columns:1fr}header{padding-top:30px}nav{flex-wrap:wrap}.card{padding:18px}}
+  </style>
+</head>
+<body><main>
+<nav aria-label="Report navigation"><a href="../../">Agent Eval Flow / Reports</a><a href="https://github.com/guybass/agent-eval-flow">Open-source library ↗</a></nav>
+<header>
+  <p class="eyebrow">Native-agent defect · 5 October 2026</p>
+  <h1>Same bytes.<br>Different agent context.</h1>
+  <p class="lead">Pi changed a command's text depending on where its output arrived in chunks. We reproduced the defect in the official binary and traced it to ANSI color stripping inside Pi.</p>
+  <div class="comparison">
+    <div class="card expected"><h3>Expected plain text</h3><code>ERROR: file.py:1</code><p class="small muted">The colored command output, with color controls removed.</p></div>
+    <div class="card actual"><h3>Retained by Pi after a split reset</h3><code>ERROR: file.py:1<span style="color:#805221;font-weight:800">m</span></code><p class="small muted">The final color-reset character became part of the message.</p></div>
+  </div>
+  <p class="small">Verified path: user <code>!</code> commands / RPC <code>bash</code>. This is a native stream-processing defect; downstream model behavior was not measured.</p>
+</header>
+<section>
+  <p class="eyebrow">01 / Experiment</p><h2>Change the delivery boundary. Keep the bytes identical.</h2>
+  <p>We supplied the same colored line to unmodified Pi 1.0.1 on Linux, changing only where its writes were split. Each fresh process ran two controls and four deliberately selected split variants. We repeated this in three fresh native RPC processes, offline, with no extensions, credentials or model calls.</p>
+  <pre>ESC[31mERROR: file.py:1ESC[0m\n</pre>
+  <p>Both controls passed in every process. All four selected split variants corrupted both the live stream and returned output in every process. In the third process, <code>get_messages</code> confirmed the same corruption in Pi's retained <code>bashExecution</code> messages.</p>
+  <div class="table-wrap"><table><thead><tr><th>Case</th><th>Returned and streamed text</th><th>Three processes</th></tr></thead><tbody>
+<tr><td>plain-control</td><td><code>ERROR: file.py:1\n</code></td><td>Correct in 3/3</td></tr><tr><td>ansi-unsplit-control</td><td><code>ERROR: file.py:1\n</code></td><td>Correct in 3/3</td></tr><tr><td>ansi-split-after-escape</td><td><code>[31mERROR: file.py:1\n</code></td><td>Corrupted in 3/3</td></tr><tr><td>ansi-split-after-bracket</td><td><code>[31mERROR: file.py:1\n</code></td><td>Corrupted in 3/3</td></tr><tr><td>ansi-split-inside-parameter</td><td><code>1mERROR: file.py:1\n</code></td><td>Corrupted in 3/3</td></tr><tr><td>ansi-split-reset</td><td><code>ERROR: file.py:1m\n</code></td><td>Corrupted in 3/3</td></tr>  </tbody></table></div>
+  <p class="small muted">These are selected component probes. The table is not an estimate of the defect's frequency in real workloads.</p>
+</section>
+<section>
+  <p class="eyebrow">02 / Problem</p><h2>A color code became ordinary text.</h2>
+  <p>Pi already preserved UTF-8 decoder state between output chunks. But it applied <code>stripAnsi()</code> independently to each decoded chunk. If an escape sequence was split, its prefix was stripped or sanitized before its suffix arrived. That suffix then passed through as text.</p>
+  <pre>Chunk A ends:   ERROR: file.py:1 ESC[0
+Chunk B starts: m\n
+Old result:    ERROR: file.py:1m\n</pre>
+  <p>The affected code is <a href="https://github.com/earendil-works/pi/blob/v1.0.1/packages/coding-agent/src/core/bash-executor.ts">Pi's native bash executor</a>. Its <a href="https://github.com/earendil-works/pi/blob/v1.0.1/packages/coding-agent/src/core/messages.ts">message conversion</a> includes retained user-command output in model context. We verified retention; we did not make a model request to measure its response.</p>
+</section>
+<section>
+  <p class="eyebrow">03 / Proposed fix</p><h2>Preserve escape-sequence state across chunks.</h2>
+  <p>The proposed Pi patch keeps a small parser state between chunks. It strips split CSI color controls and OSC hyperlink sequences before output reaches the live callback, returned result and full-output log. It does not accumulate arbitrarily long control payloads; unfinished sequences are discarded when execution ends.</p>
+  <p>On source revision <code>8c911797c3b6b5d3b3921ce4d2438e98e1a948a6</code> (package version 1.0.3), the initial regression suite passed 1 test and failed 13 before the patch. After the patch, all 14 passed, alongside the 5 existing ANSI utility tests. The cases cover every byte boundary of the selected strings, single-byte chunks, UTF-8, cancellation and full-output files.</p>
+  <p><strong>Native before/after confirmation:</strong> we then ran the original six-case RPC probe against the current source, first unchanged and then patched, in a container with networking disabled. Before: both controls passed and all four split variants failed. After: all six returned, streamed and retained outputs matched the expected text. This is one fresh process per condition, on inspected development cases.</p>
+  <p class="links"><a href="evidence/source-before/results.json">Current source: before</a><a href="evidence/source-after/results.json">Patched source: after</a><a href="evidence/source-after/messages.json">Corrected retained messages</a></p>
+  <div class="callout"><strong>Status:</strong> PR #10503 was submitted as a draft and auto-closed by the contributor gate. Maintainer approval requested in #10504. Not merged; no technical review outcome is implied. · <a href="https://github.com/earendil-works/pi/pull/10503">Review the contribution</a></div>
+<p class="small"><a href="https://github.com/earendil-works/pi/issues/10504">Contributor approval request and minimal reproduction</a></p><p class="small">Linux: all 14 new regressions, 5 existing ANSI tests and 2 existing executeBash tests passed. Complete npm run check and npm run build:offline passed. The full ./test.sh attempt before building was not green: missing workspace exports/native daemon/fd, root-permission expectations, clipboard platform assertions, an output-file timing assertion and a process-shutdown assertion. After building, the focused 21 tests passed; the complete suite was not rerun. The earlier Windows attempt also failed on a Node path containing spaces. Initial type checks required the checksum-pinned model catalog to be hydrated.</p>  <p class="small muted">Regression checks are development validation of this patch, not new held-out inference or an improvement in coding accuracy.</p>
+</section>
+<section>
+  <p class="eyebrow">04 / Why Agent Eval Flow</p><h2>Keep the evidence needed to investigate a failure.</h2>
+  <p>The earlier <a href="../native-harness/">Pi/OpenCode research</a> used Agent Eval Flow to retain and regrade workflow evidence. This follow-up asked a narrower question: does the agent receive the same text the command produced?</p>
+  <p>The component probes here are direct native RPC tests. They do not call Agent Eval Flow or an LLM. They establish a defect in Pi, and the proposed source fix belongs in Pi. Agent Eval Flow's role is the surrounding evidence-led evaluation workflow; this was not an automatic bug detection feature of the library.</p>
+  <p>An exit code of zero did not establish output fidelity. Comparing command inputs, streaming events, returned text and retained messages made this failure observable.</p>
+</section>
+<section>
+  <p class="eyebrow">05 / Reproduce and inspect</p><h2>Evidence you can check without a model.</h2>
+  <p>Run the official binary in a clean offline environment with <code>pi --offline --mode rpc --no-session --no-extensions</code>. Send this single JSON line, then inspect the response:</p>
+  <pre>{"id":"ansi-reset","type":"bash","command":"python -c 'import os,time; os.write(1,b\"\\x1b[31mERROR: file.py:1\\x1b[0\"); time.sleep(0.15); os.write(1,b\"m\\n\")'"}</pre>
+  <p>The expected plain text is <code>ERROR: file.py:1\n</code>. The released 1.0.1 binary returned <code>ERROR: file.py:1m\n</code>. Timing makes this an OS-level reproduction; the deterministic regression tests control delivered chunks directly.</p>
+  <div class="links"><a href="study-data.json">Data and SHA-256 manifest</a><a href="evidence/ansi_context_probe.py">Original six-case probe</a><a href="evidence/latest-ansi-context/rpc.jsonl">Native RPC capture</a><a href="evidence/latest-ansi-context/messages.json">Retained messages</a></div>
+  <p class="small">The original probe expects Linux, Python, <code>/opt/pi/pi</code>, a clean <code>/work</code> directory and a writable <code>/evidence</code>. Run it in a disposable container with networking disabled. Evidence files are unchanged; the report renderer verifies their hashes and recomputes the reported ANSI outcomes.</p>
+  <p class="small">Official release archive SHA-256: <code class="hash">1940ecabcbd54ddd1a78dd2d587c189c5ced83e775a817855a9f5d1dd799c5f2</code> · <a href="https://github.com/earendil-works/pi/releases/tag/v1.0.1">release</a>.</p>
+</section>
+<section>
+  <p class="eyebrow">06 / Other results and limits</p><h2>The null results remain part of the record.</h2>
+  <p>A separate direct-native investigation follow-up completed 12 one-turn runs: 4 on inspected Django/sklearn development cases, and 8 on four frozen, inference-unused NetworkX issue families. Pi 0.99.1 and OpenCode 1.18.33 used Sol 5.6 low, fresh sessions and the original 600-second limit. It found zero net source edits and zero parsed edit-tool attempts. Earlier observed editing violations did not recur in these runs.</p>
+  <p>Task inputs, original source snapshots and scoring rules were frozen before the NetworkX inference. Hidden checks and future fixes were kept out of agent environments. Hash comparison cannot detect every transient write; public-source training contamination is unknown. These inspected cases cannot serve as an untouched holdout for further tuning.</p>
+  <p>Separately, six UTF-8 boundary controls passed. We also replicated the already-reported <a href="https://github.com/earendil-works/pi/issues/10164">Pi truncation defect #10164</a> in versions 0.99.1 and 1.0.1: four selected large-output cases failed per version, while two controls passed. We do not claim that existing finding as ours. The ANSI defect is distinct from both that truncation issue and the earlier <a href="https://github.com/earendil-works/pi/pull/433">UTF-8 fix</a>.</p>
+  <ul><li>No model response or coding-accuracy improvement was measured.</li><li>No causal link to failures in the earlier coding benchmark was established.</li><li>Selected ANSI component probes are development cases, not a frozen holdout.</li><li>A bounded duplicate search is not proof of novelty.</li><li>Raw model traces from the separate investigation study are not published here.</li></ul>
+  <p class="small">The original coding experiment and its frozen records remain unchanged. This report exports only the benign no-model ANSI captures; the separate investigation outcomes are curated summaries whose private raw model traces are not redistributed.</p>
+</section>
+<footer><p>Agent Eval Flow · Research follow-up · Rebuild with <code>python examples/pi_output_report.py</code>.</p><p class="hash">Study data SHA-256: b5494eb2caa6e5711f988df9dde9178b76a0eaf65ec0f8e82240ee9682a522fb</p></footer>
+</main></body></html>
