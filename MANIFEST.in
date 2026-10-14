@@ -1,4 +1,4 @@
-include README.md CONTRIBUTING.md THIRD_PARTY_NOTICES.md pyproject.toml pytest.ini requirements-test.txt .gitattributes
+include README.md TUTORIAL.md CONTRIBUTING.md CHANGELOG.md CITATION.cff THIRD_PARTY_NOTICES.md pyproject.toml pytest.ini requirements-test.txt .gitattributes
 graft .github
 prune doc
 prune docs

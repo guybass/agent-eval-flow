@@ -126,9 +126,13 @@ def _summaries(runs):
         for item in run["receipts"] or [{"receipt": None, "error": fallback_error}]:
             receipt = item["receipt"]
             settings = receipt["settings"] if receipt else {"receipt": "unavailable"}
-            config = semantic_fingerprint("tools-report-settings", settings)
+            evaluator = receipt["evaluator"] if receipt else None
+            version = (receipt.get("required_toolscore_version") or receipt.get("toolscore_version")) if receipt else None
+            config = semantic_fingerprint("tools-report-settings", {
+                "settings": settings, "evaluator": evaluator, "required_toolscore_version": version})
             key = (run["candidate_id"], config)
             group = groups.setdefault(key, {"candidate": key[0], "settings": settings,
+                "evaluator": evaluator, "required_toolscore_version": version,
                 "observed": 0, "missing": 0, "error": 0, "not_applicable": 0, "values": []})
             if receipt is None:
                 group["error" if item["error"] else "missing"] += 1

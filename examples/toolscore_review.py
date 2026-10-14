@@ -1,4 +1,4 @@
-"""Two linked reports from synthetic retained Claude streams; no agent calls.
+"""Toolscore 1.10 reports from retained synthetic Claude streams; no agent calls.
 
 Install: python -m pip install -e ".[toolscore]"
 Run: python examples/toolscore_review.py --output demo-output/toolscore
@@ -64,6 +64,7 @@ def build_example(output):
         results = [{"type": "tool_result", "tool_use_id": call["id"], "content": "Fixture result", "is_error": False}
                    for call in calls]
         if assignment.candidate_id == "baseline" and calls:
+            results[0].update(content="Synthetic upstream timeout", is_error=True)
             results = results[:1]  # The second request was issued but has no completion.
         records = [{"type": "assistant", "message": {"content": calls}},
                    {"type": "user", "message": {"content": results}}]

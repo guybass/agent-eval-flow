@@ -7,9 +7,9 @@
 <p><a href="{{ view.general_href }}">General report</a> · <a href="{{ view.json_href }}">Tools JSON</a></p>
 <p>Result {{ view.result_id }}. Scores describe captured requests at the declared boundary. Tool completion and task success are separate observations.</p></header>
 <main>
-<section><h2>Candidate comparison</h2><p>Mean composite over applicable scored runs, grouped by candidate and scoring settings. Missing, error and not-applicable scores are excluded and counted explicitly. Correct no-tool runs scored with Toolscore 1.9.0 are included.</p>
+<section><h2>Candidate comparison</h2><p>Mean composite over applicable scored runs, grouped by candidate, scoring settings and evaluator version. Missing, error and not-applicable scores are excluded and counted explicitly. Correct no-tool runs with an applicable saved score are included.</p>
 <div class="table-wrap"><table><thead><tr><th>Candidate</th><th>Mean score</th><th>Scored</th><th>Missing</th><th>Error</th><th>Not applicable</th><th>Settings</th></tr></thead><tbody>
-{% for row in view.summaries %}<tr><td>{{ row.candidate }}</td><td>{{ '%.3f'|format(row.mean) if row.mean is not none else 'unknown' }}</td><td>{{ row.observed }}</td><td>{{ row.missing }}</td><td>{{ row.error }}</td><td>{{ row.not_applicable }}</td><td><details><summary>View settings</summary><pre>{{ row.settings|pretty_json }}</pre></details></td></tr>{% else %}<tr><td colspan="7">No readable Toolscore receipts.</td></tr>{% endfor %}
+{% for row in view.summaries %}<tr><td>{{ row.candidate }}</td><td>{{ '%.3f'|format(row.mean) if row.mean is not none else 'unknown' }}</td><td>{{ row.observed }}</td><td>{{ row.missing }}</td><td>{{ row.error }}</td><td>{{ row.not_applicable }}</td><td><details><summary>View settings</summary><p>Declared Toolscore {{ row.required_toolscore_version or 'unknown' }} · Adapter {{ row.evaluator.revision if row.evaluator else 'unknown' }}</p><pre>{{ row.settings|pretty_json }}</pre></details></td></tr>{% else %}<tr><td colspan="7">No readable Toolscore receipts.</td></tr>{% endfor %}
 </tbody></table></div></section>
 {% for run in view.runs %}
 <section id="{{ run.anchor }}"><h2>{{ run.candidate_id }} · {{ run.unit|pretty_json }}</h2>
@@ -21,6 +21,11 @@
 {% if receipt.trace %}<p>Boundary: {{ receipt.trace.boundary }} · Scope: {{ receipt.trace.scope }}<br>
 Request coverage: {{ receipt.trace.coverage.status }} / {{ receipt.trace.coverage.value if receipt.trace.coverage.value is not none else 'unknown' }} · {{ receipt.trace.coverage.reason }}</p>{% endif %}
 <p>Toolscore {{ receipt.toolscore_version or 'not invoked' }} · Adapter {{ receipt.evaluator.revision }}</p>
+{% if receipt.get('completion_coverage') %}<p>Known completions: {{ receipt.completion_coverage.known }} / {{ receipt.completion_coverage.total }} · Unknown completions: {{ receipt.completion_coverage.unknown }}. Error rate is unavailable while any completion is unknown.</p>{% endif %}
+{% if receipt.alternatives %}{% set selected = receipt.alternatives[receipt.selected_alternative] %}
+{% if selected.get('upstream_result') %}{% set efficiency = selected.upstream_result.metrics.efficiency_metrics %}
+<p>Recorded failed calls: {{ efficiency.error_count }} · Immediate identical retries after a recorded failure: {{ efficiency.retry_after_error_count }}. Counts use captured request order and only recorded failures; unknown completions may hide additional failures.</p>
+{% endif %}{% endif %}
 <div class="table-wrap"><table><thead><tr><th>Metric</th><th>Value</th><th>Status</th><th>Meaning / limits</th></tr></thead><tbody>
 {% for name, metric in receipt.metrics.items() %}<tr><td>{{ name }}</td><td>{{ '%.3f'|format(metric.value) if metric.value is not none else 'unavailable' }}</td><td>{{ metric.status }}</td><td>{{ metric.reason }}</td></tr>{% else %}<tr><td colspan="4">No scores: {{ receipt.reason }}</td></tr>{% endfor %}
 </tbody></table></div>

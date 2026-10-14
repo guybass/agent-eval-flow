@@ -6,61 +6,100 @@
 [![Tests](https://github.com/guybass/agent-eval-flow/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/guybass/agent-eval-flow/actions/workflows/tests.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-49659c)](https://github.com/guybass/agent-eval-flow/blob/main/pyproject.toml)
 
-**Evaluate agent runs, understand failures, and compare changes.**
+**Evaluate agent runs. Inspect the evidence. Compare what changed.**
 
-Use your existing agent runtime or import retained runs into a shared evidence
-format. Apply your checks, inspect an HTML report, change the system, and compare
-another run. The target can include models, instructions, skills, tools, loops,
-memory and environment.
+Agent Eval Flow (AEF) is a Python library for evaluating complete agent systems:
+models, instructions, skills, tools, execution loops, memory, and environment.
+Use your existing runtime or import retained runs, apply explicit checks, and
+open a report that connects results to their evidence.
 
+[Quickstart](#quickstart) · [Tutorial](https://github.com/guybass/agent-eval-flow/blob/main/TUTORIAL.md) ·
 [Example reports](https://guybass.github.io/agent-eval-flow/) ·
-[Releases](https://github.com/guybass/agent-eval-flow/releases) ·
-[Report an issue](https://github.com/guybass/agent-eval-flow/issues/new/choose) ·
-[Contribute](https://github.com/guybass/agent-eval-flow/blob/main/CONTRIBUTING.md)
+[Toolscore integration](https://github.com/guybass/agent-eval-flow/blob/main/examples/TOOLSCORE.md) · [Contributing](https://github.com/guybass/agent-eval-flow/blob/main/CONTRIBUTING.md)
 
-## Install
+## Why Agent Eval Flow?
 
-Requires Python 3.11 or later.
+- **Keep your agent's own loop.** Runtime adapters capture native execution;
+  importers let you evaluate retained runs without another agent invocation.
+- **Make results inspectable.** Preserve source-linked events, outputs,
+  failures, and unknowns alongside application-defined checks.
+- **Separate capture from grading.** Save a run once, reopen its report, or
+  apply a different evaluation suite to the retained evidence.
+- **Compare system changes.** Review candidate outcomes, diagnostics, resource
+  observations, and explicit selection policies together.
 
-```bash
-python -m pip install agent-eval-flow
-```
+<a id="try-an-offline-example"></a>
 
-## Try an offline example
+## Quickstart
+
+Requires **Python 3.11+**. Install the library with
+`python -m pip install agent-eval-flow`, or use a checkout to try the bundled
+offline example. The checkout includes unreleased changes; PyPI installs the
+latest published release.
 
 ```bash
 git clone https://github.com/guybass/agent-eval-flow.git
 cd agent-eval-flow
 python -m pip install -e ".[cli]"
 python examples/archive_review.py --output demo-output/archive
-python examples/assessment_review.py --output demo-output/assessment
-python examples/gpt_researcher_review.py --output demo-output/gpt-researcher
 ```
 
-Open `report.html` inside an output directory. These examples make no model
-calls.
+Open **`demo-output/archive/report.html`**. No model credentials or model calls
+are needed to run this example after installation.
 
-- [Archived-run evaluation](https://github.com/guybass/agent-eval-flow/blob/main/examples/archive_review.py)
-  imports a published SWE-agent trajectory, checks its evidence, saves the
-  result, and regrades the same capture without running the agent again.
-- [Configuration assessment](https://github.com/guybass/agent-eval-flow/blob/main/examples/assessment_review.py)
-  compares two local instruction files against an explicit requirement.
+The example imports a pinned, published SWE-agent repair trajectory, evaluates
+its captured observations, saves the result, and regrades the same capture.
+The bundled input produces:
 
-## What you can evaluate
+| What you see | Result |
+| --- | --- |
+| Historical tasks / captured actions | 1 / 12 |
+| Observations containing `SyntaxError` | 3 |
+| Same capture reused for regrading | `true` |
+| New agent invocations | 0 |
 
-- Outcomes and execution evidence with application-defined metrics.
-- Configuration and observed runtime behavior, with explicit coverage and
-  expected versus observed values.
-- Candidate changes using saved results, comparisons and selection policies.
+These are trace diagnostics, not a new test of whether the patch fixes the
+original issue. [Walk through the report and the code →](https://github.com/guybass/agent-eval-flow/blob/main/TUTORIAL.md)
 
-Missing evidence stays unknown. Runtime-specific importers and collectors map
-native logs into the shared records; arbitrary logs are not interpreted
-automatically. Native adapters keep the agent's own execution loop.
+### Use the saved result in Python
+
+After running the quickstart, run this from the checkout root:
+
+```python
+from agent_eval_flow import EvaluationResult
+
+result = EvaluationResult.load("demo-output/archive/result")
+for row in result.summary():
+    print(row.summary_id, row.value.value)
+
+result.report("demo-output/archive/reopened.html")
+```
+
+Loading and reporting use saved results. The [tutorial](https://github.com/guybass/agent-eval-flow/blob/main/TUTORIAL.md#regrade-the-same-capture)
+shows how to change a suite and regrade without executing the agent again.
+
+## How it fits together
+
+![AEF workflow: define a study, capture native runs or import retained evidence, evaluate, and inspect or compare saved results](https://raw.githubusercontent.com/guybass/agent-eval-flow/main/examples/assets/evaluation-workflow.svg)
+
+An evaluation starts with a **study**: tasks, candidates, checks, and execution
+policy. Capture produces a **run set**, evaluation produces a **result**, and
+reports and comparisons use that result. Configuration assessment can also run
+independently of an agent execution.
+
+| I want to… | Start here |
+| --- | --- |
+| Inspect a retained run and learn the API | [Offline tutorial](https://github.com/guybass/agent-eval-flow/blob/main/TUTORIAL.md) |
+| Check instruction files against a requirement | [Configuration assessment](https://github.com/guybass/agent-eval-flow/blob/main/examples/assessment_review.py) |
+| Diagnose tool selection, arguments, order, and repeated calls | [Toolscore integration](https://github.com/guybass/agent-eval-flow/blob/main/examples/TOOLSCORE.md) |
+| Configure a local OpenKritt workflow | [Workflow guide](https://github.com/guybass/agent-eval-flow/blob/main/examples/workflows/README.md) |
+| Capture and inspect a native agent run | [OpenKritt local integration](https://github.com/guybass/agent-eval-flow/blob/main/examples/integrations/README.openkritt-local.md) |
+| Browse worked examples and their limits | [Report gallery](https://github.com/guybass/agent-eval-flow/blob/main/examples/reports/README.md) |
 
 ## Tool calling report
 
-Add deterministic Toolscore diagnostics to captured runs and generate a separate
-tools report alongside the general report:
+Add deterministic [Toolscore](https://github.com/yotambraun/Toolscore)
+diagnostics to captured runs and generate a linked tools report:
 
 ```bash
 python -m pip install -e ".[toolscore]"
@@ -73,7 +112,7 @@ agent or model calls. Toolscore evaluates requested tools and arguments;
 task outcomes remain separate checks. Missing capture stays unknown.
 
 Use `result.report(path, tools=True)` after configuring the optional evaluator.
-See [the integration guide](examples/TOOLSCORE.md) for trace coverage, expected
+See [the integration guide](https://github.com/guybass/agent-eval-flow/blob/main/examples/TOOLSCORE.md) for trace coverage, expected
 calls, scoring rules, and supported formats.
 
 ## Example reports
@@ -98,9 +137,20 @@ to discuss the approach.
 Start with [the contribution guide](https://github.com/guybass/agent-eval-flow/blob/main/CONTRIBUTING.md) for setup on Windows,
 macOS, or Linux, a code map, local checks, and the steps to your first pull request.
 
+## Status and boundaries
+
 This is a developer preview. Native integrations require their own runtime setup
 and credentials; offline test success does not establish live compatibility.
+Runtime-specific importers and collectors map native logs into shared records;
+arbitrary logs are not interpreted automatically. Missing evidence stays unknown,
+and tool-call diagnostics remain separate from task outcomes.
+
+Use held-out tasks to evaluate generalization and keep development cases separate.
+The small examples here demonstrate workflows; they are not a leaderboard.
 
 See [the test guide](https://github.com/guybass/agent-eval-flow/blob/main/tests/README.md)
 for live profiles, and [third-party notices](https://github.com/guybass/agent-eval-flow/blob/main/THIRD_PARTY_NOTICES.md)
 for fixture provenance and licenses.
+
+[Changelog](https://github.com/guybass/agent-eval-flow/blob/main/CHANGELOG.md) · [Releases](https://github.com/guybass/agent-eval-flow/releases) ·
+[Report an issue](https://github.com/guybass/agent-eval-flow/issues/new/choose)

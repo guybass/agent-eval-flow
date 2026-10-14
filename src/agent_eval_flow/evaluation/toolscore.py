@@ -13,10 +13,10 @@ from ..objects.tool_trace import trace_for_run, scoring_calls
 from ..objects.values import zero_resources
 
 
-SUPPORTED_VERSION = "1.9.0"
+SUPPORTED_VERSION = "1.10.0"
 RECEIPT_TYPE = "application/vnd.agent-eval-flow.toolscore+json"
 METRICS = ("score", "invocation_accuracy", "selection_accuracy", "argument_f1",
-           "sequence_accuracy", "redundant_rate", "required_call_recall", "identical_rate")
+           "sequence_accuracy", "redundant_rate", "required_call_recall", "identical_rate", "error_rate")
 DEFAULT_WEIGHTS = {"selection_accuracy": 0.4, "argument_f1": 0.3,
                    "sequence_accuracy": 0.2, "redundant_rate": 0.1}
 
@@ -40,7 +40,7 @@ class _Contract(_Model):
 
 class _Request(_Model):
     metric: Literal["score", "invocation_accuracy", "selection_accuracy", "argument_f1",
-                    "sequence_accuracy", "redundant_rate", "required_call_recall", "identical_rate"] = "score"
+                    "sequence_accuracy", "redundant_rate", "required_call_recall", "identical_rate", "error_rate"] = "score"
     reference_table: str = "tool_expectations"
     boundary: str = Field(min_length=1)
     strict: bool = True
@@ -81,19 +81,42 @@ def _ordered(calls, ordering):
     return sorted(calls, key=lambda c: (c["tool"], json.dumps(c.get("args"), sort_keys=True, ensure_ascii=False)))
 
 
-def _score(evaluate, expected, actual, request, weights):
-    result = evaluate(expected=_ordered(expected, request.ordering),
-        actual=_ordered(actual, request.ordering), weights=weights, strict=request.strict)
+def _native_calls(trace, actual):
+    """Add observed lifecycle data without turning unknown completion into success."""
+    calls = []
+    for call, request in zip(trace.calls, actual, strict=True):
+        item = {**request, "id": call.call_id, "metadata": {
+            "execution_id": call.execution_id, "completion": call.completion}}
+        if call.completion != "unknown":
+            item.update(result=plain(call.result), is_error=call.completion == "error")
+        calls.append(item)
+    return calls
+
+
+def _score(evaluate, expected, actual, request, weights, *, completion_known):
+    # Native trace checks (especially adjacent retries) must use capture order.
+    native = evaluate(expected=expected, actual=actual, weights=weights, strict=request.strict)
+    result = native if request.ordering == "ordered" else evaluate(
+        expected=_ordered(expected, request.ordering), actual=_ordered(actual, request.ordering),
+        weights=weights, strict=request.strict)
     values = {"score": float(result.score), "invocation_accuracy": float(result.metrics["invocation_accuracy"]),
         "selection_accuracy": float(result.selection_accuracy), "argument_f1": float(result.argument_f1),
         "sequence_accuracy": float(result.sequence_accuracy),
         "redundant_rate": float(result.metrics["efficiency_metrics"]["redundant_rate"]),
-        "identical_rate": float(result.metrics["efficiency_metrics"]["identical_rate"])}
+        "identical_rate": float(result.metrics["efficiency_metrics"]["identical_rate"]),
+        "error_rate": float(native.metrics["efficiency_metrics"]["error_rate"]) if completion_known else None}
     needed, used = Counter(c["tool"] for c in expected), Counter(c["tool"] for c in actual)
     values["required_call_recall"] = sum((needed & used).values()) / len(expected) if expected else None
     statuses = {name: "ok" if value is not None else "not_applicable" for name, value in values.items()}
     reasons = {"identical_rate": "Fraction of requests repeating an earlier tool and its arguments; "
-               "includes declared retries and does not affect the composite score"}
+               "includes declared retries and does not affect the composite score",
+               "required_call_recall": "Required tool-name multiplicities requested; does not establish "
+               "completion, argument correctness or task success",
+               "error_rate": "Fraction of captured requests with an observed error completion; "
+               "all request completions are known"}
+    if not completion_known:
+        statuses["error_rate"] = "missing"
+        reasons["error_rate"] = "Some request completions are unknown; an absent error is not an observed success"
     if not expected:
         reasons["required_call_recall"] = "No required tool calls in this contract"
     if not expected and not actual:
@@ -103,7 +126,11 @@ def _score(evaluate, expected, actual, request, weights):
         values["sequence_accuracy"], statuses["sequence_accuracy"] = None, "not_applicable"
         reasons["sequence_accuracy"] = "Contract ignores call order; sequence has zero weight"
     return {"values": values, "statuses": statuses, "reasons": reasons,
-            "raw_score": float(result.score), "raw_metrics": result.metrics}
+            "raw_score": float(result.score), "raw_metrics": result.metrics,
+            "upstream_result": native.to_dict(), "upstream_result_order": "captured",
+            "upstream_result_note": "Native checks use captured request order. Native required_call_recall "
+            "excludes explicit failures but treats unknown completions as non-failed; it is not verified success. "
+            "AEF required_call_recall retains request-count semantics. Unordered AEF scores use canonical order."}
 
 
 class ToolscoreEvaluator:
@@ -115,7 +142,7 @@ class ToolscoreEvaluator:
     ties resolved by declaration order. No model, server, or side-effect checker
     is invoked. Other outcome checks remain independent.
     """
-    ref = o.VersionRef(name="agent-eval-flow.toolscore", revision=f"2+tool-scorer.{SUPPORTED_VERSION}")
+    ref = o.VersionRef(name="agent-eval-flow.toolscore", revision=f"3+tool-scorer.{SUPPORTED_VERSION}")
 
     def __init__(self, *, artifacts):
         self.artifacts = artifacts
@@ -168,10 +195,15 @@ class ToolscoreEvaluator:
                 else:
                     evaluate = _load_toolscore()
                     receipt["toolscore_version"] = SUPPORTED_VERSION
+                    native_calls = _native_calls(trace, actual)
+                    unknown_completions = sum(call.completion == "unknown" for call in trace.calls)
+                    receipt["completion_coverage"] = {"known": len(trace.calls) - unknown_completions,
+                        "unknown": unknown_completions, "total": len(trace.calls)}
                     alternatives = []
                     for calls in choices:
                         expected = [call.model_dump() for call in calls]
-                        scored = _score(evaluate, expected, actual, request, weights)
+                        scored = _score(evaluate, expected, native_calls, request, weights,
+                            completion_known=unknown_completions == 0)
                         alternatives.append({"expected": expected, **scored})
                     index = max(range(len(alternatives)), key=lambda i: alternatives[i]["raw_score"])
                     selected = alternatives[index]

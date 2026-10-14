@@ -4,10 +4,13 @@ Agent Eval Flow is a developer preview. Contributions are welcome: clearer
 instructions, small examples, reproducible bug reports, tests, and code fixes
 all help. You can run the offline examples and default tests without model credentials.
 
+New to the library? Start with the [offline tutorial](TUTORIAL.md) to produce a
+report and inspect a saved result before choosing a change.
+
 ## Choose a starting point
 
 - **Improve the docs:** clarify a setup step, fix a broken link, or explain an
-  example in [README.md](README.md), [the test guide](tests/README.md), or an
+  example in [README.md](README.md), [the tutorial](TUTORIAL.md), [the test guide](tests/README.md), or an
   adjacent example README. Small edits can be proposed directly in GitHub.
 - **Report a bug:** include the package/Python versions, a minimal reproduction,
   and the expected and observed results in a
@@ -58,7 +61,7 @@ If PowerShell blocks activation, use `.\.venv\Scripts\python.exe` in place of
 Install the checkout and development dependencies, then run a first check:
 
 ```bash
-python -m pip install -e ".[test,cli]" build
+python -m pip install -e ".[test,cli]" build twine
 python scripts/verify_acceptance_checkpoint.py
 python -m pytest tests/e2e/test_archived_trajectory.py
 python examples/archive_review.py --output demo-output/contributing
@@ -97,6 +100,13 @@ new tests and fixtures in separate files instead of updating the manifest to
 make a failing integrity check pass. Third-party fixtures retain their own
 licenses and provenance; see [third-party notices](THIRD_PARTY_NOTICES.md).
 
+For evaluation studies, use tasks that match the
+agent's domain, keep related cases in the same split, and freeze a separate
+held-out set before inference. Tune prompts, adapters, budgets, and graders on
+development cases only. Keep answer keys and hidden tests outside the evaluated
+agent's environment, and use fresh agent state between independent tasks.
+Report task outcomes separately from capture completeness and process diagnostics.
+
 ## Check your change
 
 Run commands from the repository root with your virtual environment's Python.
@@ -114,7 +124,9 @@ review:
 python scripts/verify_acceptance_checkpoint.py
 python -m pytest
 python examples/archive_review.py --output demo-output/contributing
+python examples/gpt_researcher_review.py --output demo-output/gpt-researcher
 python -m build
+python -m twine check --strict dist/*
 python scripts/verify_distribution.py
 ```
 

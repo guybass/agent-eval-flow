@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If Agent Eval Flow supports your work, cite the software and identify the version or commit you used."
+title: Agent Eval Flow
+type: software
+authors:
+  - name: Agent Eval Flow contributors
+repository-code: "https://github.com/guybass/agent-eval-flow"
+url: "https://guybass.github.io/agent-eval-flow/"
+abstract: >-
+  A Python library for evaluating complete agent systems through retained
+  execution evidence, explicit checks, saved results, and comparisons.
+keywords:
+  - agent evaluation
+  - execution evidence
+  - tool calling
+  - reproducible research

@@ -1,7 +1,10 @@
 # Tool calling evaluation with Toolscore
 
-Install `agent-eval-flow[toolscore]` (or `pip install -e ".[toolscore]"` in a
-checkout). This extra pins `tool-scorer==1.9.0`. Importing Agent Eval Flow and
+For the unreleased integration described here, install from the current checkout
+with `python -m pip install -e ".[toolscore]"`. This extra pins
+`tool-scorer==1.10.0` (released October 3, 2026). Installing the published
+`agent-eval-flow[toolscore]` package uses the dependency pin of that AEF release.
+Importing Agent Eval Flow and
 rendering saved reports do not require Toolscore. A requested evaluation with a
 missing or unsupported dependency produces an explicit error measurement.
 
@@ -87,9 +90,10 @@ is not invoked by this integration.
 
 ## Metric meanings
 
-The eight diagnostics are native composite score, invocation accuracy,
+The nine diagnostics are native composite score, invocation accuracy,
 selection accuracy, argument F1, sequence accuracy, redundant rate,
-required-call recall, and identical-call rate (`identical_rate`). Recall uses tool-name multiplicities so a
+required-call recall, identical-call rate (`identical_rate`), and error rate
+(`error_rate`). Recall uses tool-name multiplicities so a
 missing repeated invocation is not hidden by perfect selection accuracy; it
 does not validate arguments or side effects.
 
@@ -101,6 +105,21 @@ retries still count as identical repeats; this is a diagnostic, not proof of a
 loop. It adds no composite weight. The native `identical_count` is also retained
 in each alternative's raw efficiency metrics.
 
+`error_rate` is the fraction of captured requests with an observed error
+completion. It is `missing` while any request's completion is unknown; a
+complete empty trace has an error rate of zero. It has no composite weight.
+Receipts and reports also retain the count of recorded failures and immediate
+identical retries after a recorded failure. These counts use captured request
+order, including when the scoring contract ignores order. With unknown
+completions they are observed counts, not an exhaustive failure inventory.
+
+AEF's existing `required_call_recall` retains its request-count meaning.
+Toolscore 1.10's native metric of the same name excludes explicitly failed
+calls, but counts calls with unknown completions as non-failed. That native
+value is retained in each alternative's `upstream_result`; it must not be
+interpreted as verified successful completion. The optional native recall
+weight is not enabled by AEF's four-weight contract.
+
 Strict argument matching is the default. Set `strict=False` explicitly to use
 Toolscore's lenient comparisons. Default weights are selection 0.4, arguments
 0.3, sequence 0.2 and non-redundancy 0.1. Custom weights must specify all four
@@ -108,7 +127,7 @@ keys (`selection_accuracy`, `argument_f1`, `sequence_accuracy`, `redundant_rate`
 and are normalized. `ordering="unordered"` sorts calls deterministically by
 name and JSON arguments and gives sequence zero weight; its sequence metric is
 not applicable. This is canonical-list scoring, not dependency-graph evaluation.
-Toolscore 1.9.0 pairs expected and actual calls of each tool one-to-one to
+Toolscore pairs expected and actual calls of each tool one-to-one to
 maximize argument matches, independently of order. Pairing is exact for up to
 12 actual calls per tool and greedy above that limit. A missing earlier call
 does not hide a correct later call, and an actual call cannot satisfy two
@@ -116,7 +135,10 @@ expected calls. Inspect the retained calls and keep independent outcome checks.
 
 Retries remain separate calls. Legitimate retries can be declared in expected
 or alternative traces; they are not silently removed. Completion status and
-returned results are displayed, but the in-memory Toolscore API scores requests.
+returned results are retained in both the original trace and the native
+Toolscore record; explicit error completions feed its failure diagnostics.
+The default composite still scores request selection, arguments, order and
+redundancy, independently of completion.
 The adapter never runs tools, side-effect validators, MCP tests, or an LLM judge.
 
 For an explicit empty expectation and a complete empty trace, invocation
@@ -126,14 +148,30 @@ now contribute to candidate composite means.
 Unknown per-tool timing/cost remain unknown. Offline grading's model cost is
 zero, which is distinct from the cost of the captured agent run.
 
-### Upgrading from 1.8.1
+### Upgrading from 1.9.0
 
-The adapter revision is now `2+tool-scorer.1.9.0`. One-to-one argument pairing
-can raise scores for existing traces, and correct no-tool runs now have an
-applicable perfect score. Re-evaluate retained runs for both candidates with
-the new evaluator before comparing scores or recalibrating gates. Saved 1.8.1
-receipts still render their original metrics and statuses without regrading.
-See the [Toolscore 1.9.0 release notes](https://github.com/yotambraun/Toolscore/releases/tag/v1.9.0).
+The adapter revision is now `3+tool-scorer.1.10.0`. Install the updated extra
+and build new metric specs with `toolscore_metrics(...)` to include
+`tools.error_rate`. Existing request metrics and composite weights keep their
+meanings. Failure diagnostics require retained completion evidence; upgrading
+does not recover missing results.
+
+Each alternative now stores Toolscore's complete `to_dict()` record (native
+schema version `"2"`) as `upstream_result`, in captured order. This includes
+native metrics, grade, weights, calls, results, and failure flags. For unordered
+contracts, `raw_score` and `raw_metrics` continue to describe AEF's canonical
+scoring order; the native record separately preserves capture-order checks.
+Call IDs, execution identity, completion uncertainty and source references
+remain in the original AEF `trace` because native serialization omits some of
+that metadata.
+
+Saved older receipts still render their original metrics without regrading.
+Candidate summaries keep different evaluator versions in separate groups.
+When comparing versions, use the same retained development runs for both
+candidates and retain both evaluations. Do not regenerate deleted historical
+archives or reuse an inspected holdout as untouched evaluation. Upgrading
+from before 1.9 also changes argument pairing and correct no-tool scoring.
+See the [Toolscore 1.10.0 release notes](https://github.com/yotambraun/Toolscore/releases/tag/v1.10.0).
 
 ## Saved reports and evidence
 
@@ -147,7 +185,8 @@ the existing APIs; reporting reads saved receipts without regrading.
 HTML/JSON report, and verified local evidence under `evidence/`. Links in the
 HTML reports are relative to the bundle. For `report.html`, companion names are
 `tools.html` and `tools.json`; other report names use `<stem>-tools.*`.
-The tools view compares candidates, lists expected/observed requests and per-tool
+The tools view compares candidates within matching settings and evaluator
+versions, lists expected/observed requests and per-tool
 counts, and shows missing/error/not-applicable coverage. Receipt read failures
 are visible. Unavailable, unhashed, changed, or remote evidence is listed as
 unavailable; it is never downloaded implicitly.

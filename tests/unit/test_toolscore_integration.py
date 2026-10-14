@@ -41,9 +41,13 @@ def scenario(tmp_path):
     evaluator = integration.ToolscoreEvaluator(artifacts=cache)
 
     def evaluate(expected, actual, *, coverage=True, missing_trace=False, missing_contract=False,
-                 metric="score", alternatives=(), **settings):
+                 metric="score", alternatives=(), completions=None, **settings):
         calls = tuple(ToolRequest(call_id=f"call-{i}", execution_id="main", tool=call["tool"],
-            arguments=call.get("args"), evidence=(evidence,)) for i, call in enumerate(actual))
+            arguments=call.get("args"), evidence=(evidence,),
+            completion=completions[i] if completions else "unknown",
+            result=call.get("result") if completions and completions[i] != "unknown" else None,
+            result_evidence=(evidence,) if completions and completions[i] != "unknown" else ())
+            for i, call in enumerate(actual))
         trace = ToolTrace(collector=a.VersionRef(name="fixture", revision="1"), boundary="requests", scope="main fixture",
             coverage=unknown("Not captured") if coverage is None else observed(coverage, "Fixture coverage", (evidence,)),
             calls=calls)
@@ -104,7 +108,7 @@ def test_unavailable_dependency_is_explicit_error(scenario, monkeypatch):
     assert receipt["toolscore_version"] is None
 
 
-@pytest.mark.parametrize("version", ["1.8.1", "99.0"])
+@pytest.mark.parametrize("version", ["1.8.1", "1.9.0", "1.9.1", "99.0"])
 def test_unsupported_dependency_version_is_explicit_error(scenario, monkeypatch, version):
     monkeypatch.setattr(integration.metadata, "version", lambda _: version)
     row, _, _ = scenario[0]([], [])
@@ -141,7 +145,7 @@ def test_one_to_one_argument_pairing_is_preserved_in_receipts(scenario, expected
     row, receipt, _ = scenario[0](expected, actual, metric="argument_f1")
     assert row.status == "ok" and row.value == pytest.approx(value)
     assert receipt["actual"] == actual
-    assert receipt["evaluator"]["revision"] == "2+tool-scorer.1.9.0"
+    assert receipt["evaluator"]["revision"] == "3+tool-scorer.1.10.0"
     assert receipt["alternatives"][0]["values"]["argument_f1"] == pytest.approx(value)
 
 
@@ -284,7 +288,9 @@ def test_pipeline_persistence_portable_reports_and_assessment(tmp_path, monkeypa
     assert all(len(row["receipts"]) == 1 for row in data["runs"])
     assert 'href="tools.html"' in html and 'href="report.html#run-0"' in tools
     assert "Completion unknown" in tools and "No calls expected or observed" in tools
-    assert "Tool latency: unknown" in tools and "Toolscore 1.9.0" in tools
+    assert "Tool latency: unknown" in tools and "Toolscore 1.10.0" in tools
+    assert "Known completions:" in tools and "Recorded failed calls:" in tools
+    assert "error_rate" in tools
     assert "identical_rate" in tools
     assert all(row["observed"] == 2 and row["not_applicable"] == 0 for row in data["summaries"])
     assert sum(row.metric == "tools.identical_rate" for row in loaded.measurements) == 4
@@ -398,3 +404,120 @@ import agent_eval_flow.reporting.toolscore
 assert 'toolscore' not in sys.modules
 """
     subprocess.run([sys.executable, "-c", code], check=True, capture_output=True, text=True)
+
+
+@requires_toolscore
+def test_native_v2_receipt_preserves_results_and_failed_retry_diagnostics(scenario):
+    call = {"tool": "search", "args": {"q": "x"}}
+    actual = [{**call, "result": {"message": "timeout"}}, {**call, "result": ["answer"]}]
+    row, receipt, _ = scenario[0]([call], actual, completions=["error", "completed"], metric="error_rate")
+    assert row.status == "ok" and row.value == 0.5
+    native = receipt["alternatives"][0]["upstream_result"]
+    assert native["schema_version"] == "2"
+    assert native["calls"]["actual"][0]["is_error"] is True
+    assert [item["result"] for item in native["calls"]["actual"]] == [{"message": "timeout"}, ["answer"]]
+    assert native["metrics"]["efficiency_metrics"]["error_count"] == 1
+    assert native["metrics"]["efficiency_metrics"]["retry_after_error_count"] == 1
+    assert native["weights"]["required_call_recall"] == 0.0
+    assert receipt["completion_coverage"] == {"known": 2, "unknown": 0, "total": 2}
+    assert receipt["trace"]["calls"][0]["call_id"] == "call-0"
+    assert receipt["metrics"]["required_call_recall"]["value"] == 1.0
+
+
+@requires_toolscore
+def test_error_rate_requires_known_completion_without_changing_request_scores(scenario):
+    call = {"tool": "read", "args": {}}
+    failed, receipt, _ = scenario[0]([call], [call], completions=["error"], metric="error_rate")
+    assert failed.value == 1.0
+    assert receipt["metrics"]["required_call_recall"]["value"] == 1.0
+    assert receipt["alternatives"][0]["upstream_result"]["required_call_recall"] == 0.0
+    unknown_row, unknown_receipt, _ = scenario[0]([call], [call], metric="error_rate")
+    assert unknown_row.status == "missing" and unknown_row.value is None
+    assert unknown_row.basis is None and "unknown" in unknown_row.reason
+    assert unknown_receipt["metrics"]["score"]["value"] == receipt["metrics"]["score"]["value"] == pytest.approx(1.0)
+    assert unknown_receipt["alternatives"][0]["upstream_result"]["required_call_recall"] == 1.0
+    partial, partial_receipt, _ = scenario[0]([call], [call, call],
+        completions=["error", "unknown"], metric="error_rate")
+    assert partial.status == "missing" and partial.value is None
+    assert partial_receipt["alternatives"][0]["upstream_result"]["metrics"]["efficiency_metrics"]["error_count"] == 1
+    empty, _, _ = scenario[0]([], [], metric="error_rate")
+    assert empty.status == "ok" and empty.value == 0.0
+
+
+@requires_toolscore
+def test_unordered_scoring_keeps_failure_retry_checks_in_capture_order(scenario):
+    call = {"tool": "search", "args": {"q": "x"}}
+    other = {"tool": "other", "args": {}}
+    row, receipt, _ = scenario[0]([call, other], [call, other, call],
+        completions=["error", "completed", "completed"], ordering="unordered")
+    assert row.status == "ok"
+    native = receipt["alternatives"][0]["upstream_result"]
+    assert [item["tool"] for item in native["calls"]["actual"]] == ["search", "other", "search"]
+    assert native["metrics"]["efficiency_metrics"]["retry_after_error_count"] == 0
+    assert receipt["metrics"]["sequence_accuracy"]["status"] == "not_applicable"
+
+
+def test_tools_summary_separates_saved_evaluator_versions():
+    from agent_eval_flow.reporting.toolscore import _summaries
+    runs = []
+    for version, score in [("1.9.0", 0.5), ("1.10.0", 1.0)]:
+        receipt = {"status": "ok", "settings": {"strict": True}, "evaluator": {"name": "toolscore", "revision": version},
+            "toolscore_version": version, "metrics": {"score": {"status": "ok", "value": score}}}
+        runs.append({"candidate_id": "same", "measurements": [], "receipts": [{"receipt": receipt}]})
+    summaries = _summaries(runs)
+    assert len(summaries) == 2
+    assert [row["mean"] for row in summaries] == [0.5, 1.0]
+    assert [row["required_toolscore_version"] for row in summaries] == ["1.9.0", "1.10.0"]
+
+
+@requires_toolscore
+def test_tools_summary_counts_unscored_runs_with_same_declared_evaluator(scenario, monkeypatch):
+    from agent_eval_flow.reporting.toolscore import _summaries
+
+    receipts = [scenario[0]([], [], **options)[1] for options in (
+        {}, {"coverage": False}, {"missing_trace": True}, {"missing_contract": True})]
+    monkeypatch.setattr(integration.metadata, "version", lambda _: "1.9.0")
+    receipts.append(scenario[0]([], [])[1])
+    assert [receipt["status"] for receipt in receipts] == ["ok", "missing", "missing", "missing", "error"]
+    assert receipts[0]["toolscore_version"] == integration.SUPPORTED_VERSION
+    assert all(receipt["toolscore_version"] is None for receipt in receipts[1:])
+    runs = [{"candidate_id": "same", "measurements": [], "receipts": [{"receipt": receipt}]}
+        for receipt in receipts]
+    summaries = _summaries(runs)
+    assert len(summaries) == 1
+    assert summaries[0]["observed"] == 1
+    assert summaries[0]["missing"] == 3
+    assert summaries[0]["error"] == 1
+    assert summaries[0]["mean"] == pytest.approx(1.0)
+    assert summaries[0]["required_toolscore_version"] == integration.SUPPORTED_VERSION
+
+
+@requires_toolscore
+def test_legacy_receipt_renders_without_new_lifecycle_fields(scenario, monkeypatch):
+    from importlib.resources import files
+    from jinja2 import Environment, FileSystemLoader, select_autoescape
+    from agent_eval_flow.reporting.html import _json
+    from agent_eval_flow.reporting.toolscore import _receipt, _summaries, _tool_rows
+
+    _, receipt, run = scenario[0]([], [])
+    receipt.pop("completion_coverage")
+    receipt["metrics"].pop("error_rate")
+    receipt["toolscore_version"] = receipt["required_toolscore_version"] = "1.9.0"
+    receipt["evaluator"]["revision"] = "2+tool-scorer.1.9.0"
+    for alternative in receipt["alternatives"]:
+        for name in ("upstream_result", "upstream_result_order", "upstream_result_note"):
+            alternative.pop(name)
+    artifact = scenario[2].write_bytes("legacy", json.dumps(receipt).encode(), integration.RECEIPT_TYPE)
+    monkeypatch.setattr(integration, "_load_toolscore", lambda: pytest.fail("Saved receipts must not be regraded"))
+    saved = _receipt(artifact, run)
+    runs = [{"run_id": run.id, "candidate_id": "legacy", "unit": {}, "anchor": "tools-run-0",
+        "general_anchor": "run-0", "measurements": [], "receipts": [{"receipt": saved,
+            "error": None, "tools": _tool_rows(saved)}]}]
+    env = Environment(loader=FileSystemLoader(str(files("agent_eval_flow.reporting").joinpath("templates"))),
+        autoescape=select_autoescape(default=True))
+    env.filters["pretty_json"] = _json
+    html = env.get_template("tools_report.html.j2").render(css="", view={"title": "Legacy",
+        "result_id": "old", "general_href": "report.html", "json_href": "tools.json",
+        "summaries": _summaries(runs), "runs": runs, "evidence": []})
+    assert "Toolscore 1.9.0" in html and "2+tool-scorer.1.9.0" in html
+    assert "Recorded failed calls:" not in html and "Known completions:" not in html
