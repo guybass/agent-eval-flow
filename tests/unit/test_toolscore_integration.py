@@ -108,7 +108,7 @@ def test_unavailable_dependency_is_explicit_error(scenario, monkeypatch):
     assert receipt["toolscore_version"] is None
 
 
-@pytest.mark.parametrize("version", ["1.8.1", "1.9.0", "1.9.1", "99.0"])
+@pytest.mark.parametrize("version", ["1.8.1", "1.9.0", "1.9.1", "1.10.0", "99.0"])
 def test_unsupported_dependency_version_is_explicit_error(scenario, monkeypatch, version):
     monkeypatch.setattr(integration.metadata, "version", lambda _: version)
     row, _, _ = scenario[0]([], [])
@@ -118,7 +118,7 @@ def test_unsupported_dependency_version_is_explicit_error(scenario, monkeypatch,
 @requires_toolscore
 def test_no_tool_contract_has_perfect_native_scores(scenario):
     row, receipt, _ = scenario[0]([], [])
-    assert row.status == "ok" and row.value == pytest.approx(1.0)
+    assert row.status == "ok" and row.value == 1.0
     assert receipt["metrics"]["invocation_accuracy"]["value"] == 1.0
     assert receipt["metrics"]["argument_f1"]["value"] == 1.0
     assert receipt["metrics"]["required_call_recall"]["status"] == "not_applicable"
@@ -145,7 +145,7 @@ def test_one_to_one_argument_pairing_is_preserved_in_receipts(scenario, expected
     row, receipt, _ = scenario[0](expected, actual, metric="argument_f1")
     assert row.status == "ok" and row.value == pytest.approx(value)
     assert receipt["actual"] == actual
-    assert receipt["evaluator"]["revision"] == "3+tool-scorer.1.10.0"
+    assert receipt["evaluator"]["revision"] == "3+tool-scorer.1.11.0"
     assert receipt["alternatives"][0]["values"]["argument_f1"] == pytest.approx(value)
 
 
@@ -288,7 +288,7 @@ def test_pipeline_persistence_portable_reports_and_assessment(tmp_path, monkeypa
     assert all(len(row["receipts"]) == 1 for row in data["runs"])
     assert 'href="tools.html"' in html and 'href="report.html#run-0"' in tools
     assert "Completion unknown" in tools and "No calls expected or observed" in tools
-    assert "Tool latency: unknown" in tools and "Toolscore 1.10.0" in tools
+    assert "Tool latency: unknown" in tools and "Toolscore 1.11.0" in tools
     assert "Known completions:" in tools and "Recorded failed calls:" in tools
     assert "error_rate" in tools
     assert "identical_rate" in tools
@@ -414,6 +414,7 @@ def test_native_v2_receipt_preserves_results_and_failed_retry_diagnostics(scenar
     assert row.status == "ok" and row.value == 0.5
     native = receipt["alternatives"][0]["upstream_result"]
     assert native["schema_version"] == "2"
+    assert [item["id"] for item in native["calls"]["actual"]] == ["call-0", "call-1"]
     assert native["calls"]["actual"][0]["is_error"] is True
     assert [item["result"] for item in native["calls"]["actual"]] == [{"message": "timeout"}, ["answer"]]
     assert native["metrics"]["efficiency_metrics"]["error_count"] == 1
@@ -436,6 +437,9 @@ def test_error_rate_requires_known_completion_without_changing_request_scores(sc
     assert unknown_row.basis is None and "unknown" in unknown_row.reason
     assert unknown_receipt["metrics"]["score"]["value"] == receipt["metrics"]["score"]["value"] == pytest.approx(1.0)
     assert unknown_receipt["alternatives"][0]["upstream_result"]["required_call_recall"] == 1.0
+    native = unknown_receipt["alternatives"][0]["upstream_result"]
+    checks = {check["check"]: check["status"] for check in native["evidence"]["checks"]}
+    assert checks["call-errors"] == checks["required-calls"] == checks["claimed-success"] == "unknown"
     partial, partial_receipt, _ = scenario[0]([call], [call, call],
         completions=["error", "unknown"], metric="error_rate")
     assert partial.status == "missing" and partial.value is None

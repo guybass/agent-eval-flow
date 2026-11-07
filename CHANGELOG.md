@@ -3,7 +3,7 @@
 Changes to Agent Eval Flow are recorded here before the next release. Published
 versions and their notes are available on [GitHub Releases](https://github.com/guybass/agent-eval-flow/releases).
 
-## 0.6.1 — 2026-10-14
+## 0.6.1 (unreleased)
 
 ### Getting started
 
@@ -16,7 +16,9 @@ versions and their notes are available on [GitHub Releases](https://github.com/g
 
 ### Toolscore integration
 
-- Upgrade the optional `tool-scorer` dependency from 1.9.0 to 1.10.0.
+- Upgrade the optional `tool-scorer` dependency from 1.9.0 to 1.11.0.
+- Retain Toolscore's evidence coverage and check statuses in the native receipt.
+  AEF scores request traces, so final-answer checks remain unknown.
 - Retain Toolscore's versioned result payload and recorded tool outcomes for
   failure and retry diagnostics. Incomplete outcome capture remains explicit.
 - Preserve AEF's existing request-count `required_call_recall` and default
