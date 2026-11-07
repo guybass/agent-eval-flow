@@ -2,7 +2,7 @@
 
 For the unreleased integration described here, install from the current checkout
 with `python -m pip install -e ".[toolscore]"`. This extra pins
-`tool-scorer==1.10.0` (released October 3, 2026). Installing the published
+`tool-scorer==1.11.0` (released November 3, 2026). Installing the published
 `agent-eval-flow[toolscore]` package uses the dependency pin of that AEF release.
 Importing Agent Eval Flow and
 rendering saved reports do not require Toolscore. A requested evaluation with a
@@ -114,7 +114,7 @@ order, including when the scoring contract ignores order. With unknown
 completions they are observed counts, not an exhaustive failure inventory.
 
 AEF's existing `required_call_recall` retains its request-count meaning.
-Toolscore 1.10's native metric of the same name excludes explicitly failed
+Toolscore's native metric of the same name excludes explicitly failed
 calls, but counts calls with unknown completions as non-failed. That native
 value is retained in each alternative's `upstream_result`; it must not be
 interpreted as verified successful completion. The optional native recall
@@ -148,13 +148,25 @@ now contribute to candidate composite means.
 Unknown per-tool timing/cost remain unknown. Offline grading's model cost is
 zero, which is distinct from the cost of the captured agent run.
 
-### Upgrading from 1.9.0
+### Upgrading from 1.10.0
 
-The adapter revision is now `3+tool-scorer.1.10.0`. Install the updated extra
-and build new metric specs with `toolscore_metrics(...)` to include
-`tools.error_rate`. Existing request metrics and composite weights keep their
-meanings. Failure diagnostics require retained completion evidence; upgrading
-does not recover missing results.
+The evaluator revision is `3+tool-scorer.1.11.0`. Build metric specs with
+`toolscore_metrics(...)` to grade with the new version. The request metrics and
+weights keep their definitions. Toolscore now rounds the native composite score
+to 12 decimal places, so numerical ties can change which alternative wins.
+
+The native `upstream_result` keeps record schema version `"2"` and now includes
+call IDs and tri-state `evidence`. AEF passes the captured requests and observed
+results. Final-answer checks remain unknown, and missing native latency and
+cost are null. Use AEF's `completion_coverage` for the collector's recorded
+lifecycle status, including completed calls with a null result.
+See the [Toolscore 1.11.0 release PR](https://github.com/yotambraun/Toolscore/pull/5).
+
+### Changes introduced in 1.10.0
+
+Revision `3+tool-scorer.1.10.0` added `tools.error_rate` to the specs created by
+`toolscore_metrics(...)`. Failure diagnostics require retained completion
+evidence.
 
 Each alternative now stores Toolscore's complete `to_dict()` record (native
 schema version `"2"`) as `upstream_result`, in captured order. This includes

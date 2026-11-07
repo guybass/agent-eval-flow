@@ -34,8 +34,8 @@ open a report that connects results to their evidence.
 
 Requires **Python 3.11+**. Install the library with
 `python -m pip install agent-eval-flow`, or use a checkout to try the bundled
-offline example. The checkout includes unreleased changes; PyPI installs the
-latest published release.
+offline example. PyPI installs the latest published release; the `main` branch
+may include changes for a future release.
 
 ```bash
 git clone https://github.com/guybass/agent-eval-flow.git
